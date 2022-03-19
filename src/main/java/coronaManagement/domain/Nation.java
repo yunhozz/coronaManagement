@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class City {
+public class Nation {
 
     @Id
     @GeneratedValue
@@ -26,7 +26,6 @@ public class City {
     private int numOfVaccination;
 
     private int numOfInfection;
-
 
     public void addPopulation(int population) {
         this.population += population;

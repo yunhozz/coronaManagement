@@ -28,6 +28,15 @@ public class Virus {
 
     private double fatalityRate;
 
+
+
+    public double calculateInfectionRate() {
+        int population = infectedPerson.getNation().getPopulation();
+        int numOfInfection = infectedPerson.getNation().getNumOfInfection();
+
+        return (double) numOfInfection / (double) population * 100;
+    }
+
     protected void setInfectedPerson(InfectedPerson infectedPerson) {
         this.infectedPerson = infectedPerson;
     }

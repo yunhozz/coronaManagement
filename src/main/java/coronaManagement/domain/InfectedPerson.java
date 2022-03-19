@@ -19,7 +19,7 @@ public class InfectedPerson {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
-    private City city;
+    private Nation nation;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "virus_id")
