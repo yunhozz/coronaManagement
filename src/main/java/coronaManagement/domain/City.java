@@ -26,4 +26,25 @@ public class City {
     private int numOfVaccination;
 
     private int numOfInfection;
+
+
+    public void addPopulation(int population) {
+        this.population += population;
+    }
+
+    public void removePopulation(int population) {
+        this.population -= population;
+    }
+
+    public void addNumOfVaccination(int number) {
+        numOfVaccination += number;
+    }
+
+    public void addNumOfInfection(int number) {
+        numOfInfection += number;
+    }
+
+    public void removeNumOfInfection(int number) {
+        numOfInfection -= number;
+    }
 }
