@@ -1,5 +1,6 @@
 package coronaManagement.domain;
 
+import coronaManagement.domain.person.InfectedPerson;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +38,7 @@ public class Virus {
         return numOfInfection / population * 100;
     }
 
-    protected void setInfectedPerson(InfectedPerson infectedPerson) {
+    public void updateInfectedPerson(InfectedPerson infectedPerson) {
         this.infectedPerson = infectedPerson;
     }
 }

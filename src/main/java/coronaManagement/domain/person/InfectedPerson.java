@@ -1,7 +1,9 @@
-package coronaManagement.domain;
+package coronaManagement.domain.person;
 
+import coronaManagement.domain.*;
 import coronaManagement.domain.person.Person;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,11 +14,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class InfectedPerson extends Person {
-
-    @Id
-    @GeneratedValue
-    @Column(name = "person_who_infected_id")
-    private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "virus_id")
@@ -42,10 +39,23 @@ public class InfectedPerson extends Person {
     /**
      * 연관관계 편의 메소드
      */
-    public void setVirus(Virus virus) {
+    private void setVirus(Virus virus) {
         this.virus = virus;
-        virus.setInfectedPerson(this);
+        virus.updateInfectedPerson(this);
     }
 
+    @Builder
+    private InfectedPerson(Nation nation, BasicInfo basicInfo, Virus virus, BasicInfo basicInfo1, Address address,int phoneNumber, String email,
+                          LocalDateTime infectedTime, String infectedPlace, PhysicalStatus physicalStatus) {
 
+        super(nation, basicInfo);
+        setVirus(virus);
+        this.basicInfo = basicInfo1;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.infectedTime = infectedTime;
+        this.infectedPlace = infectedPlace;
+        this.physicalStatus = physicalStatus;
+    }
 }

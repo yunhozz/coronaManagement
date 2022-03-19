@@ -2,7 +2,9 @@ package coronaManagement.domain.person;
 
 import coronaManagement.domain.BasicInfo;
 import coronaManagement.domain.Nation;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @DiscriminatorColumn
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Person {
 
     @Id
@@ -23,4 +26,9 @@ public abstract class Person {
 
     @Embedded
     private BasicInfo basicInfo;
+
+    public Person(Nation nation, BasicInfo basicInfo) {
+        this.nation = nation;
+        this.basicInfo = basicInfo;
+    }
 }

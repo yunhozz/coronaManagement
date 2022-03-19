@@ -12,12 +12,12 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class City extends Nation {
+public class City {
 
     @Id
     @GeneratedValue
     @Column(name = "city_id")
     private Long id;
 
-
+    private int population;
 }
