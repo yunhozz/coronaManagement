@@ -31,10 +31,10 @@ public class Virus {
 
 
     public double calculateInfectionRate() {
-        int population = infectedPerson.getNation().getPopulation();
-        int numOfInfection = infectedPerson.getNation().getNumOfInfection();
+        double population = infectedPerson.getNation().getPopulation();
+        double numOfInfection = infectedPerson.getNation().getNumOfInfection();
 
-        return (double) numOfInfection / (double) population * 100;
+        return numOfInfection / population * 100;
     }
 
     protected void setInfectedPerson(InfectedPerson infectedPerson) {

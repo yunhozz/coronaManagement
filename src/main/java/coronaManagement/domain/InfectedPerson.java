@@ -1,5 +1,6 @@
 package coronaManagement.domain;
 
+import coronaManagement.domain.person.Person;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,16 +11,12 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class InfectedPerson {
+public class InfectedPerson extends Person {
 
     @Id
     @GeneratedValue
     @Column(name = "person_who_infected_id")
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id")
-    private Nation nation;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "virus_id")
