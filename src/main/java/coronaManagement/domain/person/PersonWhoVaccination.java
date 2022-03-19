@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@DiscriminatorValue("V")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PersonWhoVaccination extends Person {
 
