@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@DiscriminatorValue("I")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class InfectedPerson extends Person {
 

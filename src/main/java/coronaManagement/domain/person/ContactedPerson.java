@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@DiscriminatorValue("C")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ContactedPerson extends Person {
 
