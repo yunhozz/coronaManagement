@@ -15,13 +15,11 @@ public class BasicInfo {
     private String name;
     private int age;
     private int phoneNumber;
-    private String email;
 
     @Builder
-    private BasicInfo(String name, int age, int phoneNumber, String email) {
+    private BasicInfo(String name, int age, int phoneNumber) {
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;
-        this.email = email;
     }
 }
