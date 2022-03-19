@@ -26,9 +26,4 @@ public abstract class Person {
 
     @Embedded
     private BasicInfo basicInfo;
-
-    public Person(Nation nation, BasicInfo basicInfo) {
-        this.nation = nation;
-        this.basicInfo = basicInfo;
-    }
 }
