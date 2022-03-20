@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class InfectedPerson extends Person {
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "virus_id")
     private Virus virus;
 
@@ -41,7 +41,7 @@ public class InfectedPerson extends Person {
      */
     private void setVirus(Virus virus) {
         this.virus = virus;
-        virus.updateInfectedPerson(this);
+        virus.getInfectedPersonList().add(this);
     }
 
     @Builder

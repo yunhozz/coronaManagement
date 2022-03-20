@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,8 +19,8 @@ public class Virus {
     @Column(name = "virus_id")
     private Long id;
 
-    @OneToOne(mappedBy = "virus")
-    private InfectedPerson infectedPerson;
+    @OneToMany(mappedBy = "virus")
+    private List<InfectedPerson> infectedPersonList = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -29,16 +31,11 @@ public class Virus {
 
     private double fatalityRate;
 
-
-
     public double calculateInfectionRate() {
-        double population = infectedPerson.getNation().getPopulation();
-        double numOfInfection = infectedPerson.getNation().getNumOfInfection();
 
-        return numOfInfection / population * 100;
     }
 
-    public void updateInfectedPerson(InfectedPerson infectedPerson) {
-        this.infectedPerson = infectedPerson;
+    public double calculateFatalityRate() {
+
     }
 }
