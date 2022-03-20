@@ -23,4 +23,20 @@ public class Vaccine {
     private String name;
 
     private int stockQuantity;
+
+    public void addQuantity(int stockQuantity) {
+        this.stockQuantity += stockQuantity;
+    }
+
+    public void removeQuantity(int stockQuantity) {
+        this.stockQuantity -= stockQuantity;
+    }
+
+    public void calculatePreventionRate() {
+
+    }
+
+    public void calculateFatalityRate() {
+
+    }
 }

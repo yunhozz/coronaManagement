@@ -13,12 +13,14 @@ import javax.persistence.Embeddable;
 public class BasicInfo {
 
     private String name;
+    private Gender gender;
     private int age;
     private int phoneNumber;
 
     @Builder
-    private BasicInfo(String name, int age, int phoneNumber) {
+    private BasicInfo(String name, Gender gender, int age, int phoneNumber) {
         this.name = name;
+        this.gender = gender;
         this.age = age;
         this.phoneNumber = phoneNumber;
     }
