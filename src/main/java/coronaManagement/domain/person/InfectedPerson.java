@@ -45,8 +45,8 @@ public class InfectedPerson extends Person {
     }
 
     @Builder
-    private InfectedPerson(Nation nation, BasicInfo basicInfo, Virus virus, BasicInfo basicInfo1, Address address,int phoneNumber, String email,
-                          LocalDateTime infectedTime, String infectedPlace, PhysicalStatus physicalStatus) {
+    private InfectedPerson(Nation nation, BasicInfo basicInfo, Virus virus, BasicInfo basicInfo1, Address address, int phoneNumber,
+                           String email, LocalDateTime infectedTime, String infectedPlace, PhysicalStatus physicalStatus) {
 
         super(nation, basicInfo);
         setVirus(virus);

@@ -3,6 +3,7 @@ package coronaManagement.domain.person;
 import coronaManagement.domain.BasicInfo;
 import coronaManagement.domain.Nation;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +20,8 @@ public class PersonWhoVaccination extends Person {
 
     private LocalDateTime vaccinationDate;
 
-    public PersonWhoVaccination(Nation nation, BasicInfo basicInfo, int vaccinationCount, LocalDateTime vaccinationDate) {
+    @Builder
+    private PersonWhoVaccination(Nation nation, BasicInfo basicInfo, int vaccinationCount, LocalDateTime vaccinationDate) {
         super(nation, basicInfo);
         this.vaccinationCount = vaccinationCount;
         this.vaccinationDate = vaccinationDate;
