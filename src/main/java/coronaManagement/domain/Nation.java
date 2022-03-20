@@ -46,4 +46,8 @@ public class Nation {
     public void removeNumOfInfection(int number) {
         numOfInfection -= number;
     }
+
+    public double getVaccinationRate() {
+        return (double) numOfVaccination / population * 100;
+    }
 }

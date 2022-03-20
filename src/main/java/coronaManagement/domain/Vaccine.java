@@ -32,11 +32,8 @@ public class Vaccine {
         this.stockQuantity -= stockQuantity;
     }
 
-    public void calculatePreventionRate() {
-
-    }
-
-    public void calculateFatalityRate() {
-
+    //치명률 : (감염자 수) / (백신 접종자 수) * 100
+    public double calculateFatalityRate() {
+        return nation.getNumOfVaccination();
     }
 }
