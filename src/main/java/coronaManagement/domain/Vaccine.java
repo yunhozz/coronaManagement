@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,9 +18,8 @@ public class Vaccine {
     @Column(name = "vaccine_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nation_id")
-    private Nation nation;
+    @OneToMany(mappedBy = "vaccine")
+    private List<NationVaccine> nationVaccines = new ArrayList<>();
 
     private String name;
 
@@ -34,6 +35,12 @@ public class Vaccine {
 
     //치명률 : (감염자 수) / (백신 접종자 수) * 100
     public double calculateFatalityRate() {
-        return nation.getNumOfVaccination();
+        double rate = 0;
+
+        for (NationVaccine nationVaccine : nationVaccines) {
+            rate += (double) nationVaccine.getNation().getNumOfInfection() / nationVaccine.getNation().getNumOfVaccination() * 100;
+        }
+
+        return rate / nationVaccines.size();
     }
 }
