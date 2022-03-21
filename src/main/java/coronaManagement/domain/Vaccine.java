@@ -18,4 +18,8 @@ public class Vaccine {
     @GeneratedValue
     @Column(name = "vaccine_id")
     private Long id;
+
+    private String name;
+
+    private int stockQuantity;
 }

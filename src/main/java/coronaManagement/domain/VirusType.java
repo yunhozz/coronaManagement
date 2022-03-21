@@ -1,5 +1,5 @@
 package coronaManagement.domain;
 
-public enum Type {
+public enum VirusType {
     ALPHA, BETA, GAMMA, DELTA, OMICRON
 }

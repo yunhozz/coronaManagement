@@ -1,9 +1,7 @@
 package coronaManagement.domain.person;
 
-import coronaManagement.domain.BasicInfo;
 import coronaManagement.domain.InfectionStatus;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

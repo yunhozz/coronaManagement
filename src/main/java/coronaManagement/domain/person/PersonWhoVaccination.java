@@ -1,8 +1,7 @@
 package coronaManagement.domain.person;
 
-import coronaManagement.domain.BasicInfo;
+import coronaManagement.domain.Vaccine;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +13,10 @@ import java.time.LocalDateTime;
 @DiscriminatorValue("V")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PersonWhoVaccination extends Person {
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vaccine_id")
+    private Vaccine vaccine;
 
     private int vaccinationCount;
 

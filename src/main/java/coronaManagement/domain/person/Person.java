@@ -1,6 +1,7 @@
 package coronaManagement.domain.person;
 
-import coronaManagement.domain.BasicInfo;
+import coronaManagement.domain.City;
+import coronaManagement.domain.Gender;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,23 @@ public abstract class Person {
     @Column(name = "person_id")
     private Long id;
 
-    @Embedded
-    private BasicInfo basicInfo;
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private City city;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    private int age;
+
+    private int phoneNumber;
+
+    public Person(String name, City city, Gender gender, int age, int phoneNumber) {
+        this.name = name;
+        this.city = city;
+        this.gender = gender;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+    }
 }
