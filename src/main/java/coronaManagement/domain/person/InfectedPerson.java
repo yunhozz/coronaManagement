@@ -43,19 +43,4 @@ public class InfectedPerson extends Person {
         this.virus = virus;
         virus.getInfectedPersonList().add(this);
     }
-
-    @Builder
-    private InfectedPerson(Nation nation, BasicInfo basicInfo, Virus virus, BasicInfo basicInfo1, Address address, int phoneNumber,
-                           String email, LocalDateTime infectedTime, String infectedPlace, PhysicalStatus physicalStatus) {
-
-        super(nation, basicInfo);
-        setVirus(virus);
-        this.basicInfo = basicInfo1;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.infectedTime = infectedTime;
-        this.infectedPlace = infectedPlace;
-        this.physicalStatus = physicalStatus;
-    }
 }

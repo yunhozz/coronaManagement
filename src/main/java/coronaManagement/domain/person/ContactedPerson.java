@@ -2,8 +2,6 @@ package coronaManagement.domain.person;
 
 import coronaManagement.domain.BasicInfo;
 import coronaManagement.domain.InfectionStatus;
-import coronaManagement.domain.Nation;
-import coronaManagement.domain.person.InfectedPerson;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,15 +26,4 @@ public class ContactedPerson extends Person {
 
     @Enumerated(EnumType.STRING)
     private InfectionStatus infectionStatus;
-
-    @Builder
-    private ContactedPerson(Nation nation, BasicInfo basicInfo, InfectedPerson infectedPerson, LocalDateTime contactTime,
-                            String contactPlace, InfectionStatus infectionStatus) {
-
-        super(nation, basicInfo);
-        this.infectedPerson = infectedPerson;
-        this.contactTime = contactTime;
-        this.contactPlace = contactPlace;
-        this.infectionStatus = infectionStatus;
-    }
 }
