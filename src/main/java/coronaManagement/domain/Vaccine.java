@@ -21,5 +21,7 @@ public class Vaccine {
 
     private String name;
 
+    private String developer;
+
     private int stockQuantity;
 }

@@ -19,7 +19,7 @@ public class Virus {
     @Enumerated(EnumType.STRING)
     private VirusType virusType;
 
-    private String initialConfirm;
+    private String initialPoint;
 
     private double infectionRate;
 
