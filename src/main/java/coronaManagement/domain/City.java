@@ -19,5 +19,19 @@ public class City {
     @Column(name = "city_id")
     private Long id;
 
+    private String name;
+
     private int population;
+
+    private int numOfVaccination;
+
+    private int numOfInfection;
+
+    public void addPopulation(int population) {
+
+    }
+
+    public void removePopulation(int population) {
+
+    }
 }

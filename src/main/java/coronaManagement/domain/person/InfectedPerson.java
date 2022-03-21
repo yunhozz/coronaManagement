@@ -20,14 +20,7 @@ public class InfectedPerson extends Person {
     private Virus virus;
 
     @Embedded
-    private BasicInfo basicInfo;
-
-    @Embedded
     private Address address;
-
-    private int phoneNumber;
-
-    private String email;
 
     private LocalDateTime infectedTime;
 
