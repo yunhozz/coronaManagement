@@ -1,6 +1,7 @@
 package coronaManagement.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +22,26 @@ public class Virus {
 
     private String initialPoint;
 
-    private double infectionRate;
+    private int infectionCount;
 
-    private double fatalityRate;
+    private int fatalCount;
+
+    public Virus(VirusType virusType, String initialPoint, int infectionCount, int fatalCount) {
+        this.virusType = virusType;
+        this.initialPoint = initialPoint;
+        this.infectionCount = infectionCount;
+        this.fatalCount = fatalCount;
+    }
+
+    public static Virus createVirus(VirusType virusType, String initialPoint) {
+        return new Virus(virusType, initialPoint, 0, 0);
+    }
+
+    public void addInfectionCount() {
+        infectionCount++;
+    }
+
+    public void addFatalCount() {
+        fatalCount++;
+    }
 }
