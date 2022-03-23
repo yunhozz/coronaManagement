@@ -31,8 +31,8 @@ public class PersonWhoVaccination extends Person {
 
         super(name, city, gender, age, phoneNumber);
         this.vaccine = vaccine;
-        this.vaccinationCount = 1;
-        this.vaccinationDate = LocalDateTime.now();
+        this.vaccinationCount = vaccinationCount;
+        this.vaccinationDate = vaccinationDate;
 
         vaccine.removeQuantity();
     }

@@ -28,12 +28,14 @@ public class InfectedPerson extends Person {
     private PhysicalStatus physicalStatus;
 
     @Builder
-    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, Address infectedAddress) {
+    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, LocalDateTime infectedTime,
+                          Address infectedAddress, PhysicalStatus physicalStatus) {
+
         super(name, city, gender, age, phoneNumber);
         this.virus = virus;
+        this.infectedTime = infectedTime;
         this.infectedAddress = infectedAddress;
-        this.infectedTime = LocalDateTime.now();
-        this.physicalStatus = PhysicalStatus.ISOLATED;
+        this.physicalStatus = physicalStatus;
     }
 
     public void getRecovered() {

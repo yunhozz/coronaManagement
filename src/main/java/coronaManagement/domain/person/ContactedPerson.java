@@ -1,8 +1,11 @@
 package coronaManagement.domain.person;
 
+import coronaManagement.domain.City;
+import coronaManagement.domain.Gender;
 import coronaManagement.domain.InfectionStatus;
 import coronaManagement.domain.RouteInformation;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +28,13 @@ public class ContactedPerson extends Person {
 
     @Enumerated(EnumType.STRING)
     private InfectionStatus infectionStatus;
+
+    @Builder
+    private ContactedPerson(String name, City city, Gender gender, int age, int phoneNumber, RouteInformation routeInformation,
+                           InfectionStatus infectionStatus) {
+
+        super(name, city, gender, age, phoneNumber);
+        this.routeInformation = routeInformation;
+        this.infectionStatus = infectionStatus;
+    }
 }
