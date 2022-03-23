@@ -26,7 +26,7 @@ public class Virus {
 
     private int fatalCount;
 
-    public Virus(VirusType virusType, String initialPoint, int infectionCount, int fatalCount) {
+    private Virus(VirusType virusType, String initialPoint, int infectionCount, int fatalCount) {
         this.virusType = virusType;
         this.initialPoint = initialPoint;
         this.infectionCount = infectionCount;
