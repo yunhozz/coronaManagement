@@ -1,7 +1,10 @@
 package coronaManagement.domain.person;
 
+import coronaManagement.domain.City;
+import coronaManagement.domain.Gender;
 import coronaManagement.domain.Vaccine;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,4 +24,16 @@ public class PersonWhoVaccination extends Person {
     private int vaccinationCount;
 
     private LocalDateTime vaccinationDate;
+
+    @Builder
+    private PersonWhoVaccination(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine,
+                                int vaccinationCount, LocalDateTime vaccinationDate) {
+
+        super(name, city, gender, age, phoneNumber);
+        this.vaccine = vaccine;
+        this.vaccinationCount = 1;
+        this.vaccinationDate = LocalDateTime.now();
+
+        vaccine.removeQuantity();
+    }
 }

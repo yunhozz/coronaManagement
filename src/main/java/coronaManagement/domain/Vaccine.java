@@ -35,17 +35,17 @@ public class Vaccine {
         return new Vaccine(name, developer, stockQuantity);
     }
 
-    public void addQuantity(int stockQuantity) {
-        this.stockQuantity += stockQuantity;
+    public void addQuantity() {
+        stockQuantity++;
     }
 
-    public void removeQuantity(int stockQuantity) {
-        int remainQuantity = this.stockQuantity - stockQuantity;
+    public void removeQuantity() {
+        int remainQuantity = stockQuantity - 1;
 
         if (remainQuantity < 0) {
             throw new IllegalStateException("not enough stock quantity.");
         }
 
-        this.stockQuantity = remainQuantity;
+        stockQuantity = remainQuantity;
     }
 }
