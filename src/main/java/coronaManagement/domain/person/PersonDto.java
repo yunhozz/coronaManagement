@@ -16,17 +16,20 @@ public class PersonDto {
     private int age;
     private int phoneNumber;
 
+    //infectedPerson
     private Virus virus;
     private Address infectedAddress;
 
+    //contactedPerson
     private RouteInformation routeInformation;
     private LocalDateTime contactDate;
 
+    //personWhoVaccination
     private Vaccine vaccine;
     private int vaccinationCount;
     private LocalDateTime vaccinationDate;
 
-    public InfectedPerson infectedPersonToEntity() {
+    public Person infectedPersonToEntity() {
         return InfectedPerson.builder()
                 .name(name)
                 .city(city)
@@ -39,7 +42,7 @@ public class PersonDto {
                 .build();
     }
 
-    public ContactedPerson contactedPersonToEntity() {
+    public Person contactedPersonToEntity() {
         return ContactedPerson.builder()
                 .name(name)
                 .city(city)
@@ -52,7 +55,7 @@ public class PersonDto {
                 .build();
     }
 
-    public PersonWhoVaccination personWhoVaccinationToEntity() {
+    public Person personWhoVaccinationToEntity() {
         return PersonWhoVaccination.builder()
                 .name(name)
                 .city(city)
@@ -65,7 +68,7 @@ public class PersonDto {
                 .build();
     }
 
-    public PersonBeforeVaccination personBeforeVaccinationToEntity() {
+    public Person personBeforeVaccinationToEntity() {
         return PersonBeforeVaccination.builder()
                 .name(name)
                 .city(city)
