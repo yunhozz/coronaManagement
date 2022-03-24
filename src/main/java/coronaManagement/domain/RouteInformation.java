@@ -2,6 +2,7 @@ package coronaManagement.domain;
 
 import coronaManagement.domain.person.InfectedPerson;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,4 +31,13 @@ public class RouteInformation {
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
+
+    @Builder
+    private RouteInformation(InfectedPerson infectedPerson, Address address, boolean isCCTV, LocalDateTime startTime, LocalDateTime endTime) {
+        this.infectedPerson = infectedPerson;
+        this.address = address;
+        this.isCCTV = isCCTV;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }
