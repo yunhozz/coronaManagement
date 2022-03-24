@@ -26,15 +26,38 @@ public class Hospital {
 
     private int numberOfBed;
 
-    public void treatPatient() {
-
+    public Hospital(String name, int numberOfBed) {
+        this.name = name;
+        this.numberOfBed = numberOfBed;
     }
 
-    public void addNumberOfBed() {
+    public void completeTreatment(InfectedPerson... infectedPeople) {
+        for (InfectedPerson infectedPerson : infectedPeople) {
+            infectedPerson.recovered();
+        }
 
+        addNumberOfBed(infectedPeople.length);
     }
 
-    public void removeNumberOfBed() {
+    public void failTreatment(InfectedPerson... infectedPeople) {
+        for (InfectedPerson infectedPerson : infectedPeople) {
+            infectedPerson.passedAway();
+        }
 
+        addNumberOfBed(infectedPeople.length);
+    }
+
+    public void addNumberOfBed(int numberOfBed) {
+        this.numberOfBed += numberOfBed;
+    }
+
+    public void removeNumberOfBed(int numberOfBed) {
+        int remainBed = this.numberOfBed - numberOfBed;
+
+        if (remainBed < 0) {
+            throw new IllegalStateException("Not enough number of bed.");
+        }
+
+        this.numberOfBed = remainBed;
     }
 }
