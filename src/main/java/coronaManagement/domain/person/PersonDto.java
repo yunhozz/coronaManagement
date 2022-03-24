@@ -17,6 +17,7 @@ public class PersonDto {
     private int phoneNumber;
 
     private Virus virus;
+    private Hospital hospital;
     private Address infectedAddress;
 
     private RouteInformation routeInformation;
@@ -34,6 +35,7 @@ public class PersonDto {
                 .age(age)
                 .phoneNumber(phoneNumber)
                 .virus(virus)
+                .hospital(hospital)
                 .infectedTime(LocalDateTime.now())
                 .infectedAddress(infectedAddress)
                 .physicalStatus(PhysicalStatus.ISOLATED)

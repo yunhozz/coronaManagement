@@ -19,6 +19,10 @@ public class InfectedPerson extends Person {
     @JoinColumn(name = "virus_id")
     private Virus virus;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital;
+
     private LocalDateTime infectedTime;
 
     @Embedded
@@ -28,11 +32,12 @@ public class InfectedPerson extends Person {
     private PhysicalStatus physicalStatus;
 
     @Builder
-    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, LocalDateTime infectedTime,
-                          Address infectedAddress, PhysicalStatus physicalStatus) {
+    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, Hospital hospital,
+                          LocalDateTime infectedTime, Address infectedAddress, PhysicalStatus physicalStatus) {
 
         super(name, city, gender, age, phoneNumber);
         this.virus = virus;
+        this.hospital = hospital;
         this.infectedTime = infectedTime;
         this.infectedAddress = infectedAddress;
         this.physicalStatus = physicalStatus;

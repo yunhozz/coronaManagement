@@ -27,7 +27,7 @@ public class RouteInformation {
 
     private boolean isCCTV;
 
-    private LocalDateTime startedTime;
+    private LocalDateTime startTime;
 
     private LocalDateTime endTime;
 }
