@@ -51,7 +51,6 @@ public class InfectedPerson extends Person {
     public void beHospitalized() {
         if (physicalStatus == PhysicalStatus.INFECTED) {
             setPhysicalStatus(PhysicalStatus.ISOLATED);
-            hospital.removeNumberOfBed(1);
 
         } else {
             throw new IllegalStateException("You can't be hospitalized.");

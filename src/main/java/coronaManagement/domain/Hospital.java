@@ -31,6 +31,14 @@ public class Hospital {
         this.numberOfBed = numberOfBed;
     }
 
+    public void hospitalize(InfectedPerson... infectedPeople) {
+        for (InfectedPerson infectedPerson : infectedPeople) {
+            infectedPerson.beHospitalized();
+        }
+
+        removeNumberOfBed(infectedPeople.length);
+    }
+
     public void completeTreatment(InfectedPerson... infectedPeople) {
         for (InfectedPerson infectedPerson : infectedPeople) {
             infectedPerson.recovered();
