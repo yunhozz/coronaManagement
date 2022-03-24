@@ -38,7 +38,7 @@ public class PersonDto {
                 .phoneNumber(phoneNumber)
                 .virus(virus)
                 .infectedTime(LocalDateTime.now())
-                .physicalStatus(PhysicalStatus.ISOLATED)
+                .physicalStatus(PhysicalStatus.INFECTED)
                 .build();
     }
 

@@ -44,4 +44,12 @@ public class Virus {
     public void addFatalCount() {
         fatalCount++;
     }
+
+    public double getInfectionRate(int number) {
+        return (double) infectionCount / number * 100;
+    }
+
+    public double getFatalityRate(int number) {
+        return (double) fatalCount / number * 100;
+    }
 }

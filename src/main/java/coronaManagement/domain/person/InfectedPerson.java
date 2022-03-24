@@ -42,6 +42,8 @@ public class InfectedPerson extends Person {
         this.virus = virus;
         this.infectedTime = infectedTime;
         this.physicalStatus = physicalStatus;
+
+        virus.addInfectionCount();
     }
 
     public void beHospitalized(Hospital hospital) {
