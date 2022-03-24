@@ -17,11 +17,10 @@ public class PersonDto {
     private int phoneNumber;
 
     private Virus virus;
-    private Hospital hospital;
     private Address infectedAddress;
 
     private RouteInformation routeInformation;
-    private InfectionStatus infectionStatus;
+    private LocalDateTime contactDate;
 
     private Vaccine vaccine;
     private int vaccinationCount;
@@ -48,7 +47,8 @@ public class PersonDto {
                 .age(age)
                 .phoneNumber(phoneNumber)
                 .routeInformation(routeInformation)
-                .infectionStatus(infectionStatus)
+                .contactDate(contactDate)
+                .infectionStatus(InfectionStatus.BEFORE_INFECT)
                 .build();
     }
 

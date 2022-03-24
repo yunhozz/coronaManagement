@@ -11,6 +11,4 @@ import java.util.List;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-    @Query("select p from Person p where :date - p.vaccinationDate > 180")
-    List<PersonWhoVaccination> findVaccinationAgain(@Param("date") LocalDateTime localDateTime);
 }

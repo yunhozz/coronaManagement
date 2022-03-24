@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,15 +27,30 @@ public class ContactedPerson extends Person {
     @JoinColumn(name = "route_information_id")
     private RouteInformation routeInformation;
 
+    private LocalDateTime contactDate;
+
     @Enumerated(EnumType.STRING)
     private InfectionStatus infectionStatus;
 
     @Builder
     private ContactedPerson(String name, City city, Gender gender, int age, int phoneNumber, RouteInformation routeInformation,
-                           InfectionStatus infectionStatus) {
+                           LocalDateTime contactDate, InfectionStatus infectionStatus) {
 
         super(name, city, gender, age, phoneNumber);
         this.routeInformation = routeInformation;
+        this.contactDate = contactDate;
+        this.infectionStatus = infectionStatus;
+    }
+
+    public void getInfected() {
+        if (infectionStatus == InfectionStatus.INFECTED) {
+            throw new IllegalStateException("This person is already infected.");
+        }
+
+        setInfectionStatus(InfectionStatus.INFECTED);
+    }
+
+    private void setInfectionStatus(InfectionStatus infectionStatus) {
         this.infectionStatus = infectionStatus;
     }
 }
