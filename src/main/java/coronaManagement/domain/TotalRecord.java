@@ -31,15 +31,15 @@ public class TotalRecord {
         this.totalVaccination = totalVaccination;
     }
 
-    public void addInfection() {
-
+    public void addInfection(int eachInfection) {
+        totalInfection += eachInfection;
     }
 
-    public void addDeath() {
-
+    public void addDeath(int eachDeath) {
+        totalDeath += eachDeath;
     }
 
-    public void addVaccination() {
-
+    public void addVaccination(int eachVaccination) {
+        totalVaccination += eachVaccination;
     }
 }
