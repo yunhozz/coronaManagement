@@ -25,9 +25,6 @@ public class InfectedPerson extends Person {
 
     private LocalDateTime infectedTime;
 
-    @Embedded
-    private Address infectedAddress;
-
     @Enumerated(EnumType.STRING)
     private PhysicalStatus physicalStatus;
 
@@ -37,13 +34,12 @@ public class InfectedPerson extends Person {
     }
 
     @Builder
-    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, LocalDateTime infectedTime,
-                           Address infectedAddress, PhysicalStatus physicalStatus) {
+    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus,
+                           LocalDateTime infectedTime, PhysicalStatus physicalStatus) {
 
         super(name, city, gender, age, phoneNumber);
         this.virus = virus;
         this.infectedTime = infectedTime;
-        this.infectedAddress = infectedAddress;
         this.physicalStatus = physicalStatus;
     }
 
