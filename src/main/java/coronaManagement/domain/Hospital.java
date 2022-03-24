@@ -1,14 +1,13 @@
 package coronaManagement.domain;
 
+import coronaManagement.domain.person.InfectedPerson;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.LocalDateTime;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,9 +19,22 @@ public class Hospital {
     @Column(name = "hospital_id")
     private Long id;
 
+    @OneToMany(mappedBy = "hospital")
+    private List<InfectedPerson> infectedPersonList = new ArrayList<>();
+
     private String name;
 
     private int numberOfBed;
 
-    private LocalDateTime hospitalizationDate;
+    public void treatPatient() {
+
+    }
+
+    public void addNumberOfBed() {
+
+    }
+
+    public void removeNumberOfBed() {
+
+    }
 }

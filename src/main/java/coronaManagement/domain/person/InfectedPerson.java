@@ -31,16 +31,31 @@ public class InfectedPerson extends Person {
     @Enumerated(EnumType.STRING)
     private PhysicalStatus physicalStatus;
 
+    private void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+        hospital.getInfectedPersonList().add(this);
+    }
+
     @Builder
     private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, Hospital hospital,
                           LocalDateTime infectedTime, Address infectedAddress, PhysicalStatus physicalStatus) {
 
         super(name, city, gender, age, phoneNumber);
         this.virus = virus;
-        this.hospital = hospital;
+        setHospital(hospital);
         this.infectedTime = infectedTime;
         this.infectedAddress = infectedAddress;
         this.physicalStatus = physicalStatus;
+    }
+
+    public void beHospitalized() {
+        if (physicalStatus == PhysicalStatus.INFECTED) {
+            setPhysicalStatus(PhysicalStatus.ISOLATED);
+            hospital.removeNumberOfBed();
+
+        } else {
+            throw new IllegalStateException("You can't be hospitalized.");
+        }
     }
 
     public void getRecovered() {

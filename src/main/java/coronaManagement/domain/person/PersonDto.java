@@ -38,7 +38,7 @@ public class PersonDto {
                 .hospital(hospital)
                 .infectedTime(LocalDateTime.now())
                 .infectedAddress(infectedAddress)
-                .physicalStatus(PhysicalStatus.ISOLATED)
+                .physicalStatus(PhysicalStatus.INFECTED)
                 .build();
     }
 

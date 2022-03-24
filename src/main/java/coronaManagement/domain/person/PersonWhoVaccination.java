@@ -34,6 +34,6 @@ public class PersonWhoVaccination extends Person {
         this.vaccinationCount = vaccinationCount;
         this.vaccinationDate = vaccinationDate;
 
-        vaccine.removeQuantity();
+        vaccine.removeQuantity(1);
     }
 }
