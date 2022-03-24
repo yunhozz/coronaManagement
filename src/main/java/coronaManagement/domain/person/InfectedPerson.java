@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class InfectedPerson extends Person {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
+    @Nullable
     private Hospital hospital;
 
     private LocalDateTime infectedTime;
@@ -37,19 +39,19 @@ public class InfectedPerson extends Person {
     }
 
     @Builder
-    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, Hospital hospital,
-                          LocalDateTime infectedTime, Address infectedAddress, PhysicalStatus physicalStatus) {
+    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, LocalDateTime infectedTime,
+                           Address infectedAddress, PhysicalStatus physicalStatus) {
 
         super(name, city, gender, age, phoneNumber);
         this.virus = virus;
-        setHospital(hospital);
         this.infectedTime = infectedTime;
         this.infectedAddress = infectedAddress;
         this.physicalStatus = physicalStatus;
     }
 
-    public void beHospitalized() {
+    public void beHospitalized(Hospital hospital) {
         if (physicalStatus == PhysicalStatus.INFECTED) {
+            setHospital(hospital);
             setPhysicalStatus(PhysicalStatus.ISOLATED);
 
         } else {

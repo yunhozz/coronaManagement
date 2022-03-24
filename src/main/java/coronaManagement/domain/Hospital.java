@@ -34,7 +34,7 @@ public class Hospital {
     //입원 처리
     public void hospitalize(InfectedPerson... infectedPeople) {
         for (InfectedPerson infectedPerson : infectedPeople) {
-            infectedPerson.beHospitalized();
+            infectedPerson.beHospitalized(this);
         }
 
         removeNumberOfBed(infectedPeople.length);
