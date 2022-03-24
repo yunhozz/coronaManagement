@@ -31,6 +31,7 @@ public class Hospital {
         this.numberOfBed = numberOfBed;
     }
 
+    //입원 처리
     public void hospitalize(InfectedPerson... infectedPeople) {
         for (InfectedPerson infectedPerson : infectedPeople) {
             infectedPerson.beHospitalized();
@@ -39,6 +40,7 @@ public class Hospital {
         removeNumberOfBed(infectedPeople.length);
     }
 
+    //치료 완료
     public void completeTreatment(InfectedPerson... infectedPeople) {
         for (InfectedPerson infectedPerson : infectedPeople) {
             infectedPerson.recovered();
@@ -47,6 +49,7 @@ public class Hospital {
         addNumberOfBed(infectedPeople.length);
     }
 
+    //치료 실패
     public void failTreatment(InfectedPerson... infectedPeople) {
         for (InfectedPerson infectedPerson : infectedPeople) {
             infectedPerson.passedAway();
@@ -60,12 +63,10 @@ public class Hospital {
     }
 
     public void removeNumberOfBed(int numberOfBed) {
-        int remainBed = this.numberOfBed - numberOfBed;
-
-        if (remainBed < 0) {
+        if (this.numberOfBed - numberOfBed < 0) {
             throw new IllegalStateException("Not enough number of bed.");
         }
 
-        this.numberOfBed = remainBed;
+        this.numberOfBed -= numberOfBed;
     }
 }
