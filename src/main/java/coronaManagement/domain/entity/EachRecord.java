@@ -1,9 +1,6 @@
-package coronaManagement.domain;
+package coronaManagement.domain.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,7 +15,7 @@ public class EachRecord {
     @Column(name = "each_record_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "total_record_id")
     private TotalRecord totalRecord;
 

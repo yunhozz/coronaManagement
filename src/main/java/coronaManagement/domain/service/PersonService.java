@@ -1,6 +1,6 @@
-package coronaManagement.service;
+package coronaManagement.domain.service;
 
-import coronaManagement.repo.PersonRepository;
+import coronaManagement.domain.repo.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

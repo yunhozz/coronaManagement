@@ -1,4 +1,4 @@
-package coronaManagement.domain;
+package coronaManagement.domain.entity;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
-package coronaManagement.domain;
+package coronaManagement.domain.entity;
 
-import coronaManagement.domain.person.InfectedPerson;
+import coronaManagement.domain.entity.person.InfectedPerson;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

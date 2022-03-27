@@ -1,5 +1,6 @@
-package coronaManagement.domain;
+package coronaManagement.domain.entity;
 
+import coronaManagement.domain.enums.City;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

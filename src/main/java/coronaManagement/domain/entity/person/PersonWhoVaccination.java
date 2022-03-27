@@ -1,8 +1,8 @@
-package coronaManagement.domain.person;
+package coronaManagement.domain.entity.person;
 
-import coronaManagement.domain.City;
-import coronaManagement.domain.Gender;
-import coronaManagement.domain.Vaccine;
+import coronaManagement.domain.enums.City;
+import coronaManagement.domain.enums.Gender;
+import coronaManagement.domain.entity.Vaccine;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
