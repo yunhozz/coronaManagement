@@ -11,17 +11,18 @@ import coronaManagement.domain.enums.PhysicalStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 public class RequestPersonDto {
 
-    private String name;
-    private City city;
-    private Gender gender;
-    private int age;
-    private int phoneNumber;
+    @NotEmpty private String name;
+    @NotEmpty private City city;
+    @NotEmpty private Gender gender;
+    @NotEmpty private int age;
+    @NotEmpty private int phoneNumber;
 
     //infectedPerson
     private Virus virus;
