@@ -40,10 +40,6 @@ public class PersonWhoVaccination extends Person {
     public void reVaccination() {
         vaccine.removeQuantity(1);
         vaccinationCount++;
-        setVaccinationDate(LocalDateTime.now());
-    }
-
-    private void setVaccinationDate(LocalDateTime vaccinationDate) {
-        this.vaccinationDate = vaccinationDate;
+        this.vaccinationDate = LocalDateTime.now();
     }
 }

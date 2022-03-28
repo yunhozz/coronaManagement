@@ -53,7 +53,7 @@ public class InfectedPerson extends Person {
     public void beHospitalized(Hospital hospital) {
         if (physicalStatus == PhysicalStatus.INFECTED) {
             setHospital(hospital);
-            setPhysicalStatus(PhysicalStatus.ISOLATED);
+            this.physicalStatus = PhysicalStatus.ISOLATED;
 
         } else {
             throw new IllegalStateException("You can't be hospitalized.");
@@ -62,7 +62,7 @@ public class InfectedPerson extends Person {
 
     public void recovered() {
         if (physicalStatus == PhysicalStatus.ISOLATED) {
-            setPhysicalStatus(PhysicalStatus.RECOVERED);
+            this.physicalStatus = PhysicalStatus.RECOVERED;
 
         } else {
             throw new IllegalStateException("This people is already recovered or dead.");
@@ -74,11 +74,7 @@ public class InfectedPerson extends Person {
             throw new IllegalStateException("This people is already dead.");
         }
 
-        setPhysicalStatus(PhysicalStatus.DEAD);
+        this.physicalStatus = PhysicalStatus.DEAD;
         virus.addFatalCount();
-    }
-
-    private void setPhysicalStatus(PhysicalStatus physicalStatus) {
-        this.physicalStatus = physicalStatus;
     }
 }
