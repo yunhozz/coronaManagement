@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-public class PersonDto {
+public class RequestPersonDto {
 
     private String name;
     private City city;
