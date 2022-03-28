@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static coronaManagement.domain.enums.PhysicalStatus.*;
+
 @Entity
 @Getter
 @DiscriminatorValue("I")
@@ -51,9 +53,9 @@ public class InfectedPerson extends Person {
     }
 
     public void beHospitalized(Hospital hospital) {
-        if (physicalStatus == PhysicalStatus.INFECTED) {
+        if (physicalStatus == INFECTED) {
             setHospital(hospital);
-            this.physicalStatus = PhysicalStatus.ISOLATED;
+            this.physicalStatus = ISOLATED;
 
         } else {
             throw new IllegalStateException("You can't be hospitalized.");
@@ -61,8 +63,8 @@ public class InfectedPerson extends Person {
     }
 
     public void recovered() {
-        if (physicalStatus == PhysicalStatus.ISOLATED) {
-            this.physicalStatus = PhysicalStatus.RECOVERED;
+        if (physicalStatus == ISOLATED) {
+            this.physicalStatus = RECOVERED;
 
         } else {
             throw new IllegalStateException("This people is already recovered or dead.");
@@ -70,11 +72,11 @@ public class InfectedPerson extends Person {
     }
 
     public void passedAway() {
-        if (physicalStatus == PhysicalStatus.DEAD) {
+        if (physicalStatus == DEAD) {
             throw new IllegalStateException("This people is already dead.");
         }
 
-        this.physicalStatus = PhysicalStatus.DEAD;
+        this.physicalStatus = DEAD;
         virus.addFatalCount();
     }
 }
