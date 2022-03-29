@@ -1,6 +1,7 @@
 package coronaManagement.domain.person;
 
 import coronaManagement.domain.hospital.Hospital;
+import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.virus.Virus;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
@@ -29,6 +30,10 @@ public class InfectedPerson extends Person {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "each_record_id")
+    private EachRecord eachRecord;
 
     private LocalDateTime infectedTime;
 

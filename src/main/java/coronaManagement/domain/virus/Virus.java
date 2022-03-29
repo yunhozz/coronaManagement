@@ -21,9 +21,7 @@ public class Virus {
     private VirusType virusType;
 
     private String initialPoint;
-
     private int infectionCount;
-
     private int fatalCount;
 
     private Virus(VirusType virusType, String initialPoint, int infectionCount, int fatalCount) {

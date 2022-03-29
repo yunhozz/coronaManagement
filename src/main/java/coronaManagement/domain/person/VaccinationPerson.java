@@ -1,5 +1,6 @@
 package coronaManagement.domain.person;
 
+import coronaManagement.domain.record.EachRecord;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import coronaManagement.domain.vaccine.Vaccine;
@@ -21,8 +22,11 @@ public class VaccinationPerson extends Person {
     @JoinColumn(name = "vaccine_id")
     private Vaccine vaccine;
 
-    private int vaccinationCount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "each_record_id")
+    private EachRecord eachRecord;
 
+    private int vaccinationCount;
     private LocalDateTime vaccinationDate;
 
     @Builder
