@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static coronaManagement.global.enums.InfectionStatus.*;
+
 @Entity
 @Getter
 @DiscriminatorValue("C")
@@ -43,14 +45,10 @@ public class ContactedPerson extends Person {
     }
 
     public void getInfected() {
-        if (infectionStatus == InfectionStatus.INFECTED) {
+        if (infectionStatus == INFECTED) {
             throw new IllegalStateException("This person is already infected.");
         }
 
-        setInfectionStatus(InfectionStatus.INFECTED);
-    }
-
-    private void setInfectionStatus(InfectionStatus infectionStatus) {
-        this.infectionStatus = infectionStatus;
+        this.infectionStatus = INFECTED;
     }
 }
