@@ -39,7 +39,7 @@ public class Hospital {
             }
         }
 
-        this.removeNumberOfBed(infectedPeople.length);
+        removeNumberOfBed(infectedPeople.length);
     }
 
     //치료 완료
@@ -48,7 +48,7 @@ public class Hospital {
             infectedPerson.recovered();
         }
 
-        this.addNumberOfBed(infectedPeople.length);
+        addNumberOfBed(infectedPeople.length);
     }
 
     //치료 실패
@@ -57,7 +57,7 @@ public class Hospital {
             infectedPerson.passedAway();
         }
 
-        this.addNumberOfBed(infectedPeople.length);
+        addNumberOfBed(infectedPeople.length);
     }
 
     public void addNumberOfBed(int numberOfBed) {
