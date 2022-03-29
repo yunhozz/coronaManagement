@@ -1,6 +1,6 @@
 package coronaManagement.global.dto;
 
-import coronaManagement.domain.enums.City;
+import coronaManagement.global.enums.City;
 import coronaManagement.domain.person.InfectedPerson;
 import coronaManagement.domain.routeInformation.Address;
 import coronaManagement.domain.routeInformation.RouteInformation;

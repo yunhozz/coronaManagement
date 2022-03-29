@@ -2,9 +2,9 @@ package coronaManagement.domain.person;
 
 import coronaManagement.domain.hospital.Hospital;
 import coronaManagement.domain.virus.Virus;
-import coronaManagement.domain.enums.City;
-import coronaManagement.domain.enums.Gender;
-import coronaManagement.domain.enums.PhysicalStatus;
+import coronaManagement.global.enums.City;
+import coronaManagement.global.enums.Gender;
+import coronaManagement.global.enums.PhysicalStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-import static coronaManagement.domain.enums.PhysicalStatus.*;
+import static coronaManagement.global.enums.PhysicalStatus.*;
 
 @Entity
 @Getter

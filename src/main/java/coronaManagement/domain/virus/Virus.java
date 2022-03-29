@@ -1,6 +1,6 @@
 package coronaManagement.domain.virus;
 
-import coronaManagement.domain.enums.VirusType;
+import coronaManagement.global.enums.VirusType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

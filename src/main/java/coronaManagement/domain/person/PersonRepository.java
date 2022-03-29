@@ -1,4 +1,4 @@
-package coronaManagement.domain.person.repo;
+package coronaManagement.domain.person;
 
 import coronaManagement.domain.person.Person;
 import org.springframework.data.jpa.repository.JpaRepository;

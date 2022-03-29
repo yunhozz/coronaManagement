@@ -1,6 +1,6 @@
-package coronaManagement.domain.person.controller;
+package coronaManagement.domain.person;
 
-import coronaManagement.domain.person.service.PersonService;
+import coronaManagement.domain.person.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 

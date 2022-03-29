@@ -1,6 +1,6 @@
 package coronaManagement.domain.routeInformation;
 
-import coronaManagement.domain.enums.City;
+import coronaManagement.global.enums.City;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

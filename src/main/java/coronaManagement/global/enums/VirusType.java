@@ -1,4 +1,4 @@
-package coronaManagement.domain.enums;
+package coronaManagement.global.enums;
 
 public enum VirusType {
     ALPHA, BETA, GAMMA, DELTA, OMICRON
