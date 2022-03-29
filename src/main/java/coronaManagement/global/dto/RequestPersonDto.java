@@ -1,5 +1,6 @@
 package coronaManagement.global.dto;
 
+import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.routeInformation.Address;
 import coronaManagement.domain.routeInformation.RouteInformation;
 import coronaManagement.domain.vaccine.Vaccine;
@@ -25,6 +26,8 @@ public class RequestPersonDto {
     @NotEmpty private int age;
     @NotEmpty private int phoneNumber;
 
+    private EachRecord eachRecord;
+
     //infectedPerson
     private Virus virus;
     private Address infectedAddress;
@@ -46,6 +49,7 @@ public class RequestPersonDto {
                 .age(age)
                 .phoneNumber(phoneNumber)
                 .virus(virus)
+                .eachRecord(eachRecord)
                 .infectedTime(LocalDateTime.now())
                 .physicalStatus(PhysicalStatus.INFECTED)
                 .build();
@@ -72,6 +76,7 @@ public class RequestPersonDto {
                 .age(age)
                 .phoneNumber(phoneNumber)
                 .vaccine(vaccine)
+                .eachRecord(eachRecord)
                 .vaccinationCount(1)
                 .vaccinationDate(LocalDateTime.now())
                 .build();
