@@ -41,11 +41,12 @@ public class InfectedPerson extends Person {
     private PhysicalStatus physicalStatus;
 
     @Builder
-    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus,
+    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, EachRecord eachRecord,
                            LocalDateTime infectedTime, PhysicalStatus physicalStatus) {
 
         super(name, city, gender, age, phoneNumber);
         this.virus = virus;
+        this.eachRecord = eachRecord;
         this.infectedTime = infectedTime;
         this.physicalStatus = physicalStatus;
 

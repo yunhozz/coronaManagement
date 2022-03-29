@@ -30,11 +30,12 @@ public class VaccinationPerson extends Person {
     private LocalDateTime vaccinationDate;
 
     @Builder
-    private VaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine,
+    private VaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine, EachRecord eachRecord,
                               int vaccinationCount, LocalDateTime vaccinationDate) {
 
         super(name, city, gender, age, phoneNumber);
         this.vaccine = vaccine;
+        this.eachRecord = eachRecord;
         this.vaccinationCount = vaccinationCount;
         this.vaccinationDate = vaccinationDate;
 

@@ -64,7 +64,7 @@ public class RequestPersonDto {
                 .build();
     }
 
-    public Person personWhoVaccinationToEntity() {
+    public Person vaccinationPersonToEntity() {
         return VaccinationPerson.builder()
                 .name(name)
                 .city(city)
@@ -77,7 +77,7 @@ public class RequestPersonDto {
                 .build();
     }
 
-    public Person personBeforeVaccinationToEntity() {
+    public Person notVaccinationPersonToEntity() {
         return NotVaccinationPerson.builder()
                 .name(name)
                 .city(city)

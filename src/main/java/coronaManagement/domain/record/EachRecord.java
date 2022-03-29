@@ -20,11 +20,8 @@ public class EachRecord {
     private TotalRecord totalRecord;
 
     private LocalDate recordDate;
-
     private int todayInfection;
-
     private int todayDeath;
-
     private int todayVaccination;
 
     @Builder
