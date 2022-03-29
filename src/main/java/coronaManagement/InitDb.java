@@ -34,8 +34,9 @@ public class InitDb {
 
         public void dbInit() {
             Virus virus = Virus.createVirus(VirusType.ALPHA, "China");
-            RequestPersonDto requestPersonDto = createInfectedPerson(virus);
+            em.persist(virus);
 
+            RequestPersonDto requestPersonDto = createInfectedPerson(virus);
             Person infectedPerson = requestPersonDto.infectedPersonToEntity();
             em.persist(infectedPerson);
         }
