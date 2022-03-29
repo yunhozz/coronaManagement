@@ -34,7 +34,13 @@ public class InitDb {
 
         public void dbInit() {
             Virus virus = Virus.createVirus(VirusType.ALPHA, "China");
+            RequestPersonDto requestPersonDto = createInfectedPerson(virus);
 
+            Person infectedPerson = requestPersonDto.infectedPersonToEntity();
+            em.persist(infectedPerson);
+        }
+
+        private RequestPersonDto createInfectedPerson(Virus virus) {
             RequestPersonDto requestPersonDto = new RequestPersonDto();
             requestPersonDto.setName("yunho");
             requestPersonDto.setCity(City.SEOUL);
@@ -44,8 +50,7 @@ public class InitDb {
             requestPersonDto.setVirus(virus);
             requestPersonDto.setInfectedAddress(new Address(City.BUSAN, "Seomyun", "HaeWoonDae", "123"));
 
-            Person infectedPerson = requestPersonDto.infectedPersonToEntity();
-            em.persist(infectedPerson);
+            return requestPersonDto;
         }
     }
 }
