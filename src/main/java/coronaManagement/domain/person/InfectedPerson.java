@@ -38,7 +38,7 @@ public class InfectedPerson extends Person {
     private LocalDateTime infectedTime;
 
     @Enumerated(EnumType.STRING)
-    private PhysicalStatus physicalStatus;
+    private PhysicalStatus physicalStatus; //INFECTED, RECOVERED, ISOLATED, DEAD
 
     @Builder
     private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, EachRecord eachRecord,

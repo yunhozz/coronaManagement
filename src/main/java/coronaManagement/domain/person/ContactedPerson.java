@@ -32,7 +32,7 @@ public class ContactedPerson extends Person {
     private LocalDateTime contactDate;
 
     @Enumerated(EnumType.STRING)
-    private InfectionStatus infectionStatus;
+    private InfectionStatus infectionStatus; //BEFORE_INFECT, INFECTED
 
     @Builder
     private ContactedPerson(String name, City city, Gender gender, int age, int phoneNumber, RouteInformation routeInformation,
