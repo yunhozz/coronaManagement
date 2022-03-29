@@ -1,7 +1,9 @@
-package coronaManagement.domain.entity;
+package coronaManagement.global.dto;
 
 import coronaManagement.domain.enums.City;
-import coronaManagement.domain.entity.person.InfectedPerson;
+import coronaManagement.domain.person.InfectedPerson;
+import coronaManagement.domain.routeInformation.Address;
+import coronaManagement.domain.routeInformation.RouteInformation;
 import lombok.Data;
 
 import java.time.LocalDateTime;

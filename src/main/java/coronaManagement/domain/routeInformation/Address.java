@@ -1,4 +1,4 @@
-package coronaManagement.domain.entity;
+package coronaManagement.domain.routeInformation;
 
 import coronaManagement.domain.enums.City;
 import lombok.AccessLevel;

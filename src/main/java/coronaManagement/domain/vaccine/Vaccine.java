@@ -1,4 +1,4 @@
-package coronaManagement.domain.entity;
+package coronaManagement.domain.vaccine;
 
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -1,5 +1,7 @@
-package coronaManagement.domain.entity;
+package coronaManagement.global.dto;
 
+import coronaManagement.domain.record.EachRecord;
+import coronaManagement.domain.record.TotalRecord;
 import lombok.Data;
 
 import java.time.LocalDate;

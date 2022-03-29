@@ -1,4 +1,4 @@
-package coronaManagement.domain.entity.person;
+package coronaManagement.domain.person;
 
 import coronaManagement.domain.enums.City;
 import coronaManagement.domain.enums.Gender;

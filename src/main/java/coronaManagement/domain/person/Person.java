@@ -1,4 +1,4 @@
-package coronaManagement.domain.entity.person;
+package coronaManagement.domain.person;
 
 import coronaManagement.domain.enums.City;
 import coronaManagement.domain.enums.Gender;
@@ -29,7 +29,6 @@ public abstract class Person {
     private Gender gender;
 
     private int age;
-
     private int phoneNumber;
 
     public Person(String name, City city, Gender gender, int age, int phoneNumber) {

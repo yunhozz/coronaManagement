@@ -1,6 +1,6 @@
-package coronaManagement.domain.entity;
+package coronaManagement.domain.hospital;
 
-import coronaManagement.domain.entity.person.InfectedPerson;
+import coronaManagement.domain.person.InfectedPerson;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,6 @@ public class Hospital {
     private List<InfectedPerson> infectedPersonList = new ArrayList<>();
 
     private String name;
-
     private int numberOfBed;
 
     public Hospital(String name, int numberOfBed) {

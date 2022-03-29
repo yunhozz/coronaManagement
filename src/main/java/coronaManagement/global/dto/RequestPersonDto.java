@@ -1,13 +1,14 @@
-package coronaManagement.domain.entity.person;
+package coronaManagement.global.dto;
 
-import coronaManagement.domain.entity.Address;
-import coronaManagement.domain.entity.RouteInformation;
-import coronaManagement.domain.entity.Vaccine;
-import coronaManagement.domain.entity.Virus;
+import coronaManagement.domain.routeInformation.Address;
+import coronaManagement.domain.routeInformation.RouteInformation;
+import coronaManagement.domain.vaccine.Vaccine;
+import coronaManagement.domain.virus.Virus;
 import coronaManagement.domain.enums.City;
 import coronaManagement.domain.enums.Gender;
 import coronaManagement.domain.enums.InfectionStatus;
 import coronaManagement.domain.enums.PhysicalStatus;
+import coronaManagement.domain.person.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

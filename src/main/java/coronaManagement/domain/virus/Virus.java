@@ -1,4 +1,4 @@
-package coronaManagement.domain.entity;
+package coronaManagement.domain.virus;
 
 import coronaManagement.domain.enums.VirusType;
 import lombok.AccessLevel;

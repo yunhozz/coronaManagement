@@ -1,7 +1,7 @@
-package coronaManagement.domain.entity.person;
+package coronaManagement.domain.person;
 
-import coronaManagement.domain.entity.Hospital;
-import coronaManagement.domain.entity.Virus;
+import coronaManagement.domain.hospital.Hospital;
+import coronaManagement.domain.virus.Virus;
 import coronaManagement.domain.enums.City;
 import coronaManagement.domain.enums.Gender;
 import coronaManagement.domain.enums.PhysicalStatus;
