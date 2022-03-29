@@ -34,12 +34,6 @@ public class InfectedPerson extends Person {
     @Enumerated(EnumType.STRING)
     private PhysicalStatus physicalStatus;
 
-    //연관관계 편의 메소드
-    private void setHospital(Hospital hospital) {
-        this.hospital = hospital;
-        hospital.getInfectedPersonList().add(this);
-    }
-
     @Builder
     private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus,
                            LocalDateTime infectedTime, PhysicalStatus physicalStatus) {
@@ -78,5 +72,11 @@ public class InfectedPerson extends Person {
 
         this.physicalStatus = DEAD;
         virus.addFatalCount();
+    }
+
+    //연관관계 편의 메소드
+    private void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+        hospital.getInfectedPersonList().add(this);
     }
 }
