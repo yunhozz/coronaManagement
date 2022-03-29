@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @DiscriminatorValue("V")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PersonWhoVaccination extends Person {
+public class VaccinationPerson extends Person {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vaccine_id")
@@ -26,8 +26,8 @@ public class PersonWhoVaccination extends Person {
     private LocalDateTime vaccinationDate;
 
     @Builder
-    private PersonWhoVaccination(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine,
-                                int vaccinationCount, LocalDateTime vaccinationDate) {
+    private VaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine,
+                              int vaccinationCount, LocalDateTime vaccinationDate) {
 
         super(name, city, gender, age, phoneNumber);
         this.vaccine = vaccine;

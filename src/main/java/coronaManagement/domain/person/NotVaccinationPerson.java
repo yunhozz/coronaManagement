@@ -13,10 +13,10 @@ import javax.persistence.*;
 @Getter
 @DiscriminatorValue("BV")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PersonBeforeVaccination extends Person {
+public class NotVaccinationPerson extends Person {
 
     @Builder
-    private PersonBeforeVaccination(String name, City city, Gender gender, int age, int phoneNumber) {
+    private NotVaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber) {
         super(name, city, gender, age, phoneNumber);
     }
 }
