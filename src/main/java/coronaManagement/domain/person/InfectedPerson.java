@@ -46,6 +46,7 @@ public class InfectedPerson extends Person {
         virus.addInfectionCount();
     }
 
+    //입원 -> Hospital 과의 연관관계 생성
     public void beHospitalized(Hospital hospital) {
         if (physicalStatus == INFECTED) {
             setHospital(hospital);
