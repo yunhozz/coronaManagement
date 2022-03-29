@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-    @Query("select p from Person p where p.vaccinationCount < :vaccinationCount and p.vaccination > 0")
+    @Query("select p from Person p where p.vaccinationCount < :vaccinationCount and p.vaccinationCount > 0")
     List<Person> findPersonWhoVaccinationTarget(@Param("vaccinationCount") int vaccinationCount);
 }
