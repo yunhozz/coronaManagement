@@ -38,18 +38,18 @@ public class Virus {
     }
 
     public void addInfectionCount() {
-        infectionCount++;
+        this.infectionCount++;
     }
 
     public void addFatalCount() {
-        fatalCount++;
+        this.fatalCount++;
     }
 
     public double getInfectionRate(int number) {
-        return (double) infectionCount / number * 100;
+        return (double) this.infectionCount / number * 100;
     }
 
     public double getFatalityRate(int number) {
-        return (double) fatalCount / number * 100;
+        return (double) this.fatalCount / number * 100;
     }
 }

@@ -1,6 +1,7 @@
 package coronaManagement.domain.hospital;
 
 import coronaManagement.domain.person.InfectedPerson;
+import coronaManagement.global.exception.NotEnoughStockException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -65,7 +66,7 @@ public class Hospital {
 
     public void removeNumberOfBed(int numberOfBed) {
         if (this.numberOfBed - numberOfBed < 0) {
-            throw new IllegalStateException("Not enough number of bed.");
+            throw new NotEnoughStockException("Not enough number of bed.");
         }
 
         this.numberOfBed -= numberOfBed;

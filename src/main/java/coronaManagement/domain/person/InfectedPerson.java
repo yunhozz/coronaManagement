@@ -5,6 +5,7 @@ import coronaManagement.domain.virus.Virus;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import coronaManagement.global.enums.PhysicalStatus;
+import coronaManagement.global.exception.NotAllowedPersonException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,7 +54,7 @@ public class InfectedPerson extends Person {
             this.physicalStatus = ISOLATED;
 
         } else {
-            throw new IllegalStateException("You can't be hospitalized.");
+            throw new NotAllowedPersonException("You can't be hospitalized.");
         }
     }
 
@@ -62,13 +63,13 @@ public class InfectedPerson extends Person {
             this.physicalStatus = RECOVERED;
 
         } else {
-            throw new IllegalStateException("This people is already recovered or dead.");
+            throw new NotAllowedPersonException("This people is already recovered or dead.");
         }
     }
 
     public void passedAway() {
         if (physicalStatus == DEAD) {
-            throw new IllegalStateException("This people is already dead.");
+            throw new NotAllowedPersonException("This people is already dead.");
         }
 
         this.physicalStatus = DEAD;
