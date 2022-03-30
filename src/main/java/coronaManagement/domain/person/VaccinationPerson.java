@@ -20,9 +20,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class VaccinationPerson extends Person {
 
-    @OneToMany(mappedBy = "vaccination_person", cascade = CascadeType.ALL)
-    private List<VaccinationPersonToInfected> vaccinationPersonToInfectedList = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vaccine_id")
     private Vaccine vaccine;
@@ -35,8 +32,8 @@ public class VaccinationPerson extends Person {
     private LocalDateTime vaccinationDate;
 
     @Builder
-    private VaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine, EachRecord eachRecord, int vaccinationCount,
-                              LocalDateTime vaccinationDate, VaccinationPersonToInfected... vaccinationPersonToInfecteds) {
+    private VaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine,
+                              EachRecord eachRecord, int vaccinationCount, LocalDateTime vaccinationDate) {
 
         super(name, city, gender, age, phoneNumber);
         this.vaccine = vaccine;
@@ -44,27 +41,13 @@ public class VaccinationPerson extends Person {
         this.vaccinationCount = vaccinationCount;
         this.vaccinationDate = vaccinationDate;
 
-        for (VaccinationPersonToInfected vaccinationPersonToInfected : vaccinationPersonToInfecteds) {
-            setVaccinationPersonToInfectedList(vaccinationPersonToInfected);
-        }
-
         vaccine.removeQuantity(1);
         eachRecord.addVaccination();
-    }
-
-    public void getInfected() {
-
     }
 
     public void reVaccination() {
         vaccine.removeQuantity(1);
         vaccinationCount++;
         this.vaccinationDate = LocalDateTime.now();
-    }
-
-    //연관관계 편의 메소드
-    private void setVaccinationPersonToInfectedList(VaccinationPersonToInfected vaccinationPersonToInfected) {
-        vaccinationPersonToInfectedList.add(vaccinationPersonToInfected);
-        vaccinationPersonToInfected.updateVaccinationPerson(this);
     }
 }

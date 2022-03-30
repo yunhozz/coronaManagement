@@ -28,12 +28,4 @@ public class VaccinationPersonToInfected {
         this.vaccinationPerson = vaccinationPerson;
         this.infectedPerson = infectedPerson;
     }
-
-    public void getInfected() {
-
-    }
-
-    public void updateVaccinationPerson(VaccinationPerson vaccinationPerson) {
-        this.vaccinationPerson = vaccinationPerson;
-    }
 }
