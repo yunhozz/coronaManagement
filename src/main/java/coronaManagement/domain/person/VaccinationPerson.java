@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class VaccinationPerson extends Person {
 
-    @OneToMany(mappedBy = "vaccination_person")
+    @OneToMany(mappedBy = "vaccination_person", cascade = CascadeType.ALL)
     private List<VaccinationPersonToInfected> vaccinationPersonToInfectedList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
