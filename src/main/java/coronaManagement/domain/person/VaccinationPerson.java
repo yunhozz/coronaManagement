@@ -11,12 +11,17 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @DiscriminatorValue("V")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class VaccinationPerson extends Person {
+
+    @OneToMany(mappedBy = "vaccination_person")
+    private List<VaccinationPersonToInfected> vaccinationPersonToInfectedList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vaccine_id")
@@ -43,9 +48,19 @@ public class VaccinationPerson extends Person {
         eachRecord.addVaccination();
     }
 
+    public void getInfected() {
+
+    }
+
     public void reVaccination() {
         vaccine.removeQuantity(1);
         vaccinationCount++;
         this.vaccinationDate = LocalDateTime.now();
+    }
+
+    //연관관계 편의 메소드
+    private void setVaccinationPersonToInfectedList(VaccinationPersonToInfected vaccinationPersonToInfected) {
+        this.vaccinationPersonToInfectedList.add(vaccinationPersonToInfected);
+        vaccinationPersonToInfected.updateVaccinationPerson(this);
     }
 }
