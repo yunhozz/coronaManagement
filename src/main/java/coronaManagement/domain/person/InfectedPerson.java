@@ -51,6 +51,16 @@ public class InfectedPerson extends Person {
         this.physicalStatus = physicalStatus;
 
         virus.addInfectionCount();
+        eachRecord.addInfection();
+    }
+
+    public InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, LocalDateTime infectedTime,
+                          PhysicalStatus physicalStatus) {
+
+        super(name, city, gender, age, phoneNumber);
+        this.virus = virus;
+        this.infectedTime = infectedTime;
+        this.physicalStatus = physicalStatus;
     }
 
     //입원 -> Hospital 과의 연관관계 생성
@@ -80,6 +90,7 @@ public class InfectedPerson extends Person {
 
         this.physicalStatus = DEAD;
         virus.addFatalCount();
+        eachRecord.addDeath();
     }
 
     //연관관계 편의 메소드

@@ -40,6 +40,7 @@ public class VaccinationPerson extends Person {
         this.vaccinationDate = vaccinationDate;
 
         vaccine.removeQuantity(1);
+        eachRecord.addVaccination();
     }
 
     public void reVaccination() {

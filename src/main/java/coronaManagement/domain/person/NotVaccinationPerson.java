@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@DiscriminatorValue("BV")
+@DiscriminatorValue("NV")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NotVaccinationPerson extends Person {
 

@@ -33,18 +33,18 @@ public class EachRecord {
         this.todayVaccination = todayVaccination;
     }
 
-    public void addInfection(int todayInfection) {
-        this.todayInfection += todayInfection;
-        totalRecord.addInfection(todayInfection);
+    public void addInfection() {
+        this.todayInfection += 1;
+        totalRecord.addInfection();
     }
 
-    public void addDeath(int todayDeath) {
-        this.todayDeath += todayDeath;
-        totalRecord.addDeath(todayDeath);
+    public void addDeath() {
+        this.todayDeath += 1;
+        totalRecord.addDeath();
     }
 
-    public void addVaccination(int todayVaccination) {
-        this.todayVaccination += todayVaccination;
-        totalRecord.addVaccination(todayVaccination);
+    public void addVaccination() {
+        this.todayVaccination += 1;
+        totalRecord.addVaccination();
     }
 }
