@@ -34,17 +34,17 @@ public class EachRecord {
     }
 
     public void addInfection() {
-        this.todayInfection += 1;
+        todayInfection += 1;
         totalRecord.addInfection();
     }
 
     public void addDeath() {
-        this.todayDeath += 1;
+        todayDeath += 1;
         totalRecord.addDeath();
     }
 
     public void addVaccination() {
-        this.todayVaccination += 1;
+        todayVaccination += 1;
         totalRecord.addVaccination();
     }
 }

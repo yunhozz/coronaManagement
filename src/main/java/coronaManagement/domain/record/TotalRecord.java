@@ -32,14 +32,14 @@ public class TotalRecord {
     }
 
     public void addInfection() {
-        this.totalInfection += 1;
+        totalInfection += 1;
     }
 
     public void addDeath() {
-        this.totalDeath += 1;
+        totalDeath += 1;
     }
 
     public void addVaccination() {
-        this.totalVaccination += 1;
+        totalVaccination += 1;
     }
 }

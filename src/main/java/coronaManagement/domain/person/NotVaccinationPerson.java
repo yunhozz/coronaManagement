@@ -31,7 +31,7 @@ public class NotVaccinationPerson extends Person {
 
     //연관관계 편의 메소드
     private void setNotVaccinationPersonToInfectedList(NotVaccinationPersonToInfected notVaccinationPersonToInfected) {
-        this.notVaccinationPersonToInfectedList.add(notVaccinationPersonToInfected);
+        notVaccinationPersonToInfectedList.add(notVaccinationPersonToInfected);
         notVaccinationPersonToInfected.updateNotVaccinationPerson(this);
     }
 }

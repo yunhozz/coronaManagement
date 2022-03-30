@@ -60,7 +60,7 @@ public class VaccinationPerson extends Person {
 
     //연관관계 편의 메소드
     private void setVaccinationPersonToInfectedList(VaccinationPersonToInfected vaccinationPersonToInfected) {
-        this.vaccinationPersonToInfectedList.add(vaccinationPersonToInfected);
+        vaccinationPersonToInfectedList.add(vaccinationPersonToInfected);
         vaccinationPersonToInfected.updateVaccinationPerson(this);
     }
 }
