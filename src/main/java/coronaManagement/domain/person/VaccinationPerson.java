@@ -35,8 +35,8 @@ public class VaccinationPerson extends Person {
     private LocalDateTime vaccinationDate;
 
     @Builder
-    private VaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine, EachRecord eachRecord,
-                              int vaccinationCount, LocalDateTime vaccinationDate) {
+    private VaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine, EachRecord eachRecord, int vaccinationCount,
+                              LocalDateTime vaccinationDate, VaccinationPersonToInfected... vaccinationPersonToInfecteds) {
 
         super(name, city, gender, age, phoneNumber);
         this.vaccine = vaccine;
@@ -46,6 +46,10 @@ public class VaccinationPerson extends Person {
 
         vaccine.removeQuantity(1);
         eachRecord.addVaccination();
+
+        for (VaccinationPersonToInfected vaccinationPersonToInfected : vaccinationPersonToInfecteds) {
+            setVaccinationPersonToInfectedList(vaccinationPersonToInfected);
+        }
     }
 
     public void getInfected() {
