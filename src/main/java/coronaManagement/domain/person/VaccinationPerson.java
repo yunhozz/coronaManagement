@@ -44,12 +44,12 @@ public class VaccinationPerson extends Person {
         this.vaccinationCount = vaccinationCount;
         this.vaccinationDate = vaccinationDate;
 
-        vaccine.removeQuantity(1);
-        eachRecord.addVaccination();
-
         for (VaccinationPersonToInfected vaccinationPersonToInfected : vaccinationPersonToInfecteds) {
             setVaccinationPersonToInfectedList(vaccinationPersonToInfected);
         }
+
+        vaccine.removeQuantity(1);
+        eachRecord.addVaccination();
     }
 
     public void getInfected() {
