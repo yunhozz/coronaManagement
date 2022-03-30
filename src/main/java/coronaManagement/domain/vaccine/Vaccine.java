@@ -20,9 +20,7 @@ public class Vaccine {
     private Long id;
 
     private String name;
-
     private String developer;
-
     private int stockQuantity;
 
     private Vaccine(String name, String developer, int stockQuantity) {
