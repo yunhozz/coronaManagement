@@ -36,9 +36,20 @@ public class InfectedPerson extends Person {
     private EachRecord eachRecord;
 
     private LocalDateTime infectedTime;
+    private String vaccinationPersonId;
 
     @Enumerated(EnumType.STRING)
     private PhysicalStatus physicalStatus; //INFECTED, RECOVERED, ISOLATED, DEAD
+
+    private InfectedPerson(Virus virus, EachRecord eachRecord, LocalDateTime infectedTime, String vaccinationPersonId,
+                           PhysicalStatus physicalStatus) {
+
+        this.virus = virus;
+        this.eachRecord = eachRecord;
+        this.infectedTime = infectedTime;
+        this.vaccinationPersonId = vaccinationPersonId;
+        this.physicalStatus = physicalStatus;
+    }
 
     @Builder
     private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, EachRecord eachRecord,
@@ -52,6 +63,16 @@ public class InfectedPerson extends Person {
 
         virus.addInfectionCount();
         eachRecord.addInfection();
+    }
+
+    public static InfectedPerson updateInfectedPerson(Virus virus, EachRecord eachRecord, LocalDateTime infectedTime,
+                                                      String vaccinationPersonId) {
+
+        InfectedPerson infectedPerson = new InfectedPerson(virus, eachRecord, infectedTime, vaccinationPersonId, INFECTED);
+        infectedPerson.virus.addFatalCount();
+        infectedPerson.eachRecord.addInfection();
+
+        return infectedPerson;
     }
 
     public InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, LocalDateTime infectedTime,
