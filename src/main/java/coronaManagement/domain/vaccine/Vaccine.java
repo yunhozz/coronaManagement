@@ -1,5 +1,6 @@
 package coronaManagement.domain.vaccine;
 
+import coronaManagement.global.exception.NotEnoughStockException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,7 +42,7 @@ public class Vaccine {
         int remainQuantity = this.stockQuantity - stockQuantity;
 
         if (remainQuantity < 0) {
-            throw new IllegalStateException("not enough stock quantity.");
+            throw new NotEnoughStockException("not enough stock quantity.");
         }
 
         this.stockQuantity = remainQuantity;

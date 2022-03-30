@@ -10,7 +10,6 @@ import coronaManagement.global.enums.Gender;
 import coronaManagement.global.enums.InfectionStatus;
 import coronaManagement.global.enums.PhysicalStatus;
 import coronaManagement.domain.person.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +18,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class RequestPersonDto {
+public class PersonDto {
 
     @NotEmpty private String name;
     @NotEmpty private City city;

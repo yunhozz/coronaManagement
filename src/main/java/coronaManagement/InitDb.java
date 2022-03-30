@@ -3,7 +3,7 @@ package coronaManagement;
 import coronaManagement.domain.person.Person;
 import coronaManagement.domain.routeInformation.Address;
 import coronaManagement.domain.virus.Virus;
-import coronaManagement.global.dto.RequestPersonDto;
+import coronaManagement.global.dto.PersonDto;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import coronaManagement.global.enums.VirusType;
@@ -36,22 +36,22 @@ public class InitDb {
             Virus virus = Virus.createVirus(VirusType.ALPHA, "China");
             em.persist(virus);
 
-            RequestPersonDto requestPersonDto = createInfectedPerson(virus);
-            Person infectedPerson = requestPersonDto.infectedPersonToEntity();
+            PersonDto personDto = createInfectedPerson(virus);
+            Person infectedPerson = personDto.infectedPersonToEntity();
             em.persist(infectedPerson);
         }
 
-        private RequestPersonDto createInfectedPerson(Virus virus) {
-            RequestPersonDto requestPersonDto = new RequestPersonDto();
-            requestPersonDto.setName("yunho");
-            requestPersonDto.setCity(City.SEOUL);
-            requestPersonDto.setGender(Gender.MALE);
-            requestPersonDto.setAge(27);
-            requestPersonDto.setPhoneNumber(01033317551);
-            requestPersonDto.setVirus(virus);
-            requestPersonDto.setInfectedAddress(new Address(City.BUSAN, "Seomyun", "HaeWoonDae", "123"));
+        private PersonDto createInfectedPerson(Virus virus) {
+            PersonDto personDto = new PersonDto();
+            personDto.setName("yunho");
+            personDto.setCity(City.SEOUL);
+            personDto.setGender(Gender.MALE);
+            personDto.setAge(27);
+            personDto.setPhoneNumber(01033317551);
+            personDto.setVirus(virus);
+            personDto.setInfectedAddress(new Address(City.BUSAN, "Seomyun", "HaeWoonDae", "123"));
 
-            return requestPersonDto;
+            return personDto;
         }
     }
 }

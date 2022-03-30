@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class RequestEachRecordDto {
+public class EachRecordDto {
 
     private TotalRecord totalRecord;
     private int year;

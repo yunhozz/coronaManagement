@@ -9,7 +9,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class RequestRouteInformationDto {
+public class RouteInformationDto {
 
     private InfectedPerson infectedPerson;
     private City city;
