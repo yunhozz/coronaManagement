@@ -27,6 +27,7 @@ public class PersonDto {
     @NotEmpty private int phoneNumber;
 
     private EachRecord eachRecord;
+    private String distinguishId;
 
     //infectedPerson
     private Virus virus;
@@ -66,19 +67,20 @@ public class PersonDto {
                 .build();
     }
 
-//    public Person infectedPersonToEntity() {
-//        return InfectedPerson.builder()
-//                .name(name)
-//                .city(city)
-//                .gender(gender)
-//                .age(age)
-//                .phoneNumber(phoneNumber)
-//                .virus(virus)
-//                .eachRecord(eachRecord)
-//                .infectedTime(LocalDateTime.now())
-//                .physicalStatus(PhysicalStatus.INFECTED)
-//                .build();
-//    }
+    public Person infectedPersonToEntity() {
+        return InfectedPerson.builder()
+                .name(name)
+                .city(city)
+                .gender(gender)
+                .age(age)
+                .phoneNumber(phoneNumber)
+                .virus(virus)
+                .eachRecord(eachRecord)
+                .infectedTime(LocalDateTime.now())
+                .physicalStatus(PhysicalStatus.INFECTED)
+                .distinguishId(distinguishId)
+                .build();
+    }
 //
 //    public Person contactedPersonToEntity() {
 //        return ContactedPerson.builder()
