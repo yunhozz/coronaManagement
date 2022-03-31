@@ -4,6 +4,7 @@ import coronaManagement.domain.record.EachRecord;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import coronaManagement.domain.vaccine.Vaccine;
+import coronaManagement.global.enums.InfectionStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,16 +29,18 @@ public class VaccinationPerson extends Person {
 
     private int vaccinationCount;
     private LocalDateTime vaccinationDate;
+    private InfectionStatus infectionStatus;
 
     @Builder
-    private VaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine,
-                              EachRecord eachRecord, int vaccinationCount, LocalDateTime vaccinationDate) {
+    private VaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, Vaccine vaccine, EachRecord eachRecord,
+                              int vaccinationCount, LocalDateTime vaccinationDate, InfectionStatus infectionStatus) {
 
         super(name, city, gender, age, phoneNumber);
         this.vaccine = vaccine;
         this.eachRecord = eachRecord;
         this.vaccinationCount = vaccinationCount;
         this.vaccinationDate = vaccinationDate;
+        this.infectionStatus = infectionStatus;
 
         vaccine.removeQuantity(1);
         eachRecord.addVaccination();

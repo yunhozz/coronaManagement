@@ -41,33 +41,6 @@ public class PersonDto {
     private int vaccinationCount;
     private LocalDateTime vaccinationDate;
 
-    public Person infectedPersonToEntity() {
-        return InfectedPerson.builder()
-                .name(name)
-                .city(city)
-                .gender(gender)
-                .age(age)
-                .phoneNumber(phoneNumber)
-                .virus(virus)
-                .eachRecord(eachRecord)
-                .infectedTime(LocalDateTime.now())
-                .physicalStatus(PhysicalStatus.INFECTED)
-                .build();
-    }
-
-    public Person contactedPersonToEntity() {
-        return ContactedPerson.builder()
-                .name(name)
-                .city(city)
-                .gender(gender)
-                .age(age)
-                .phoneNumber(phoneNumber)
-                .routeInformation(routeInformation)
-                .contactDate(contactDate)
-                .infectionStatus(InfectionStatus.BEFORE_INFECT)
-                .build();
-    }
-
     public Person vaccinationPersonToEntity() {
         return VaccinationPerson.builder()
                 .name(name)
@@ -79,6 +52,7 @@ public class PersonDto {
                 .eachRecord(eachRecord)
                 .vaccinationCount(1)
                 .vaccinationDate(LocalDateTime.now())
+                .infectionStatus(InfectionStatus.BEFORE_INFECT)
                 .build();
     }
 
@@ -91,4 +65,31 @@ public class PersonDto {
                 .phoneNumber(phoneNumber)
                 .build();
     }
+
+//    public Person infectedPersonToEntity() {
+//        return InfectedPerson.builder()
+//                .name(name)
+//                .city(city)
+//                .gender(gender)
+//                .age(age)
+//                .phoneNumber(phoneNumber)
+//                .virus(virus)
+//                .eachRecord(eachRecord)
+//                .infectedTime(LocalDateTime.now())
+//                .physicalStatus(PhysicalStatus.INFECTED)
+//                .build();
+//    }
+//
+//    public Person contactedPersonToEntity() {
+//        return ContactedPerson.builder()
+//                .name(name)
+//                .city(city)
+//                .gender(gender)
+//                .age(age)
+//                .phoneNumber(phoneNumber)
+//                .routeInformation(routeInformation)
+//                .contactDate(contactDate)
+//                .infectionStatus(InfectionStatus.BEFORE_INFECT)
+//                .build();
+//    }
 }
