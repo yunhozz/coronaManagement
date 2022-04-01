@@ -1,12 +1,9 @@
 package coronaManagement.domain.person;
 
-import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.vaccine.Vaccine;
-import coronaManagement.global.dto.EachRecordDto;
 import coronaManagement.global.dto.PersonDto;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,9 +34,8 @@ class PersonRepositoryTest {
         personDto.setPhoneNumber(01033317551);
         personDto.setVaccine(vaccine);
 
-        Person vaccinationPerson = personDto.vaccinationPersonToEntity();
-
         //when
+        Person vaccinationPerson = personDto.vaccinationPersonToEntity();
         VaccinationPerson findPerson = personRepository.findPersonWhoVaccinationAtLeastOnce(vaccinationPerson.getId()).get();
 
         //then
