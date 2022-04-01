@@ -64,6 +64,7 @@ public class PersonDto {
                 .gender(gender)
                 .age(age)
                 .phoneNumber(phoneNumber)
+                .infectionStatus(InfectionStatus.BEFORE_INFECT)
                 .build();
     }
 

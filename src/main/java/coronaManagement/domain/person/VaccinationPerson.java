@@ -32,6 +32,8 @@ public class VaccinationPerson extends Person {
 
     private int vaccinationCount;
     private LocalDateTime vaccinationDate;
+
+    @Enumerated(EnumType.STRING)
     private InfectionStatus infectionStatus;
 
     @Builder
