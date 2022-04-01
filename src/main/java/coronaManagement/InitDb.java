@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 public class InitDb {
 
@@ -22,36 +22,23 @@ public class InitDb {
 
     @PostConstruct
     public void init() {
-        initService.dbInit();
+        initService.dbInit1();
+        initService.dbInit2();
     }
 
-//    @Component
+    @Component
     @Transactional
     @RequiredArgsConstructor
     public static class InitService {
 
         private final EntityManager em;
 
-        public void dbInit() {
-            Virus virus = Virus.createVirus(VirusType.ALPHA, "China");
-            em.persist(virus);
+        public void dbInit1() {
 
-            PersonDto personDto = createInfectedPerson(virus);
-            Person infectedPerson = personDto.infectedPersonToEntity();
-            em.persist(infectedPerson);
         }
 
-        private PersonDto createInfectedPerson(Virus virus) {
-            PersonDto personDto = new PersonDto();
-            personDto.setName("yunho");
-            personDto.setCity(City.SEOUL);
-            personDto.setGender(Gender.MALE);
-            personDto.setAge(27);
-            personDto.setPhoneNumber(01033317551);
-            personDto.setVirus(virus);
-            personDto.setInfectedAddress(new Address(City.BUSAN, "Seomyun", "HaeWoonDae", "123"));
+        public void dbInit2() {
 
-            return personDto;
         }
     }
 }

@@ -27,9 +27,7 @@ public class RouteInformation {
     private Address address;
 
     private boolean isCCTV;
-
     private LocalDateTime startTime;
-
     private LocalDateTime endTime;
 
     @Builder

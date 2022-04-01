@@ -82,17 +82,17 @@ public class PersonDto {
                 .distinguishId(distinguishId)
                 .build();
     }
-//
-//    public Person contactedPersonToEntity() {
-//        return ContactedPerson.builder()
-//                .name(name)
-//                .city(city)
-//                .gender(gender)
-//                .age(age)
-//                .phoneNumber(phoneNumber)
-//                .routeInformation(routeInformation)
-//                .contactDate(contactDate)
-//                .infectionStatus(InfectionStatus.BEFORE_INFECT)
-//                .build();
-//    }
+
+    public Person contactedPersonToEntity() {
+        return ContactedPerson.builder()
+                .name(name)
+                .city(city)
+                .gender(gender)
+                .age(age)
+                .phoneNumber(phoneNumber)
+                .routeInformation(routeInformation)
+                .contactDate(contactDate)
+                .infectionStatus(InfectionStatus.BEFORE_INFECT)
+                .build();
+    }
 }
