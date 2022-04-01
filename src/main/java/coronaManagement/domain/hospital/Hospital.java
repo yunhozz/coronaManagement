@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static coronaManagement.global.enums.PhysicalStatus.*;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,7 +36,7 @@ public class Hospital {
     //입원 처리
     public void hospitalize(InfectedPerson... infectedPeople) {
         for (InfectedPerson infectedPerson : infectedPeople) {
-            if (infectedPerson.getHospital() == null) {
+            if (infectedPerson.getHospital() == null && infectedPerson.getPhysicalStatus() == INFECTED) {
                 infectedPerson.beHospitalized(this);
             }
         }
