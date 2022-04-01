@@ -20,9 +20,7 @@ public class TotalRecord {
     private Long id;
 
     private int totalInfection;
-
     private int totalDeath;
-
     private int totalVaccination;
 
     public TotalRecord(int totalInfection, int totalDeath, int totalVaccination) {
@@ -41,5 +39,13 @@ public class TotalRecord {
 
     public void addVaccination() {
         totalVaccination += 1;
+    }
+
+    public double getFatalityRate() {
+        return (double) totalDeath / totalInfection * 100;
+    }
+
+    public double getVaccinationRate(int population) {
+        return (double) totalVaccination / population * 100;
     }
 }

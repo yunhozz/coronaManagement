@@ -47,4 +47,8 @@ public class EachRecord {
         todayVaccination += 1;
         totalRecord.addVaccination();
     }
+
+    public double getFatalityRateOfToday() {
+        return (double) todayDeath / todayInfection * 100;
+    }
 }

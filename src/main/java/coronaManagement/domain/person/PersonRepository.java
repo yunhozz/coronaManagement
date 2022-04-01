@@ -13,4 +13,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query("select p from Person p where p.vaccinationCount > 0")
     List<Person> findPersonWhoVaccinationButInfected();
+
+    @Query("select p from Person p where p.vaccinationCount = 0")
+    List<Person> findPersonWhoNotVaccinationButInfected();
 }
