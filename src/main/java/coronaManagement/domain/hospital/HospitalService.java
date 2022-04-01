@@ -33,7 +33,10 @@ public class HospitalService {
         }
 
         Hospital hospital = findHospital.get();
-        hospital.hospitalize();
+
+        for (Long personId : personIds) {
+            Person person = personRepository.findById(personId).get();
+        }
     }
 
     @Transactional(readOnly = true)

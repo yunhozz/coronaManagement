@@ -11,6 +11,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query("select p from Person p where p.id = :personId and p.vaccinationCount >= 1")
     Optional<VaccinationPerson> findPersonWhoVaccinationAtLeastOnce(@Param("personId") Long personId);
 
-    @Query("select p from Person p where p.id = :personId and p.physicalStatus = PhysicalStatus.INFECTED")
+    @Query("select p from Person p where p.id = :personId and p.physicalStatus = INFECTED")
     Optional<InfectedPerson> findPersonWhoInfectedButNotInHospital(@Param("personId") Long personId);
 }
