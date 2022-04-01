@@ -12,10 +12,13 @@ import java.time.LocalDateTime;
 public class RouteInformationDto {
 
     private InfectedPerson infectedPerson;
+
+    //address
     private City city;
     private String district;
     private String street;
     private String etc;
+
     private boolean isCCTV;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

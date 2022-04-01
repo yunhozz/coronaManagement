@@ -1,6 +1,7 @@
 package coronaManagement.domain.record;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +24,8 @@ public class TotalRecord {
     private int totalDeath;
     private int totalVaccination;
 
-    public TotalRecord(int totalInfection, int totalDeath, int totalVaccination) {
+    @Builder
+    private TotalRecord(int totalInfection, int totalDeath, int totalVaccination) {
         this.totalInfection = totalInfection;
         this.totalDeath = totalDeath;
         this.totalVaccination = totalVaccination;

@@ -13,6 +13,9 @@ public class EachRecordDto {
     private int year;
     private int month;
     private int day;
+    private int todayInfection;
+    private int todayDeath;
+    private int todayVaccination;
 
     public EachRecord toEntity() {
         return EachRecord.builder()
