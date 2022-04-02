@@ -9,26 +9,24 @@ import coronaManagement.global.enums.InfectionStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 class PersonRepositoryTest {
 
     @Autowired PersonRepository personRepository;
     @Autowired VaccineRepository vaccineRepository;
 
     @Test
-    public void findPeopleWhoMustBeVaccination() {
+    void findPeopleWhoMustBeVaccination() {
 
     }
 
     @Test
-    public void findPersonWhoVaccination() {
+    void findPersonWhoVaccination() {
         //given
         Vaccine vaccine = new Vaccine("vac", "doctor", 123);
         vaccineRepository.save(vaccine);
