@@ -53,7 +53,7 @@ public class PersonService {
 
     //백신 재접종
     public void reVaccination(Long personId) {
-        Optional<VaccinationPerson> findPerson = personRepository.findPersonWhoVaccinationAtLeastOnce(personId);
+        Optional<VaccinationPerson> findPerson = personRepository.findPersonWhoVaccination(personId);
 
         if (findPerson.isEmpty()) {
             throw new IllegalStateException("Can't find this person. Please get vaccination first.");

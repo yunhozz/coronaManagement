@@ -1,6 +1,7 @@
 package coronaManagement.domain.person;
 
 import coronaManagement.domain.vaccine.Vaccine;
+import coronaManagement.domain.vaccine.VaccineRepository;
 import coronaManagement.global.dto.PersonDto;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
@@ -16,15 +17,16 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 class PersonRepositoryTest {
 
     @Autowired PersonRepository personRepository;
+    @Autowired VaccineRepository vaccineRepository;
 
     @Test
-    public void findPersonWhoVaccinationAtLeastOnce() {
+    public void findPersonWhoVaccination() {
         //given
         Vaccine vaccine = new Vaccine("vac", "doctor", 123);
+        vaccineRepository.save(vaccine);
 
         PersonDto personDto = new PersonDto();
         personDto.setName("yunho");
@@ -36,10 +38,10 @@ class PersonRepositoryTest {
 
         //when
         Person vaccinationPerson = personDto.vaccinationPersonToEntity();
-        VaccinationPerson findPerson = personRepository.findPersonWhoVaccinationAtLeastOnce(vaccinationPerson.getId()).get();
+        Person savedPerson = personRepository.save(vaccinationPerson);
+        VaccinationPerson findPerson = personRepository.findPersonWhoVaccination(savedPerson.getId()).get();
 
         //then
-        assertThat(findPerson.getName()).isEqualTo("yunho");
-        assertThat(findPerson.getVaccinationDate()).isEqualTo(LocalDateTime.now());
+        assertThat(findPerson).isEqualTo(savedPerson);
     }
 }
