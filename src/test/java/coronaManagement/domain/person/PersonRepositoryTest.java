@@ -5,22 +5,27 @@ import coronaManagement.domain.vaccine.VaccineRepository;
 import coronaManagement.global.dto.PersonDto;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
+import coronaManagement.global.enums.InfectionStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
+@Rollback(value = false)
 class PersonRepositoryTest {
 
     @Autowired PersonRepository personRepository;
     @Autowired VaccineRepository vaccineRepository;
+
+    @Test
+    public void findPeopleWhoMustBeVaccination() {
+
+    }
 
     @Test
     public void findPersonWhoVaccination() {
@@ -36,12 +41,14 @@ class PersonRepositoryTest {
         personDto.setPhoneNumber(01033317551);
         personDto.setVaccine(vaccine);
 
+        Person savedPerson = personRepository.save(personDto.vaccinationPersonToEntity());
+
         //when
-        Person vaccinationPerson = personDto.vaccinationPersonToEntity();
-        Person savedPerson = personRepository.save(vaccinationPerson);
         VaccinationPerson findPerson = personRepository.findPersonWhoVaccination(savedPerson.getId()).get();
 
         //then
-        assertThat(findPerson).isEqualTo(savedPerson);
+        assertThat(findPerson.getName()).isEqualTo("yunho");
+        assertThat(findPerson.getVaccinationCount()).isEqualTo(1);
+        assertThat(findPerson.getInfectionStatus()).isEqualTo(InfectionStatus.INFECTED);
     }
 }

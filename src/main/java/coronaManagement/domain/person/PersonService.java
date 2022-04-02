@@ -51,12 +51,18 @@ public class PersonService {
 
     }
 
+    //백신 재접종 대상자 검색
+    @Transactional(readOnly = true)
+    public List<VaccinationPerson> findReVaccinationPerson(int nextVaccinationCount) {
+        return personRepository.findPeopleWhoMustBeVaccination(nextVaccinationCount);
+    }
+
     //백신 재접종
     public void reVaccination(Long personId) {
         Optional<VaccinationPerson> findPerson = personRepository.findPersonWhoVaccination(personId);
 
         if (findPerson.isEmpty()) {
-            throw new IllegalStateException("Can't find this person. Please get vaccination first.");
+            throw new IllegalStateException("This person is not allowed.");
         }
 
         VaccinationPerson vaccinationPerson = findPerson.get();
