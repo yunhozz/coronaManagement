@@ -22,7 +22,13 @@ class PersonRepositoryTest {
 
     @Test
     void findPeopleWhoMustBeVaccination() {
+        //given
 
+
+        //when
+
+
+        //then
     }
 
     @Test
