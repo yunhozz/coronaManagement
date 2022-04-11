@@ -35,7 +35,11 @@ public class PersonDto {
 
     //contactedPerson
     private RouteInformation routeInformation;
-    private LocalDateTime contactDate;
+    private int year;
+    private int month;
+    private int day;
+    private int hour;
+    private int minute;
 
     //personWhoVaccination
     private Vaccine vaccine;
@@ -91,7 +95,7 @@ public class PersonDto {
                 .age(age)
                 .phoneNumber(phoneNumber)
                 .routeInformation(routeInformation)
-                .contactDate(contactDate)
+                .contactDate(LocalDateTime.of(year, month, day, hour, minute))
                 .infectionStatus(InfectionStatus.BEFORE_INFECT)
                 .build();
     }
