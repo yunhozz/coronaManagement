@@ -18,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -30,32 +32,45 @@ class PersonRepositoryTest {
     @Autowired TotalRecordRepository totalRecordRepository;
 
     @Test
+    @Rollback(value = false)
     void findPeopleWhoMustReVaccination() {
         //given
+        Vaccine vaccine = createVaccine();
+        EachRecord eachRecord = createRecord();
 
+        PersonDto personDto1 = new PersonDto();
+        personDto1.setName("yunho1");
+        personDto1.setCity(City.SEOUL);
+        personDto1.setGender(Gender.MALE);
+        personDto1.setAge(27);
+        personDto1.setPhoneNumber("01033317551");
+        personDto1.setVaccine(vaccine);
+        personDto1.setEachRecord(eachRecord);
+        personRepository.save(personDto1.vaccinationPersonToEntity());
+
+        PersonDto personDto2 = new PersonDto();
+        personDto2.setName("yunho2");
+        personDto2.setCity(City.BUSAN);
+        personDto2.setGender(Gender.FEMALE);
+        personDto2.setAge(28);
+        personDto2.setPhoneNumber("01012345678");
+        personDto2.setVaccine(vaccine);
+        personDto2.setEachRecord(eachRecord);
+        personRepository.save(personDto2.vaccinationPersonToEntity());
 
         //when
-
+        List<VaccinationPerson> result = personRepository.findPeopleWhoMustReVaccination(2);
 
         //then
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0).getVaccinationCount()).isEqualTo(1);
     }
 
     @Test
-    @Rollback(value = false)
     void findPersonWhoCanReVaccination() {
         //given
-        Vaccine vaccine = new Vaccine("vac", "doctor", 123);
-        vaccineRepository.save(vaccine);
-
-        TotalRecordDto totalRecordDto = new TotalRecordDto();
-        TotalRecord totalRecord = totalRecordRepository.save(totalRecordDto.toEntity());
-
-        EachRecordDto eachRecordDto = new EachRecordDto();
-        eachRecordDto.setYear(2022);
-        eachRecordDto.setMonth(4);
-        eachRecordDto.setDay(11);
-        eachRecordDto.setTotalRecord(totalRecord);
-        EachRecord eachRecord = eachRecordRepository.save(eachRecordDto.toEntity());
+        Vaccine vaccine = createVaccine();
+        EachRecord eachRecord = createRecord();
 
         PersonDto personDto = new PersonDto();
         personDto.setName("yunho");
@@ -81,5 +96,25 @@ class PersonRepositoryTest {
 
         assertThat(vaccinationPerson.getEachRecord().getTodayVaccination()).isEqualTo(1);
         assertThat(vaccinationPerson.getEachRecord().getTotalRecord().getTotalVaccination()).isEqualTo(1);
+    }
+
+    private Vaccine createVaccine() {
+        Vaccine vaccine = new Vaccine("vac", "doctor", 123);
+        vaccineRepository.save(vaccine);
+
+        return vaccine;
+    }
+
+    private EachRecord createRecord() {
+        TotalRecordDto totalRecordDto = new TotalRecordDto();
+        TotalRecord totalRecord = totalRecordRepository.save(totalRecordDto.toEntity());
+
+        EachRecordDto eachRecordDto = new EachRecordDto();
+        eachRecordDto.setYear(2022);
+        eachRecordDto.setMonth(4);
+        eachRecordDto.setDay(11);
+        eachRecordDto.setTotalRecord(totalRecord);
+
+        return eachRecordRepository.save(eachRecordDto.toEntity());
     }
 }
