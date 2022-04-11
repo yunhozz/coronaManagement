@@ -1,5 +1,5 @@
 package coronaManagement.global.enums;
 
 public enum PhysicalStatus {
-    INFECTED, RECOVERED, ISOLATED, DEAD
+    INFECTED, ISOLATED, HOSPITALIZED, RECOVERED, DEAD
 }

@@ -1,5 +1,6 @@
 package coronaManagement.domain.person;
 
+import coronaManagement.domain.hospital.Hospital;
 import coronaManagement.domain.hospital.HospitalRepository;
 import coronaManagement.global.dto.PersonDto;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -42,6 +44,34 @@ public class PersonService {
         personRepository.save(contactedPerson);
 
         return contactedPerson.getId();
+    }
+
+    //감염 처리
+    public void getInfection(Long personId) {
+
+    }
+
+    //백신 재접종 대상자 검색
+    @Transactional(readOnly = true)
+    public List<VaccinationPerson> findReVaccinationPerson(int nextVaccinationCount) {
+        return personRepository.findPeopleWhoMustBeVaccination(nextVaccinationCount);
+    }
+
+    //백신 재접종
+    public void reVaccination(Long personId) {
+        Optional<VaccinationPerson> findPerson = personRepository.findPersonWhoCanReVaccination(personId);
+
+        if (findPerson.isEmpty()) {
+            throw new IllegalStateException("This person is not allowed.");
+        }
+
+        VaccinationPerson vaccinationPerson = findPerson.get();
+        vaccinationPerson.reVaccination();
+    }
+
+    //회복
+    public void recover(Long personId) {
+
     }
 
     @Transactional(readOnly = true)

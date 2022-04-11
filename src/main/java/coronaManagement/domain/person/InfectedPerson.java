@@ -38,7 +38,7 @@ public class InfectedPerson extends Person {
     private LocalDateTime infectedTime;
 
     @Enumerated(EnumType.STRING)
-    private PhysicalStatus physicalStatus; //INFECTED, RECOVERED, ISOLATED, DEAD
+    private PhysicalStatus physicalStatus; //INFECTED, ISOLATED, HOSPITALIZED, RECOVERED, DEAD
 
     private String distinguishId;
 
@@ -61,15 +61,24 @@ public class InfectedPerson extends Person {
     public void beHospitalized(Hospital hospital) {
         if (physicalStatus == INFECTED) {
             setHospital(hospital);
+            physicalStatus = HOSPITALIZED;
+
+        } else {
+            throw new NotAllowedPersonException("This people can't be hospitalized.");
+        }
+    }
+
+    public void beIsolated() {
+        if (physicalStatus == INFECTED) {
             physicalStatus = ISOLATED;
 
         } else {
-            throw new NotAllowedPersonException("You can't be hospitalized.");
+            throw new NotAllowedPersonException("This people can't be isolated.");
         }
     }
 
     public void recovered() {
-        if (physicalStatus == ISOLATED) {
+        if (physicalStatus == ISOLATED || physicalStatus == HOSPITALIZED) {
             physicalStatus = RECOVERED;
 
         } else {

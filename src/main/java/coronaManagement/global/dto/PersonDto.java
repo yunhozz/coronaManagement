@@ -50,7 +50,7 @@ public class PersonDto {
                 .age(age)
                 .phoneNumber(phoneNumber)
                 .vaccine(vaccine)
-//                .eachRecord(eachRecord)
+                .eachRecord(eachRecord)
                 .vaccinationCount(1)
                 .vaccinationDate(LocalDateTime.now())
                 .infectionStatus(InfectionStatus.BEFORE_INFECT)

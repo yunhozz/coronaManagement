@@ -1,7 +1,9 @@
 package coronaManagement.domain.person;
 
+import coronaManagement.domain.record.EachRecordRepository;
 import coronaManagement.domain.vaccine.Vaccine;
 import coronaManagement.domain.vaccine.VaccineRepository;
+import coronaManagement.global.dto.EachRecordDto;
 import coronaManagement.global.dto.PersonDto;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
@@ -19,6 +21,7 @@ class PersonRepositoryTest {
 
     @Autowired PersonRepository personRepository;
     @Autowired VaccineRepository vaccineRepository;
+    @Autowired EachRecordRepository eachRecordRepository;
 
     @Test
     void findPeopleWhoMustBeVaccination() {
@@ -37,6 +40,9 @@ class PersonRepositoryTest {
         Vaccine vaccine = new Vaccine("vac", "doctor", 123);
         vaccineRepository.save(vaccine);
 
+        EachRecordDto eachRecordDto = new EachRecordDto();
+        eachRecordRepository.save(eachRecordDto.toEntity());
+
         PersonDto personDto = new PersonDto();
         personDto.setName("yunho");
         personDto.setCity(City.SEOUL);
@@ -44,6 +50,7 @@ class PersonRepositoryTest {
         personDto.setAge(27);
         personDto.setPhoneNumber(01033317551);
         personDto.setVaccine(vaccine);
+        personDto.setEachRecord(eachRecordDto.toEntity());
 
         Person savedPerson = personRepository.save(personDto.vaccinationPersonToEntity());
 
