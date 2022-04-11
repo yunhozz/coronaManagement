@@ -14,6 +14,6 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     List<T> findPeopleWhoMustReVaccination(@Param("nextVaccinationCount") int nextVaccinationCount);
 
     //백신 재접종 가능 여부 검색
-    @Query("select p from Person p where p.id = :vaccinationPersonId and p.vaccinationCount > 0")
+    @Query("select p from Person p where p.id = :personId and p.vaccinationCount > 0")
     Optional<T> findPersonWhoCanReVaccination(@Param("personId") Long personId);
 }
