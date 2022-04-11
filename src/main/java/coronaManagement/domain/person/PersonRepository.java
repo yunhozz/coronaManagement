@@ -7,13 +7,13 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface PersonRepository extends JpaRepository<Person, Long> {
+public interface PersonRepository<T extends Person> extends JpaRepository<T, Long> {
 
     //백신 재접종 대상자 검색
     @Query("select p from Person p where p.vaccinationCount < :nextVaccinationCount and p.vaccinationCount > 0")
-    List<Person> findPeopleWhoMustReVaccination(@Param("nextVaccinationCount") int nextVaccinationCount);
+    List<T> findPeopleWhoMustReVaccination(@Param("nextVaccinationCount") int nextVaccinationCount);
 
     //백신 재접종 가능 여부 검색
-    @Query("select p from Person p where p.id = :personId and p.vaccinationCount > 0")
-    Optional<Person> findPersonWhoCanReVaccination(@Param("personId") Long personId);
+    @Query("select p from Person p where p.id = :vaccinationPersonId and p.vaccinationCount > 0")
+    Optional<T> findPersonWhoCanReVaccination(@Param("personId") Long personId);
 }

@@ -26,17 +26,7 @@ public class HospitalService {
 
     //입원 처리
     public void hospitalize(Long hospitalId, Long... personIds) {
-        Optional<Hospital> findHospital = hospitalRepository.findById(hospitalId);
 
-        if (findHospital.isEmpty()) {
-            throw new IllegalStateException("There's no hospital you found.");
-        }
-
-        Hospital hospital = findHospital.get();
-
-        for (Long personId : personIds) {
-            Person person = personRepository.findById(personId).get();
-        }
     }
 
     @Transactional(readOnly = true)
