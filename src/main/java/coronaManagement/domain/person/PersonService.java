@@ -48,19 +48,19 @@ public class PersonService {
 
     //백신 재접종 대상자 검색
     @Transactional(readOnly = true)
-    public List<VaccinationPerson> findReVaccinationPerson(int nextVaccinationCount) {
+    public List<Person> findReVaccinationPerson(int nextVaccinationCount) {
         return personRepository.findPeopleWhoMustReVaccination(nextVaccinationCount);
     }
 
     //백신 재접종
     public void reVaccination(Long personId) {
-        Optional<VaccinationPerson> findPerson = personRepository.findPersonWhoCanReVaccination(personId);
+        Optional<Person> findPerson = personRepository.findPersonWhoCanReVaccination(personId);
 
         if (findPerson.isEmpty()) {
             throw new IllegalStateException("This person is not allowed.");
         }
 
-        VaccinationPerson vaccinationPerson = findPerson.get();
+        VaccinationPerson vaccinationPerson = (VaccinationPerson) findPerson.get();
         vaccinationPerson.reVaccination();
     }
 

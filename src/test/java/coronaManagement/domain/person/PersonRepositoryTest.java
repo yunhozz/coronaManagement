@@ -59,9 +59,10 @@ class PersonRepositoryTest {
         personRepository.save(personDto2.vaccinationPersonToEntity());
 
         //when
-        List<VaccinationPerson> result = personRepository.findPeopleWhoMustReVaccination(2);
+        List<Person> findPeople = personRepository.findPeopleWhoMustReVaccination(2);
 
         //then
+        assertThat(findPeople.size()).isEqualTo(2);
     }
 
     @Test
@@ -82,7 +83,7 @@ class PersonRepositoryTest {
         Person savedPerson = personRepository.save(personDto.vaccinationPersonToEntity());
 
         //when
-        VaccinationPerson vaccinationPerson = personRepository.findPersonWhoCanReVaccination(savedPerson.getId()).get();
+        VaccinationPerson vaccinationPerson = (VaccinationPerson) personRepository.findPersonWhoCanReVaccination(savedPerson.getId()).get();
 
         //then
         assertThat(vaccinationPerson.getName()).isEqualTo("yunho");

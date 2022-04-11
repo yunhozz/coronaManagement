@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-    //재접종 대상자 검색
+    //백신 재접종 대상자 검색
     @Query("select p from Person p where p.vaccinationCount < :nextVaccinationCount and p.vaccinationCount > 0")
-    List<VaccinationPerson> findPeopleWhoMustReVaccination(@Param("nextVaccinationCount") int nextVaccinationCount);
+    List<Person> findPeopleWhoMustReVaccination(@Param("nextVaccinationCount") int nextVaccinationCount);
 
-    //재접종 가능 여부 검색
-    @Query("select p from Person p where p.id = :personId and p.vaccinationCount >= 1")
-    Optional<VaccinationPerson> findPersonWhoCanReVaccination(@Param("personId") Long personId);
+    //백신 재접종 가능 여부 검색
+    @Query("select p from Person p where p.id = :personId and p.vaccinationCount > 0")
+    Optional<Person> findPersonWhoCanReVaccination(@Param("personId") Long personId);
 }
