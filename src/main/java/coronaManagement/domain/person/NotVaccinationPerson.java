@@ -23,7 +23,7 @@ public class NotVaccinationPerson extends Person {
     private InfectionStatus infectionStatus;
 
     @Builder
-    private NotVaccinationPerson(String name, City city, Gender gender, int age, int phoneNumber, InfectionStatus infectionStatus) {
+    private NotVaccinationPerson(String name, City city, Gender gender, int age, String phoneNumber, InfectionStatus infectionStatus) {
         super(name, city, gender, age, phoneNumber);
         this.infectionStatus = infectionStatus;
     }

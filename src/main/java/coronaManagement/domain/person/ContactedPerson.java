@@ -35,7 +35,7 @@ public class ContactedPerson extends Person {
     private InfectionStatus infectionStatus; //BEFORE_INFECT, INFECTED
 
     @Builder
-    private ContactedPerson(String name, City city, Gender gender, int age, int phoneNumber, RouteInformation routeInformation,
+    private ContactedPerson(String name, City city, Gender gender, int age, String phoneNumber, RouteInformation routeInformation,
                            LocalDateTime contactDate, InfectionStatus infectionStatus) {
 
         super(name, city, gender, age, phoneNumber);

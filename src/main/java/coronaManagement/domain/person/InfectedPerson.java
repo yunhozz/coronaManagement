@@ -43,7 +43,7 @@ public class InfectedPerson extends Person {
     private String distinguishId;
 
     @Builder
-    private InfectedPerson(String name, City city, Gender gender, int age, int phoneNumber, Virus virus, EachRecord eachRecord,
+    private InfectedPerson(String name, City city, Gender gender, int age, String phoneNumber, Virus virus, EachRecord eachRecord,
                            LocalDateTime infectedTime, PhysicalStatus physicalStatus, String distinguishId) {
 
         super(name, city, gender, age, phoneNumber);

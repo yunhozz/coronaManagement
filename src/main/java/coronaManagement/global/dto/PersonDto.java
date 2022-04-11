@@ -24,7 +24,7 @@ public class PersonDto {
     @NotEmpty private City city;
     @NotEmpty private Gender gender;
     @NotEmpty private int age;
-    @NotEmpty private int phoneNumber;
+    @NotEmpty private String phoneNumber;
 
     private EachRecord eachRecord;
     private String distinguishId;

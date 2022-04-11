@@ -29,9 +29,9 @@ public abstract class Person {
     private Gender gender;
 
     private int age;
-    private int phoneNumber;
+    private String phoneNumber;
 
-    public Person(String name, City city, Gender gender, int age, int phoneNumber) {
+    public Person(String name, City city, Gender gender, int age, String phoneNumber) {
         this.name = name;
         this.city = city;
         this.gender = gender;
