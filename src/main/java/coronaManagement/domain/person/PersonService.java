@@ -46,49 +46,6 @@ public class PersonService {
         return contactedPerson.getId();
     }
 
-    //감염 처리
-    public void getInfection(Long personId) {
-
-    }
-
-    //백신 재접종 대상자 검색
-    @Transactional(readOnly = true)
-    public List<VaccinationPerson> findReVaccinationPerson(int nextVaccinationCount) {
-        return personRepository.findPeopleWhoMustBeVaccination(nextVaccinationCount);
-    }
-
-    //백신 재접종
-    public void reVaccination(Long personId) {
-        Optional<VaccinationPerson> findPerson = personRepository.findPersonWhoVaccination(personId);
-
-        if (findPerson.isEmpty()) {
-            throw new IllegalStateException("This person is not allowed.");
-        }
-
-        VaccinationPerson vaccinationPerson = findPerson.get();
-        vaccinationPerson.reVaccination();
-    }
-
-    //입원 처리
-    public void hospitalize(Long personId, Long hospitalId) {
-        Optional<InfectedPerson> findPerson = personRepository.findPersonWhoInfectedButNotInHospital(personId);
-        Optional<Hospital> findHospital = hospitalRepository.findById(hospitalId);
-
-        if (findPerson.isEmpty() || findHospital.isEmpty()) {
-            throw new IllegalStateException("Can't find person or hospital.");
-        }
-
-        InfectedPerson infectedPerson = findPerson.get();
-        Hospital hospital = findHospital.get();
-
-        infectedPerson.beHospitalized(hospital);
-    }
-
-    //회복
-    public void recover(Long personId) {
-
-    }
-
     @Transactional(readOnly = true)
     public Person findPeople(Long personId) {
         return personRepository.findById(personId)
