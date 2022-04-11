@@ -1,5 +1,6 @@
 package coronaManagement.domain.virus;
 
+import coronaManagement.domain.BaseEntity;
 import coronaManagement.global.enums.VirusType;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Virus {
+public class Virus extends BaseEntity {
 
     @Id
     @GeneratedValue

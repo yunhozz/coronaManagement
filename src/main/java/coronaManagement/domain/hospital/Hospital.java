@@ -1,5 +1,6 @@
 package coronaManagement.domain.hospital;
 
+import coronaManagement.domain.BaseEntity;
 import coronaManagement.domain.person.InfectedPerson;
 import coronaManagement.global.exception.NotEnoughStockException;
 import lombok.AccessLevel;
@@ -15,7 +16,7 @@ import static coronaManagement.global.enums.PhysicalStatus.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Hospital {
+public class Hospital extends BaseEntity {
 
     @Id
     @GeneratedValue

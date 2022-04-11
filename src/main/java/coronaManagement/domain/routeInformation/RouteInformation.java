@@ -1,5 +1,6 @@
 package coronaManagement.domain.routeInformation;
 
+import coronaManagement.domain.BaseEntity;
 import coronaManagement.domain.person.InfectedPerson;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RouteInformation {
+public class RouteInformation extends BaseEntity {
 
     @Id
     @GeneratedValue

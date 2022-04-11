@@ -1,5 +1,6 @@
 package coronaManagement.domain.record;
 
+import coronaManagement.domain.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class EachRecord {
+public class EachRecord extends BaseEntity {
 
     @Id
     @GeneratedValue

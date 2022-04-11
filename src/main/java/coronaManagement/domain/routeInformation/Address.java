@@ -1,5 +1,6 @@
 package coronaManagement.domain.routeInformation;
 
+import coronaManagement.domain.BaseEntity;
 import coronaManagement.global.enums.City;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Address {
+public class Address extends BaseEntity {
 
     private City city;
     private String district;

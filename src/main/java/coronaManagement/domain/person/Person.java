@@ -1,5 +1,6 @@
 package coronaManagement.domain.person;
 
+import coronaManagement.domain.BaseEntity;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import lombok.AccessLevel;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @DiscriminatorColumn
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class Person {
+public abstract class Person extends BaseEntity {
 
     @Id
     @GeneratedValue

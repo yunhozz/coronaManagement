@@ -1,5 +1,6 @@
 package coronaManagement.domain.record;
 
+import coronaManagement.domain.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TotalRecord {
+public class TotalRecord extends BaseEntity {
 
     @Id
     @GeneratedValue

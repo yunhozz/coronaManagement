@@ -1,5 +1,6 @@
 package coronaManagement.domain.vaccine;
 
+import coronaManagement.domain.BaseEntity;
 import coronaManagement.global.exception.NotEnoughStockException;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Vaccine {
+public class Vaccine extends BaseEntity {
 
     @Id
     @GeneratedValue
