@@ -46,15 +46,10 @@ public class PersonService {
         return contactedPerson.getId();
     }
 
-    //감염 처리
-    public void getInfection(Long personId) {
-
-    }
-
     //백신 재접종 대상자 검색
     @Transactional(readOnly = true)
     public List<VaccinationPerson> findReVaccinationPerson(int nextVaccinationCount) {
-        return personRepository.findPeopleWhoMustBeVaccination(nextVaccinationCount);
+        return personRepository.findPeopleWhoMustVaccination(nextVaccinationCount);
     }
 
     //백신 재접종
@@ -69,8 +64,18 @@ public class PersonService {
         vaccinationPerson.reVaccination();
     }
 
-    //회복
+    //감염 상태에서 회복
     public void recover(Long personId) {
+
+    }
+
+    //감염 상태에서 죽음
+    public void passAway(Long personId) {
+
+    }
+
+    //밀접 접촉 대상자 감염 처리
+    public void getInfection(Long personId) {
 
     }
 
