@@ -62,8 +62,6 @@ class PersonRepositoryTest {
         List<VaccinationPerson> result = personRepository.findPeopleWhoMustReVaccination(2);
 
         //then
-        assertThat(result.size()).isEqualTo(1);
-        assertThat(result.get(0).getVaccinationCount()).isEqualTo(1);
     }
 
     @Test
