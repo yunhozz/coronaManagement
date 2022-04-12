@@ -32,8 +32,8 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
     public List<InfectedPerson> findAllWithContactedRoute(int offset, int limit) {
         return em.createQuery(
                 "select distinct ip from InfectedPerson ip" +
-                        " join fetch RouteInformation ri" +
-                        " join fetch ContactedPerson cp", InfectedPerson.class)
+                        " join fetch ip.routeInformation ri" +
+                        " join fetch ip.contactedPerson cp", InfectedPerson.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
