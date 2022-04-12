@@ -25,6 +25,14 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
     }
 
     @Override
+    public List<InfectedPerson> findIpWithVirus() {
+        return em.createQuery(
+                "select ip from InfectedPerson ip" +
+                        " join fetch ip.virus v", InfectedPerson.class)
+                .getResultList();
+    }
+
+    @Override
     public List<InfectedPerson> findIpWithVirusHospital() {
         return em.createQuery(
                 "select ip from InfectedPerson ip" +

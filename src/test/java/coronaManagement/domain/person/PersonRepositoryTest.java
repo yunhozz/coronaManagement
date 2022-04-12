@@ -16,6 +16,7 @@ import coronaManagement.global.enums.InfectionStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -32,6 +33,7 @@ class PersonRepositoryTest {
     @Autowired TotalRecordRepository totalRecordRepository;
 
     @Test
+    @Rollback(value = false)
     void findPeopleWhoMustReVaccination() {
         //given
         Vaccine vaccine = createVaccine();
@@ -58,7 +60,7 @@ class PersonRepositoryTest {
         VaccinationPerson person2 = (VaccinationPerson) personRepository.save(personDto2.vaccinationPersonToEntity());
 
         //when
-        person2.reVaccination(); //person1 1차, person2 2차 접종
+        person2.reVaccination(); //person1 1차, person2 2차 접종 (update)
         List<VaccinationPerson> findPeople = personRepository.findPeopleWhoMustReVaccination(2); //2차 접종 대상자
 
         //then

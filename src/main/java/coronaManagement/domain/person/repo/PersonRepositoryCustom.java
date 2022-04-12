@@ -10,6 +10,7 @@ import java.util.List;
 public interface PersonRepositoryCustom {
 
     List<VaccinationPerson> findVpWithVaccine();
+    List<InfectedPerson> findIpWithVirus();
     List<InfectedPerson> findIpWithVirusHospital();
     List<RouteInformation> findRouteWithInfectedPerson();
     List<ContactedPerson> findCpWithInfectedRoute();
