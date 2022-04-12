@@ -106,11 +106,6 @@ class PersonRepositoryTest {
         assertThat(vaccinationPerson.getEachRecord().getTotalRecord().getTotalVaccination()).isEqualTo(1);
     }
 
-    @Test
-    void findInfectedPersonAndHospital() {
-
-    }
-
     private Vaccine createVaccine() {
         Vaccine vaccine = new Vaccine("vac", "doctor", 10);
         vaccineRepository.save(vaccine);
