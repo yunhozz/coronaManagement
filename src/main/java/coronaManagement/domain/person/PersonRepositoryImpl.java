@@ -8,9 +8,16 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class PersonRepositoryImpl<T extends Person> implements PersonRepositoryCustom {
+public class PersonRepositoryImpl implements PersonRepositoryCustom {
 
     private final EntityManager em;
+
+    public List<VaccinationPerson> findPersonWithVaccine() {
+        return em.createQuery(
+                "select vp from VaccinationPerson vp" +
+                        " join fetch vp.vaccine v", VaccinationPerson.class)
+                .getResultList();
+    }
 
     public List<InfectedPerson> findAllWithVirusHospital(int offset, int limit) {
         return em.createQuery(
