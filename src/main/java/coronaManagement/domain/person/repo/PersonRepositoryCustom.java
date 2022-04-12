@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface PersonRepositoryCustom {
 
-    List<VaccinationPerson> findPersonWithVaccine();
-    List<InfectedPerson> findAllWithVirusHospital(int offset, int limit);
-    List<InfectedPerson> findAllWithContactedRoute(int offset, int limit);
+    List<VaccinationPerson> findVpWithVaccine();
+    List<InfectedPerson> findIpWithVirusHospital(int offset, int limit);
+    List<InfectedPerson> findIpWithContactedRoute(int offset, int limit);
+    List<InfectedPerson> findAllForIp(int offset, int limit);
 }

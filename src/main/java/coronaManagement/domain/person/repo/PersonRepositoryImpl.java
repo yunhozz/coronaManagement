@@ -14,14 +14,14 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
 
     private final EntityManager em;
 
-    public List<VaccinationPerson> findPersonWithVaccine() {
+    public List<VaccinationPerson> findVpWithVaccine() {
         return em.createQuery(
                 "select vp from VaccinationPerson vp" +
                         " join fetch vp.vaccine v", VaccinationPerson.class)
                 .getResultList();
     }
 
-    public List<InfectedPerson> findAllWithVirusHospital(int offset, int limit) {
+    public List<InfectedPerson> findIpWithVirusHospital(int offset, int limit) {
         return em.createQuery(
                 "select ip from InfectedPerson ip" +
                         " join fetch ip.virus v" +
@@ -31,11 +31,23 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                 .getResultList();
     }
 
-    public List<InfectedPerson> findAllWithContactedRoute(int offset, int limit) {
+    public List<InfectedPerson> findIpWithContactedRoute(int offset, int limit) {
         return em.createQuery(
                 "select distinct ip from InfectedPerson ip" +
                         " join fetch ip.routeInformation ri" +
-                        " join fetch ip.contactedPerson cp", InfectedPerson.class)
+                        " join fetch ri.contactedPerson cp", InfectedPerson.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public List<InfectedPerson> findAllForIp(int offset, int limit) {
+        return em.createQuery(
+                "select distinct ip from InfectedPerson ip" +
+                        " join fetch ip.virus v" +
+                        " join fetch ip.hospital h" +
+                        " join fetch ip.routeInformation ri" +
+                        " join fetch ri.contactedPerson cp", InfectedPerson.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();

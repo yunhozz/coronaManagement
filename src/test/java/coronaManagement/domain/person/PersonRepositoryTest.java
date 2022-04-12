@@ -26,8 +26,7 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 class PersonRepositoryTest {
 
-    @Autowired
-    PersonRepository personRepository;
+    @Autowired PersonRepository personRepository;
     @Autowired VaccineRepository vaccineRepository;
     @Autowired EachRecordRepository eachRecordRepository;
     @Autowired TotalRecordRepository totalRecordRepository;
