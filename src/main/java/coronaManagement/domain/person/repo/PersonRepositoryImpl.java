@@ -25,34 +25,28 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
     }
 
     @Override
-    public List<InfectedPerson> findIpWithVirusHospital(int offset, int limit) {
+    public List<InfectedPerson> findIpWithVirusHospital() {
         return em.createQuery(
                 "select ip from InfectedPerson ip" +
                         " join fetch ip.virus v" +
                         " join fetch ip.hospital h", InfectedPerson.class)
-                .setFirstResult(offset)
-                .setMaxResults(limit)
                 .getResultList();
     }
 
     @Override
-    public List<RouteInformation> findRouteWithInfectedPerson(int offset, int limit) {
+    public List<RouteInformation> findRouteWithInfectedPerson() {
         return em.createQuery(
                 "select ri from RouteInformation ri" +
                         " join fetch ri.infectedPerson ip", RouteInformation.class)
-                .setFirstResult(offset)
-                .setMaxResults(limit)
                 .getResultList();
     }
 
     @Override
-    public List<ContactedPerson> findCpWithInfectedRoute(int offset, int limit) {
+    public List<ContactedPerson> findCpWithInfectedRoute() {
         return em.createQuery(
                 "select cp from ContactedPerson cp" +
                         " join fetch cp.routeInformation ri" +
                         " join fetch ri.infectedPerson ip", ContactedPerson.class)
-                .setFirstResult(offset)
-                .setMaxResults(limit)
                 .getResultList();
     }
 
