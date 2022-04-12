@@ -16,6 +16,9 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
 
     private final EntityManager em;
 
+    /*
+    VaccinationPerson -> Vaccine
+     */
     @Override
     public List<VaccinationPerson> findVpWithVaccine() {
         return em.createQuery(
@@ -24,6 +27,9 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                 .getResultList();
     }
 
+    /*
+    InfectedPerson -> Virus
+     */
     @Override
     public List<InfectedPerson> findIpWithVirus() {
         return em.createQuery(
@@ -32,6 +38,9 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                 .getResultList();
     }
 
+    /*
+    InfectedPerson -> Virus, Hospital
+     */
     @Override
     public List<InfectedPerson> findIpWithVirusHospital() {
         return em.createQuery(
@@ -41,6 +50,9 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                 .getResultList();
     }
 
+    /*
+    RouteInformation -> InfectedPerson
+     */
     @Override
     public List<RouteInformation> findRouteWithInfectedPerson() {
         return em.createQuery(
@@ -49,6 +61,9 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                 .getResultList();
     }
 
+    /*
+    ContactedPerson -> RouteInformation, InfectedPerson
+     */
     @Override
     public List<ContactedPerson> findCpWithInfectedRoute() {
         return em.createQuery(
@@ -58,6 +73,9 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                 .getResultList();
     }
 
+    /*
+    ContactedPerson -> RouteInformation, InfectedPerson, Virus, Hospital
+     */
     @Override
     public List<ContactedPerson> findAllWithContactedPerson(int offset, int limit) {
         return em.createQuery(

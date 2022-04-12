@@ -33,7 +33,6 @@ class PersonRepositoryTest {
     @Autowired TotalRecordRepository totalRecordRepository;
 
     @Test
-    @Rollback(value = false)
     void findPeopleWhoMustReVaccination() {
         //given
         Vaccine vaccine = createVaccine();
