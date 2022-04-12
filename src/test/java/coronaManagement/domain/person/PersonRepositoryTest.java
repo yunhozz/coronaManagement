@@ -99,7 +99,6 @@ class PersonRepositoryTest {
     }
 
     @Test
-    @Rollback(value = false)
     void findAllWithContactedPerson() {
         //given
         Vaccine vaccine = createVaccine();
