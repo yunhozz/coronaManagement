@@ -58,7 +58,7 @@ class PersonRepositoryTest {
         VaccinationPerson person2 = (VaccinationPerson) personRepository.save(personDto2.vaccinationPersonToEntity());
 
         //when
-        person2.reVaccination(); //person2 2차 재접종
+        person2.reVaccination(); //person1 1차, person2 2차 접종
         List<VaccinationPerson> findPeople = personRepository.findPeopleWhoMustReVaccination(2); //2차 접종 대상자
 
         //then

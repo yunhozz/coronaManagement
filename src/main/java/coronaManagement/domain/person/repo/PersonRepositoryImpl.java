@@ -1,7 +1,9 @@
 package coronaManagement.domain.person.repo;
 
+import coronaManagement.domain.person.ContactedPerson;
 import coronaManagement.domain.person.InfectedPerson;
 import coronaManagement.domain.person.VaccinationPerson;
+import coronaManagement.domain.routeInformation.RouteInformation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,7 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
 
     private final EntityManager em;
 
+    @Override
     public List<VaccinationPerson> findVpWithVaccine() {
         return em.createQuery(
                 "select vp from VaccinationPerson vp" +
@@ -21,6 +24,7 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                 .getResultList();
     }
 
+    @Override
     public List<InfectedPerson> findIpWithVirusHospital(int offset, int limit) {
         return em.createQuery(
                 "select ip from InfectedPerson ip" +
@@ -31,23 +35,35 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                 .getResultList();
     }
 
-    public List<InfectedPerson> findIpWithContactedRoute(int offset, int limit) {
+    @Override
+    public List<RouteInformation> findRouteWithInfectedPerson(int offset, int limit) {
         return em.createQuery(
-                "select distinct ip from InfectedPerson ip" +
-                        " join fetch ip.routeInformation ri" +
-                        " join fetch ri.contactedPerson cp", InfectedPerson.class)
+                "select ri from RouteInformation ri" +
+                        " join fetch ri.infectedPerson ip", RouteInformation.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
     }
 
-    public List<InfectedPerson> findAllForIp(int offset, int limit) {
+    @Override
+    public List<ContactedPerson> findCpWithInfectedRoute(int offset, int limit) {
         return em.createQuery(
-                "select distinct ip from InfectedPerson ip" +
+                "select cp from ContactedPerson cp" +
+                        " join fetch cp.routeInformation ri" +
+                        " join fetch ri.infectedPerson ip", ContactedPerson.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    @Override
+    public List<ContactedPerson> findAllWithContactedPerson(int offset, int limit) {
+        return em.createQuery(
+                "select cp from ContactedPerson cp" +
+                        " join fetch cp.routeInformation ri" +
+                        " join fetch ri.infectedPerson ip" +
                         " join fetch ip.virus v" +
-                        " join fetch ip.hospital h" +
-                        " join fetch ip.routeInformation ri" +
-                        " join fetch ri.contactedPerson cp", InfectedPerson.class)
+                        " join fetch ip.hospital h", ContactedPerson.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
