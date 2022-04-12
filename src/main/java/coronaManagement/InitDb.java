@@ -1,12 +1,5 @@
 package coronaManagement;
 
-import coronaManagement.domain.person.Person;
-import coronaManagement.domain.routeInformation.Address;
-import coronaManagement.domain.virus.Virus;
-import coronaManagement.global.dto.PersonDto;
-import coronaManagement.global.enums.City;
-import coronaManagement.global.enums.Gender;
-import coronaManagement.global.enums.VirusType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

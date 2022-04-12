@@ -1,4 +1,4 @@
-package coronaManagement.global.dto;
+package coronaManagement.global.dto.request;
 
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.TotalRecord;

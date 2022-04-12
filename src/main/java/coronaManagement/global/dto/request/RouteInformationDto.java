@@ -1,4 +1,4 @@
-package coronaManagement.global.dto;
+package coronaManagement.global.dto.request;
 
 import coronaManagement.global.enums.City;
 import coronaManagement.domain.person.InfectedPerson;

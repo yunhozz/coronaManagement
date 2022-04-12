@@ -6,16 +6,15 @@ import coronaManagement.domain.record.TotalRecord;
 import coronaManagement.domain.record.TotalRecordRepository;
 import coronaManagement.domain.vaccine.Vaccine;
 import coronaManagement.domain.vaccine.VaccineRepository;
-import coronaManagement.global.dto.EachRecordDto;
-import coronaManagement.global.dto.PersonDto;
-import coronaManagement.global.dto.TotalRecordDto;
+import coronaManagement.global.dto.request.EachRecordDto;
+import coronaManagement.global.dto.request.PersonDto;
+import coronaManagement.global.dto.request.TotalRecordDto;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import coronaManagement.global.enums.InfectionStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -105,6 +104,11 @@ class PersonRepositoryTest {
 
         assertThat(vaccinationPerson.getEachRecord().getTodayVaccination()).isEqualTo(1);
         assertThat(vaccinationPerson.getEachRecord().getTotalRecord().getTotalVaccination()).isEqualTo(1);
+    }
+
+    @Test
+    void findInfectedPersonAndHospital() {
+
     }
 
     private Vaccine createVaccine() {
