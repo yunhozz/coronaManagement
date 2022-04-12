@@ -10,8 +10,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
 @EntityListeners(AuditingEntityListener.class)
-@MappedSuperclass
 @Getter
+@MappedSuperclass
 public class BaseUserEntity extends BaseEntity {
 
     @CreatedBy
