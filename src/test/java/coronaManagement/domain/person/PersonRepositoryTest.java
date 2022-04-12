@@ -110,7 +110,7 @@ class PersonRepositoryTest {
         List<ContactedPerson> result = personRepository.findAllWithContactedPerson(0, 2);
 
         //then
-        assertThat(result.size()).isEqualTo(0); //data empty!!
+        assertThat(result.size()).isEqualTo(0); //Data is empty so result's size is zero.
     }
 
     private Person createPerson(String name, City city, Gender gender, int age, String phoneNumber, Vaccine vaccine, EachRecord eachRecord) {
