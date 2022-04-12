@@ -32,7 +32,6 @@ class PersonRepositoryTest {
     @Autowired TotalRecordRepository totalRecordRepository;
 
     @Test
-    @Rollback(value = false)
     void findPeopleWhoMustReVaccination() {
         //given
         Vaccine vaccine = createVaccine();
@@ -46,7 +45,7 @@ class PersonRepositoryTest {
         personDto1.setPhoneNumber("01033317551");
         personDto1.setVaccine(vaccine);
         personDto1.setEachRecord(eachRecord);
-
+        VaccinationPerson person1 = (VaccinationPerson) personRepository.save(personDto1.vaccinationPersonToEntity());
 
         PersonDto personDto2 = new PersonDto();
         personDto2.setName("yunho2");
@@ -56,12 +55,23 @@ class PersonRepositoryTest {
         personDto2.setPhoneNumber("01012345678");
         personDto2.setVaccine(vaccine);
         personDto2.setEachRecord(eachRecord);
-
+        VaccinationPerson person2 = (VaccinationPerson) personRepository.save(personDto2.vaccinationPersonToEntity());
 
         //when
-
+        person2.reVaccination(); //person2 2차 재접종
+        List<VaccinationPerson> findPeople = personRepository.findPeopleWhoMustReVaccination(2); //2차 접종 대상자
 
         //then
+        assertThat(findPeople.size()).isEqualTo(1);
+        assertThat(findPeople.get(0).getId()).isEqualTo(person1.getId());
+        assertThat(findPeople.get(0).getName()).isEqualTo("yunho1");
+        assertThat(findPeople.get(0).getVaccinationCount()).isEqualTo(1);
+
+        assertThat(vaccine.getName()).isEqualTo("vac");
+        assertThat(vaccine.getStockQuantity()).isEqualTo(7);
+
+        assertThat(eachRecord.getTodayVaccination()).isEqualTo(2);
+        assertThat(eachRecord.getTotalRecord().getTotalVaccination()).isEqualTo(2);
     }
 
     @Test
@@ -85,19 +95,20 @@ class PersonRepositoryTest {
         VaccinationPerson vaccinationPerson = (VaccinationPerson) personRepository.findPersonWhoCanReVaccination(savedPerson.getId()).get();
 
         //then
+        assertThat(vaccinationPerson.getId()).isEqualTo(savedPerson.getId());
         assertThat(vaccinationPerson.getName()).isEqualTo("yunho");
         assertThat(vaccinationPerson.getVaccinationCount()).isEqualTo(1);
         assertThat(vaccinationPerson.getInfectionStatus()).isEqualTo(InfectionStatus.BEFORE_INFECT);
 
         assertThat(vaccinationPerson.getVaccine().getName()).isEqualTo("vac");
-        assertThat(vaccinationPerson.getVaccine().getStockQuantity()).isEqualTo(122);
+        assertThat(vaccinationPerson.getVaccine().getStockQuantity()).isEqualTo(9);
 
         assertThat(vaccinationPerson.getEachRecord().getTodayVaccination()).isEqualTo(1);
         assertThat(vaccinationPerson.getEachRecord().getTotalRecord().getTotalVaccination()).isEqualTo(1);
     }
 
     private Vaccine createVaccine() {
-        Vaccine vaccine = new Vaccine("vac", "doctor", 123);
+        Vaccine vaccine = new Vaccine("vac", "doctor", 10);
         vaccineRepository.save(vaccine);
 
         return vaccine;
