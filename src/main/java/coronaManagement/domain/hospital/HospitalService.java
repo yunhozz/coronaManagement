@@ -1,5 +1,6 @@
 package coronaManagement.domain.hospital;
 
+import coronaManagement.domain.hospital.repo.HospitalRepository;
 import coronaManagement.domain.person.repo.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
