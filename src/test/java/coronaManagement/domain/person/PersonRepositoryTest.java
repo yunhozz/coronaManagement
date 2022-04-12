@@ -83,7 +83,6 @@ class PersonRepositoryTest {
     }
 
     @Test
-    @Rollback(value = false)
     void findVpWithVaccine() {
         //given
         Vaccine vaccine = createVaccine();
@@ -95,6 +94,24 @@ class PersonRepositoryTest {
         List<VaccinationPerson> result = personRepository.findVpWithVaccine();
 
         //then
+        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.get(0).getVaccine().getName()).isEqualTo("vac");
+    }
+
+    @Test
+    @Rollback(value = false)
+    void findAllWithContactedPerson() {
+        //given
+        Vaccine vaccine = createVaccine();
+        EachRecord eachRecord = createRecord();
+        Person person1 = createPerson("yunho1", City.SEOUL, Gender.MALE, 27, "01033317551", vaccine, eachRecord);
+        Person person2 = createPerson("yunho2", City.BUSAN, Gender.FEMALE, 28, "01012345678", vaccine, eachRecord);
+
+        //when
+        List<ContactedPerson> result = personRepository.findAllWithContactedPerson(0, 2);
+
+        //then
+        assertThat(result.size()).isEqualTo(0); //data empty!!
     }
 
     private Person createPerson(String name, City city, Gender gender, int age, String phoneNumber, Vaccine vaccine, EachRecord eachRecord) {
