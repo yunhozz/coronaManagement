@@ -1,5 +1,6 @@
 package coronaManagement.domain.person;
 
+import coronaManagement.domain.person.repo.PersonRepository;
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.EachRecordRepository;
 import coronaManagement.domain.record.TotalRecord;
@@ -25,7 +26,8 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 class PersonRepositoryTest {
 
-    @Autowired PersonRepository personRepository;
+    @Autowired
+    PersonRepository personRepository;
     @Autowired VaccineRepository vaccineRepository;
     @Autowired EachRecordRepository eachRecordRepository;
     @Autowired TotalRecordRepository totalRecordRepository;

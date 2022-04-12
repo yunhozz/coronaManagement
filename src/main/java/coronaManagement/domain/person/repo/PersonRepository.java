@@ -1,5 +1,6 @@
-package coronaManagement.domain.person;
+package coronaManagement.domain.person.repo;
 
+import coronaManagement.domain.person.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +17,12 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     //백신 재접종 가능한 사람인지 검색
     @Query("select p from Person p where p.id = :personId and p.vaccinationCount > 0")
     Optional<T> findPersonWhoCanReVaccination(@Param("personId") Long personId);
+
+    //감염자 중 격리 조치된 사람 검색
+    @Query("select p from Person p where p.physicalStatus = ISOLATED")
+    List<T> findPeopleWhoInfectedAndIsolated();
+
+    //감염자 중 병원에 이송된 사람 검색
+    @Query("select p from Person p where p.physicalStatus = HOSPITALIZED")
+    List<T> findPeopleWhoInfectedAndHospitalized();
 }

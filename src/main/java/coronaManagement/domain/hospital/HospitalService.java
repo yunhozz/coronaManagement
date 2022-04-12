@@ -1,13 +1,11 @@
 package coronaManagement.domain.hospital;
 
-import coronaManagement.domain.person.Person;
-import coronaManagement.domain.person.PersonRepository;
+import coronaManagement.domain.person.repo.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

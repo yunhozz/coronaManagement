@@ -1,4 +1,7 @@
-package coronaManagement.domain.person;
+package coronaManagement.domain.person.repo;
+
+import coronaManagement.domain.person.InfectedPerson;
+import coronaManagement.domain.person.VaccinationPerson;
 
 import java.util.List;
 
