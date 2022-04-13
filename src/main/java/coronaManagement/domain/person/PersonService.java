@@ -42,8 +42,6 @@ public class PersonService {
         return person.getId();
     }
 
-    public void
-
     public Long saveContactedPerson(PersonRequestDto personRequestDto) {
         Person person = personRequestDto.contactedPersonToEntity();
         personRepository.save(person);
