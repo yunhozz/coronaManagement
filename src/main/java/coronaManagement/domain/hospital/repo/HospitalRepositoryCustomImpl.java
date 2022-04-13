@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class HospitalRepositoryImpl implements HospitalRepositoryCustom {
+public class HospitalRepositoryCustomImpl implements HospitalRepositoryCustom {
 
     private final EntityManager em;
 
