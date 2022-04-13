@@ -111,6 +111,8 @@ class PersonRepositoryTest {
 
         //then
         assertThat(pageByCity.getContent().size()).isEqualTo(3);
+        assertThat(pageByGender.getContent().size()).isEqualTo(3);
+        assertThat(pageByAge.getContent().size()).isEqualTo(3);
 
         for (Person person : pageByCity) {
             System.out.println("person.getName() = " + person.getName() + ", person.getCity() = " + person.getCity());
