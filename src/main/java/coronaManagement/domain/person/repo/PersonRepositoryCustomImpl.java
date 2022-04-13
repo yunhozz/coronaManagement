@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class PersonRepositoryImpl implements PersonRepositoryCustom {
+public class PersonRepositoryCustomImpl implements PersonRepositoryCustom {
 
     private final EntityManager em;
 
