@@ -16,6 +16,10 @@ import coronaManagement.global.enums.InfectionStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -82,6 +86,38 @@ class PersonRepositoryTest {
     }
 
     @Test
+    @Rollback(value = false)
+    void findPageBy() {
+        //given
+        createPerson("yunho1", City.SEOUL , Gender.MALE, 27);
+        createPerson("yunho2", City.SEOUL , Gender.FEMALE, 27);
+        createPerson("yunho3", City.BUSAN , Gender.MALE, 37);
+        createPerson("yunho4", City.BUSAN , Gender.FEMALE, 17);
+        createPerson("yunho5", City.INCHEON , Gender.MALE, 17);
+        createPerson("yunho6", City.INCHEON , Gender.FEMALE, 37);
+
+        City city = City.SEOUL;
+        Gender gender = Gender.MALE;
+        int age = 27;
+
+        //when
+        PageRequest pageRequest1 = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "city"));
+        PageRequest pageRequest2 = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "gender"));
+        PageRequest pageRequest3 = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "age"));
+
+        Page<Person> pageByCity = personRepository.findPageByCity(city, pageRequest1);
+        Page<Person> pageByGender = personRepository.findPageByGender(gender, pageRequest2);
+        Page<Person> pageByAge = personRepository.findPageByAge(age, pageRequest3);
+
+        //then
+        assertThat(pageByCity.getContent().size()).isEqualTo(3);
+
+        for (Person person : pageByCity) {
+            System.out.println("person.getName() = " + person.getName() + ", person.getCity() = " + person.getCity());
+        }
+    }
+
+    @Test
     void findVpWithVaccine() {
         //given
         Vaccine vaccine = createVaccine();
@@ -110,6 +146,16 @@ class PersonRepositoryTest {
 
         //then
         assertThat(result.size()).isEqualTo(0); //Data is empty so result's size is zero.
+    }
+
+    private Person createPerson(String name, City city, Gender gender, int age) {
+        PersonRequestDto personRequestDto = new PersonRequestDto();
+        personRequestDto.setName(name);
+        personRequestDto.setCity(city);
+        personRequestDto.setGender(gender);
+        personRequestDto.setAge(age);
+
+        return (Person) personRepository.save(personRequestDto.notVaccinationPersonToEntity());
     }
 
     private Person createPerson(String name, City city, Gender gender, int age, String phoneNumber, Vaccine vaccine, EachRecord eachRecord) {

@@ -1,6 +1,10 @@
 package coronaManagement.domain.person.repo;
 
 import coronaManagement.domain.person.*;
+import coronaManagement.global.enums.City;
+import coronaManagement.global.enums.Gender;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,6 +29,18 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     //밀접 접촉자 조회
     @Query("select cp from ContactedPerson cp")
     List<ContactedPerson> findContactedPerson();
+
+    //도시로 페이징
+    @Query("select p from Person p")
+    Page<T> findPageByCity(City city, Pageable pageable);
+
+    //나이로 페이징
+    @Query("select p from Person p")
+    Page<T> findPageByAge(int age, Pageable pageable);
+
+    //성별로 페이징
+    @Query("select p from Person p")
+    Page<T> findPageByGender(Gender gender, Pageable pageable);
 
     //백신 재접종 대상자 조회
     @Query("select p from Person p where p.vaccinationCount < :nextVaccinationCount and p.vaccinationCount > 0")
