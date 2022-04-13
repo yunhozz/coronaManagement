@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class PersonDto {
+public class PersonRequestDto {
 
     @NotEmpty private String name;
     @NotEmpty private City city;

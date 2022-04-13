@@ -4,7 +4,7 @@ import coronaManagement.domain.record.TotalRecord;
 import lombok.Data;
 
 @Data
-public class TotalRecordDto {
+public class TotalRecordRequestDto {
 
     private int totalInfection;
     private int totalDeath;

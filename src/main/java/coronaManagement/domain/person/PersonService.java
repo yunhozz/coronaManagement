@@ -2,7 +2,7 @@ package coronaManagement.domain.person;
 
 import coronaManagement.domain.hospital.repo.HospitalRepository;
 import coronaManagement.domain.person.repo.PersonRepository;
-import coronaManagement.global.dto.request.PersonDto;
+import coronaManagement.global.dto.request.PersonRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,68 +17,32 @@ public class PersonService {
     private final PersonRepository personRepository;
     private final HospitalRepository hospitalRepository;
 
-    public Long saveVaccinationPerson(PersonDto personDto) {
-        Person person = personDto.vaccinationPersonToEntity();
+    public Long saveVaccinationPerson(PersonRequestDto personRequestDto) {
+        Person person = personRequestDto.vaccinationPersonToEntity();
         personRepository.save(person);
 
         return person.getId();
     }
 
-    public Long saveNotVaccinationPerson(PersonDto personDto) {
-        Person person = personDto.notVaccinationPersonToEntity();
+    public Long saveNotVaccinationPerson(PersonRequestDto personRequestDto) {
+        Person person = personRequestDto.notVaccinationPersonToEntity();
         personRepository.save(person);
 
         return person.getId();
     }
 
-    public Long saveInfectedPerson(PersonDto personDto) {
-        Person person = personDto.infectedPersonToEntity();
+    public Long saveInfectedPerson(PersonRequestDto personRequestDto) {
+        Person person = personRequestDto.infectedPersonToEntity();
         personRepository.save(person);
 
         return person.getId();
     }
 
-    public Long saveContactedPerson(PersonDto personDto) {
-        Person person = personDto.contactedPersonToEntity();
+    public Long saveContactedPerson(PersonRequestDto personRequestDto) {
+        Person person = personRequestDto.contactedPersonToEntity();
         personRepository.save(person);
 
         return person.getId();
-    }
-
-    //백신 재접종 대상자 검색
-    @Transactional(readOnly = true)
-    public List<Person> findReVaccinationPerson(int nextVaccinationCount) {
-
-    }
-
-    //백신 재접종
-    public void reVaccination(Long personId) {
-
-    }
-
-    //감염 상태에서 회복
-    public void recover(Long personId) {
-
-    }
-
-    //감염 상태에서 죽음
-    public void passAway(Long personId) {
-
-    }
-
-    //백신 접종자 감염 처리
-    public void getInfectionForV(Long personId) {
-
-    }
-
-    //백신 미접종자 감염 처리
-    public void getInfectionForNV(Long personId) {
-
-    }
-
-    //밀접 접촉자 감염 처리
-    public void getInfectionForC(Long personId) {
-
     }
 
     @Transactional(readOnly = true)
