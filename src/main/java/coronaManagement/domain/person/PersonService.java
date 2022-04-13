@@ -2,6 +2,8 @@ package coronaManagement.domain.person;
 
 import coronaManagement.domain.hospital.repo.HospitalRepository;
 import coronaManagement.domain.person.repo.PersonRepository;
+import coronaManagement.domain.vaccine.VaccineRepository;
+import coronaManagement.domain.virus.VirusRepository;
 import coronaManagement.global.dto.request.PersonRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import java.util.List;
 public class PersonService {
 
     private final PersonRepository personRepository;
+    private final VaccineRepository vaccineRepository;
+    private final VirusRepository virusRepository;
     private final HospitalRepository hospitalRepository;
 
     public Long saveVaccinationPerson(PersonRequestDto personRequestDto) {
@@ -37,6 +41,8 @@ public class PersonService {
 
         return person.getId();
     }
+
+    public void
 
     public Long saveContactedPerson(PersonRequestDto personRequestDto) {
         Person person = personRequestDto.contactedPersonToEntity();
