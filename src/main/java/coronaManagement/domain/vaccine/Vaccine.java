@@ -25,7 +25,7 @@ public class Vaccine extends BaseEntity {
     private String developer;
     private int stockQuantity;
 
-    public Vaccine(String name, String developer, int stockQuantity) {
+    private Vaccine(String name, String developer, int stockQuantity) {
         this.name = name;
         this.developer = developer;
         this.stockQuantity = stockQuantity;

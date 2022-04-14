@@ -241,7 +241,7 @@ class PersonRepositoryTest {
     }
 
     private Vaccine createVaccine() {
-        Vaccine vaccine = new Vaccine("vac", "doctor", 10);
+        Vaccine vaccine = Vaccine.createVaccine("vac", "doctor", 10);
         vaccineRepository.save(vaccine);
 
         return vaccine;
