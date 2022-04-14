@@ -27,11 +27,11 @@ public class PersonRequestDto {
     @NotEmpty private String phoneNumber;
 
     private EachRecord eachRecord;
-    private String distinguishId;
 
     //infectedPerson
     private Virus virus;
     private Address infectedAddress;
+    private String distinguishId;
 
     //contactedPerson
     private RouteInformation routeInformation;

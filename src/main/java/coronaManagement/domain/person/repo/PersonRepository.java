@@ -42,6 +42,10 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     @Query("select p from Person p")
     Page<T> findPageByGender(Gender gender, Pageable pageable);
 
+    //성별과 나이로 조회
+    @Query("select p from Person p where p.gender = :gender and p.age = :age")
+    List<T> findPeopleWithGenderAndAge(@Param("gender") Gender gender, @Param("age") int age);
+
     //백신 재접종 대상자 조회
     @Query("select p from Person p where p.vaccinationCount < :nextVaccinationCount and p.vaccinationCount > 0")
     List<T> findPeopleWhoMustReVaccination(@Param("nextVaccinationCount") int nextVaccinationCount);

@@ -1,5 +1,7 @@
 package coronaManagement.domain.person;
 
+import coronaManagement.domain.hospital.Hospital;
+import coronaManagement.domain.hospital.repo.HospitalRepository;
 import coronaManagement.domain.person.repo.PersonRepository;
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.EachRecordRepository;
@@ -7,12 +9,15 @@ import coronaManagement.domain.record.TotalRecord;
 import coronaManagement.domain.record.TotalRecordRepository;
 import coronaManagement.domain.vaccine.Vaccine;
 import coronaManagement.domain.vaccine.VaccineRepository;
+import coronaManagement.domain.virus.Virus;
+import coronaManagement.domain.virus.VirusRepository;
 import coronaManagement.global.dto.request.EachRecordRequestDto;
 import coronaManagement.global.dto.request.PersonRequestDto;
 import coronaManagement.global.dto.request.TotalRecordRequestDto;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import coronaManagement.global.enums.InfectionStatus;
+import coronaManagement.global.enums.VirusType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,11 +37,13 @@ class PersonRepositoryTest {
 
     @Autowired PersonRepository personRepository;
     @Autowired VaccineRepository vaccineRepository;
+    @Autowired VirusRepository virusRepository;
+    @Autowired HospitalRepository hospitalRepository;
     @Autowired EachRecordRepository eachRecordRepository;
     @Autowired TotalRecordRepository totalRecordRepository;
 
     @Test
-    void findPeopleWhoMustReVaccination() {
+    void findPeopleWhoMustReVaccination() throws Exception {
         //given
         Vaccine vaccine = createVaccine();
         EachRecord eachRecord = createRecord();
@@ -63,7 +70,7 @@ class PersonRepositoryTest {
     }
 
     @Test
-    void findPersonWhoCanReVaccination() {
+    void findPersonWhoCanReVaccination() throws Exception {
         //given
         Vaccine vaccine = createVaccine();
         EachRecord eachRecord = createRecord();
@@ -87,7 +94,7 @@ class PersonRepositoryTest {
 
     @Test
     @Rollback(value = false)
-    void findPageBy() {
+    void findPageBy() throws Exception {
         //given
         createPerson("yunho1", City.SEOUL , Gender.MALE, 27);
         createPerson("yunho2", City.SEOUL , Gender.FEMALE, 27);
@@ -120,7 +127,55 @@ class PersonRepositoryTest {
     }
 
     @Test
-    void findVpWithVaccine() {
+    void findPeopleWithGenderAndAge() throws Exception {
+        //given
+        createPerson("yunho1", City.SEOUL , Gender.MALE, 27);
+        createPerson("yunho2", City.SEOUL , Gender.FEMALE, 27);
+        createPerson("yunho3", City.BUSAN , Gender.MALE, 37);
+        createPerson("yunho4", City.BUSAN , Gender.FEMALE, 17);
+        createPerson("yunho5", City.INCHEON , Gender.MALE, 17);
+        createPerson("yunho6", City.INCHEON , Gender.FEMALE, 37);
+
+        //when
+        List<Person> result = personRepository.findPeopleWithGenderAndAge(Gender.MALE, 27);
+
+        //then
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0).getName()).isEqualTo("yunho1");
+
+        for (Person person : result) {
+            System.out.println("name = " + person.getName() + ", gender = " + person.getGender() + ", age = " + person.getAge());
+        }
+    }
+
+    @Test
+    @Rollback(value = false)
+    void findPeopleWhoInfectedAndHospitalized() throws Exception {
+        //given
+        Virus virus = createVirus();
+        EachRecord eachRecord = createRecord();
+        Hospital hospital = createHospital();
+
+        InfectedPerson person1 = (InfectedPerson) createPerson("yunho1", virus, eachRecord);
+        InfectedPerson person2 = (InfectedPerson) createPerson("yunho2", virus, eachRecord);
+        InfectedPerson person3 = (InfectedPerson) createPerson("yunho3", virus, eachRecord);
+
+        //when
+        hospital.hospitalize(person1, person2, person3); //입원 처리
+        List<InfectedPerson> result = personRepository.findPeopleWhoInfectedAndHospitalized();
+
+        //then
+        assertThat(result.size()).isEqualTo(3);
+        assertThat(result.get(0).getHospital().getName()).isEqualTo("hos");
+        assertThat(result.get(0).getHospital().getNumberOfBed()).isEqualTo(97);
+
+        for (InfectedPerson person : result) {
+            System.out.println("person.name = " + person.getName() + ", hospital.name = " + person.getHospital().getName());
+        }
+    }
+
+    @Test
+    void findVpWithVaccine() throws Exception {
         //given
         Vaccine vaccine = createVaccine();
         EachRecord eachRecord = createRecord();
@@ -136,7 +191,7 @@ class PersonRepositoryTest {
     }
 
     @Test
-    void findAllWithContactedPerson() {
+    void findAllWithContactedPerson() throws Exception {
         //given
         Vaccine vaccine = createVaccine();
         EachRecord eachRecord = createRecord();
@@ -160,6 +215,16 @@ class PersonRepositoryTest {
         return (Person) personRepository.save(personRequestDto.notVaccinationPersonToEntity());
     }
 
+    private Person createPerson(String name, Virus virus, EachRecord eachRecord) {
+        PersonRequestDto personRequestDto = new PersonRequestDto();
+        personRequestDto.setName(name);
+        personRequestDto.setVirus(virus);
+        personRequestDto.setEachRecord(eachRecord);
+        InfectedPerson infectedPerson = (InfectedPerson) personRepository.save(personRequestDto.infectedPersonToEntity());
+
+        return infectedPerson;
+    }
+
     private Person createPerson(String name, City city, Gender gender, int age, String phoneNumber, Vaccine vaccine, EachRecord eachRecord) {
         PersonRequestDto personRequestDto = new PersonRequestDto();
         personRequestDto.setName(name);
@@ -178,6 +243,20 @@ class PersonRepositoryTest {
         vaccineRepository.save(vaccine);
 
         return vaccine;
+    }
+
+    private Virus createVirus() {
+        Virus virus = Virus.createVirus(VirusType.ALPHA, "China");
+        virusRepository.save(virus);
+
+        return virus;
+    }
+
+    private Hospital createHospital() {
+        Hospital hospital = new Hospital("hos", 100);
+        hospitalRepository.save(hospital);
+
+        return hospital;
     }
 
     private EachRecord createRecord() {
