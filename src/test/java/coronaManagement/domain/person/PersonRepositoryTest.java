@@ -14,10 +14,7 @@ import coronaManagement.domain.virus.VirusRepository;
 import coronaManagement.global.dto.request.EachRecordRequestDto;
 import coronaManagement.global.dto.request.PersonRequestDto;
 import coronaManagement.global.dto.request.TotalRecordRequestDto;
-import coronaManagement.global.enums.City;
-import coronaManagement.global.enums.Gender;
-import coronaManagement.global.enums.InfectionStatus;
-import coronaManagement.global.enums.VirusType;
+import coronaManagement.global.enums.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -161,13 +158,16 @@ class PersonRepositoryTest {
         InfectedPerson person3 = (InfectedPerson) createPerson("yunho3", virus, eachRecord);
 
         //when
-        hospital.hospitalize(person1, person2, person3); //입원 처리
+        hospital.hospitalize(person1, person2); //person3을 제외한 입원 처리
         List<InfectedPerson> result = personRepository.findPeopleWhoInfectedAndHospitalized();
 
         //then
-        assertThat(result.size()).isEqualTo(3);
+        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.get(0).getVirus().getInfectionCount()).isEqualTo(3);
+        assertThat(result.get(0).getEachRecord().getTodayInfection()).isEqualTo(3);
         assertThat(result.get(0).getHospital().getName()).isEqualTo("hos");
-        assertThat(result.get(0).getHospital().getNumberOfBed()).isEqualTo(97);
+        assertThat(result.get(0).getHospital().getNumberOfBed()).isEqualTo(98);
+        assertThat(result.contains(PhysicalStatus.INFECTED)).isFalse();
 
         for (InfectedPerson person : result) {
             System.out.println("person.name = " + person.getName() + ", hospital.name = " + person.getHospital().getName());
