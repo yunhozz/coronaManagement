@@ -163,6 +163,7 @@ class PersonRepositoryTest {
 
         //then
         assertThat(result.size()).isEqualTo(2);
+        assertThat(result.stream().allMatch(i -> i.getPhysicalStatus() == PhysicalStatus.HOSPITALIZED)).isTrue();
         assertThat(result.get(0).getVirus().getInfectionCount()).isEqualTo(3);
         assertThat(result.get(0).getEachRecord().getTodayInfection()).isEqualTo(3);
         assertThat(result.get(0).getHospital().getName()).isEqualTo("hos");
