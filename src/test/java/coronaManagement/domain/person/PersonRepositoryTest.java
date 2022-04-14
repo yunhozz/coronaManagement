@@ -167,7 +167,8 @@ class PersonRepositoryTest {
         assertThat(result.get(0).getEachRecord().getTodayInfection()).isEqualTo(3);
         assertThat(result.get(0).getHospital().getName()).isEqualTo("hos");
         assertThat(result.get(0).getHospital().getNumberOfBed()).isEqualTo(98);
-        assertThat(result.contains(PhysicalStatus.INFECTED)).isFalse();
+        assertThat(person3.getPhysicalStatus()).isEqualTo(PhysicalStatus.INFECTED);
+        assertThat(person3.getHospital()).isNull();
 
         for (InfectedPerson person : result) {
             System.out.println("person.name = " + person.getName() + ", hospital.name = " + person.getHospital().getName());
