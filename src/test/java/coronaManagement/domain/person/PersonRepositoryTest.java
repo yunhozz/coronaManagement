@@ -158,7 +158,7 @@ class PersonRepositoryTest {
         InfectedPerson person3 = (InfectedPerson) createPerson("yunho3", virus, eachRecord);
 
         //when
-        hospital.hospitalize(person1, person2); //person3을 제외한 입원 처리
+        hospital.hospitalize(person1, person2); //person3을 제외한 입원 처리, Person - Hospital 연관관계 생성
         List<InfectedPerson> result = personRepository.findPeopleWhoInfectedAndHospitalized();
 
         //then
