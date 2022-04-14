@@ -3,7 +3,6 @@ package coronaManagement.domain.person.repo;
 import coronaManagement.domain.person.ContactedPerson;
 import coronaManagement.domain.person.InfectedPerson;
 import coronaManagement.domain.person.VaccinationPerson;
-import coronaManagement.domain.routeInformation.RouteInformation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -39,6 +38,17 @@ public class PersonRepositoryCustomImpl implements PersonRepositoryCustom {
     }
 
     /*
+    InfectedPerson -> Hospital
+     */
+    @Override
+    public List<InfectedPerson> findIpWithHospital() {
+        return em.createQuery(
+                "select ip from InfectedPerson ip" +
+                        " join fetch ip.hospital h", InfectedPerson.class)
+                .getResultList();
+    }
+
+    /*
     InfectedPerson -> Virus, Hospital
      */
     @Override
@@ -51,13 +61,13 @@ public class PersonRepositoryCustomImpl implements PersonRepositoryCustom {
     }
 
     /*
-    RouteInformation -> InfectedPerson
+    ContactedPerson -> RouteInformation
      */
     @Override
-    public List<RouteInformation> findRouteWithInfectedPerson() {
+    public List<ContactedPerson> findCpWithRouteInformation() {
         return em.createQuery(
-                "select ri from RouteInformation ri" +
-                        " join fetch ri.infectedPerson ip", RouteInformation.class)
+                "select cp from ContactedPerson cp" +
+                        " join fetch cp.routeInformation ri", ContactedPerson.class)
                 .getResultList();
     }
 

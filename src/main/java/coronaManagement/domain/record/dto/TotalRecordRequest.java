@@ -1,10 +1,12 @@
-package coronaManagement.global.dto.request;
+package coronaManagement.domain.record.dto;
 
 import coronaManagement.domain.record.TotalRecord;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class TotalRecordRequestDto {
+@NoArgsConstructor
+public class TotalRecordRequest {
 
     private int totalInfection;
     private int totalDeath;

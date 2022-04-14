@@ -1,13 +1,15 @@
-package coronaManagement.global.dto.request;
+package coronaManagement.domain.record.dto;
 
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.TotalRecord;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-public class EachRecordRequestDto {
+@NoArgsConstructor
+public class EachRecordRequest {
 
     private TotalRecord totalRecord;
     private int year;

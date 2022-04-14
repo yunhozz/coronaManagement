@@ -2,6 +2,7 @@ package coronaManagement.domain.person;
 
 import coronaManagement.domain.hospital.Hospital;
 import coronaManagement.domain.hospital.repo.HospitalRepository;
+import coronaManagement.domain.person.dto.PersonRequest;
 import coronaManagement.domain.person.repo.PersonRepository;
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.EachRecordRepository;
@@ -11,9 +12,8 @@ import coronaManagement.domain.vaccine.Vaccine;
 import coronaManagement.domain.vaccine.VaccineRepository;
 import coronaManagement.domain.virus.Virus;
 import coronaManagement.domain.virus.VirusRepository;
-import coronaManagement.global.dto.request.EachRecordRequestDto;
-import coronaManagement.global.dto.request.PersonRequestDto;
-import coronaManagement.global.dto.request.TotalRecordRequestDto;
+import coronaManagement.domain.record.dto.EachRecordRequest;
+import coronaManagement.domain.record.dto.TotalRecordRequest;
 import coronaManagement.global.enums.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -208,36 +208,36 @@ class PersonRepositoryTest {
     }
 
     private Person createPerson(String name, City city, Gender gender, int age) {
-        PersonRequestDto personRequestDto = new PersonRequestDto();
-        personRequestDto.setName(name);
-        personRequestDto.setCity(city);
-        personRequestDto.setGender(gender);
-        personRequestDto.setAge(age);
+        PersonRequest personRequest = new PersonRequest();
+        personRequest.setName(name);
+        personRequest.setCity(city);
+        personRequest.setGender(gender);
+        personRequest.setAge(age);
 
-        return (Person) personRepository.save(personRequestDto.notVaccinationPersonToEntity());
+        return (Person) personRepository.save(personRequest.notVaccinationPersonToEntity());
     }
 
     private Person createPerson(String name, Virus virus, EachRecord eachRecord) {
-        PersonRequestDto personRequestDto = new PersonRequestDto();
-        personRequestDto.setName(name);
-        personRequestDto.setVirus(virus);
-        personRequestDto.setEachRecord(eachRecord);
-        InfectedPerson infectedPerson = (InfectedPerson) personRepository.save(personRequestDto.infectedPersonToEntity());
+        PersonRequest personRequest = new PersonRequest();
+        personRequest.setName(name);
+        personRequest.setVirus(virus);
+        personRequest.setEachRecord(eachRecord);
+        InfectedPerson infectedPerson = (InfectedPerson) personRepository.save(personRequest.infectedPersonToEntity());
 
         return infectedPerson;
     }
 
     private Person createPerson(String name, City city, Gender gender, int age, String phoneNumber, Vaccine vaccine, EachRecord eachRecord) {
-        PersonRequestDto personRequestDto = new PersonRequestDto();
-        personRequestDto.setName(name);
-        personRequestDto.setCity(city);
-        personRequestDto.setGender(gender);
-        personRequestDto.setAge(age);
-        personRequestDto.setPhoneNumber(phoneNumber);
-        personRequestDto.setVaccine(vaccine);
-        personRequestDto.setEachRecord(eachRecord);
+        PersonRequest personRequest = new PersonRequest();
+        personRequest.setName(name);
+        personRequest.setCity(city);
+        personRequest.setGender(gender);
+        personRequest.setAge(age);
+        personRequest.setPhoneNumber(phoneNumber);
+        personRequest.setVaccine(vaccine);
+        personRequest.setEachRecord(eachRecord);
 
-        return (Person) personRepository.save(personRequestDto.vaccinationPersonToEntity());
+        return (Person) personRepository.save(personRequest.vaccinationPersonToEntity());
     }
 
     private Vaccine createVaccine() {
@@ -262,15 +262,15 @@ class PersonRepositoryTest {
     }
 
     private EachRecord createRecord() {
-        TotalRecordRequestDto totalRecordRequestDto = new TotalRecordRequestDto();
-        TotalRecord totalRecord = totalRecordRepository.save(totalRecordRequestDto.toEntity());
+        TotalRecordRequest totalRecordRequest = new TotalRecordRequest();
+        TotalRecord totalRecord = totalRecordRepository.save(totalRecordRequest.toEntity());
 
-        EachRecordRequestDto eachRecordRequestDto = new EachRecordRequestDto();
-        eachRecordRequestDto.setYear(2022);
-        eachRecordRequestDto.setMonth(4);
-        eachRecordRequestDto.setDay(11);
-        eachRecordRequestDto.setTotalRecord(totalRecord);
+        EachRecordRequest eachRecordRequest = new EachRecordRequest();
+        eachRecordRequest.setYear(2022);
+        eachRecordRequest.setMonth(4);
+        eachRecordRequest.setDay(11);
+        eachRecordRequest.setTotalRecord(totalRecord);
 
-        return eachRecordRepository.save(eachRecordRequestDto.toEntity());
+        return eachRecordRepository.save(eachRecordRequest.toEntity());
     }
 }

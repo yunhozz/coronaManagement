@@ -1,4 +1,4 @@
-package coronaManagement.global.dto.request;
+package coronaManagement.domain.person.dto;
 
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.routeInformation.Address;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class PersonRequestDto {
+public class PersonRequest {
 
     @NotEmpty private String name;
     @NotEmpty private City city;

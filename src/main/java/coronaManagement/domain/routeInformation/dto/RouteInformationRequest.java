@@ -1,15 +1,17 @@
-package coronaManagement.global.dto.request;
+package coronaManagement.domain.routeInformation.dto;
 
 import coronaManagement.global.enums.City;
 import coronaManagement.domain.person.InfectedPerson;
 import coronaManagement.domain.routeInformation.Address;
 import coronaManagement.domain.routeInformation.RouteInformation;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-public class RouteInformationRequestDto {
+@NoArgsConstructor
+public class RouteInformationRequest {
 
     private InfectedPerson infectedPerson;
 

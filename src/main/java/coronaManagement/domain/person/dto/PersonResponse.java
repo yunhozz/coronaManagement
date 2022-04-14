@@ -1,4 +1,4 @@
-package coronaManagement.global.dto.response;
+package coronaManagement.domain.person.dto;
 
 import coronaManagement.domain.person.Person;
 import coronaManagement.global.enums.City;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PersonResponseDto {
+public class PersonResponse {
 
     private String name;
     private City city;
@@ -16,7 +16,7 @@ public class PersonResponseDto {
     private int age;
     private String phoneNumber;
 
-    public PersonResponseDto(Person person) {
+    public PersonResponse(Person person) {
         name = person.getName();
         city = person.getCity();
         gender = person.getGender();
