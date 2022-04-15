@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -49,8 +50,22 @@ public class PersonService {
         return person.getId();
     }
 
-    public void reVaccination(Long personId) {
+    public void reVaccination(Long personId) throws Exception {
+        Optional<VaccinationPerson> findPerson = personRepository.findPersonWhoCanReVaccination(personId);
 
+        if (findPerson.isEmpty()) {
+            throw new IllegalStateException("This person can't be re vaccinated.");
+        }
+
+        VaccinationPerson vaccinationPerson = findPerson.get();
+        vaccinationPerson.reVaccination();
+    }
+
+
+
+    @Transactional(readOnly = true)
+    public List<VaccinationPerson> findReVaccinationPeople(int nextVaccinationCount) {
+        return personRepository.findPeopleWhoMustReVaccination(nextVaccinationCount);
     }
 
     @Transactional(readOnly = true)
