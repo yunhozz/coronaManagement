@@ -2,6 +2,7 @@ package coronaManagement.domain.person;
 
 import coronaManagement.domain.hospital.repo.HospitalRepository;
 import coronaManagement.domain.person.dto.PersonRequest;
+import coronaManagement.domain.person.dto.PersonResponse;
 import coronaManagement.domain.person.repo.PersonRepository;
 import coronaManagement.domain.vaccine.VaccineRepository;
 import coronaManagement.domain.virus.VirusRepository;
@@ -50,7 +51,7 @@ public class PersonService {
         return person.getId();
     }
 
-    public void reVaccination(Long personId) throws Exception {
+    public void reVaccination(Long personId) {
         Optional<VaccinationPerson> findPerson = personRepository.findPersonWhoCanReVaccination(personId);
 
         if (findPerson.isEmpty()) {
@@ -61,7 +62,47 @@ public class PersonService {
         vaccinationPerson.reVaccination();
     }
 
+    public void getInfected(Long personId, PersonRequest personRequest) {
+        Optional<Person> optionalPerson = personRepository.findById(personId);
 
+        if (optionalPerson.isEmpty()) {
+            throw new IllegalStateException("Can't find person.");
+        }
+
+        Person findPerson = optionalPerson.get();
+        String dtype = personRepository.findPersonWhereIncluded(findPerson);
+
+        switch (dtype) {
+            case "V" -> {
+                VaccinationPerson vaccinationPerson = (VaccinationPerson) findPerson;
+                PersonResponse personResponse = new PersonResponse(vaccinationPerson);
+                personRepository.delete(vaccinationPerson);
+
+                createPersonRequest(personRequest, personResponse);
+                personRepository.save(personRequest.infectedPersonToEntity());
+            }
+
+            case "NV" -> {
+                NotVaccinationPerson notVaccinationPerson = (NotVaccinationPerson) findPerson;
+                PersonResponse personResponse = new PersonResponse(findPerson);
+                personRepository.delete(notVaccinationPerson);
+
+                createPersonRequest(personRequest, personResponse);
+                personRepository.save(personRequest.infectedPersonToEntity());
+            }
+
+            case "C" -> {
+                ContactedPerson contactedPerson = (ContactedPerson) findPerson;
+                PersonResponse personResponse = new PersonResponse(findPerson);
+                personRepository.delete(contactedPerson);
+
+                createPersonRequest(personRequest, personResponse);
+                personRepository.save(personRequest.infectedPersonToEntity());
+            }
+
+            default -> throw new IllegalStateException("This person is already infected.");
+        }
+    }
 
     @Transactional(readOnly = true)
     public List<VaccinationPerson> findReVaccinationPeople(int nextVaccinationCount) {
@@ -77,5 +118,13 @@ public class PersonService {
     @Transactional(readOnly = true)
     public List<Person> findPeople() {
         return personRepository.findAll();
+    }
+
+    private void createPersonRequest(PersonRequest personRequest, PersonResponse personResponse) {
+        personRequest.setName(personResponse.getName());
+        personRequest.setCity(personResponse.getCity());
+        personRequest.setGender(personResponse.getGender());
+        personRequest.setAge(personResponse.getAge());
+        personRequest.setPhoneNumber(personResponse.getPhoneNumber());
     }
 }

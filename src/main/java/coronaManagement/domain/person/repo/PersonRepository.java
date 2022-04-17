@@ -19,7 +19,7 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     List<VaccinationPerson> findVaccinationPerson();
 
     //백신 미접종자 조회
-    @Query("select nv from NotVaccinationPerson nv where nv.infectionStatus = 'BEFORE_INFECT' or nv.infectionStatus = 'INFECTED'")
+    @Query("select nv from NotVaccinationPerson nv where nv.infectionStatus='BEFORE_INFECT' or nv.infectionStatus = 'INFECTED'")
     List<NotVaccinationPerson> findNotVaccinationPerson();
 
     //감염자 조회
@@ -29,6 +29,10 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     //밀접 접촉자 조회
     @Query("select cp from ContactedPerson cp")
     List<ContactedPerson> findContactedPerson();
+
+    //어디에 속해있는지 조회 (sql)
+    @Query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='FIND_PERSON'")
+    String findPersonWhereIncluded(Person findPerson);
 
     //도시로 페이징
     @Query("select p from Person p")
@@ -55,10 +59,10 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     Optional<T> findPersonWhoCanReVaccination(@Param("personId") Long personId);
 
     //감염자 중 격리 조치된 사람 조회
-    @Query("select p from Person p where p.physicalStatus = 'ISOLATED' order by infectedTime desc")
+    @Query("select p from Person p where p.physicalStatus='ISOLATED' order by infectedTime desc")
     List<T> findPeopleWhoInfectedAndIsolated();
 
     //감염자 중 병원에 이송된 사람 조회
-    @Query("select p from Person p where p.physicalStatus = 'HOSPITALIZED' order by infectedTime desc")
+    @Query("select p from Person p where p.physicalStatus='HOSPITALIZED' order by infectedTime desc")
     List<T> findPeopleWhoInfectedAndHospitalized();
 }
