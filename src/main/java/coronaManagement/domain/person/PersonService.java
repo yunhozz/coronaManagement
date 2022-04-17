@@ -69,13 +69,19 @@ public class PersonService {
             throw new IllegalStateException("Can't find person.");
         }
 
-        Person findPerson = optionalPerson.get();
-        String dType = personRepository.findPersonWhereIncluded(findPerson.getId());
+        Person person = optionalPerson.get();
+
+        //감염자 -> true
+        if (personRepository.findPersonWhoInfectedOrNot(person.getId())) {
+            throw new IllegalStateException("This person is already infected.");
+        }
+
+        String dType = personRepository.findPersonWhereIncluded(person.getId()); //dType 조회
+        String distinguishId = person.getId().toString();
 
         switch (dType) {
             case "V" -> {
-                VaccinationPerson vaccinationPerson = (VaccinationPerson) findPerson;
-                String distinguishId = findPerson.getId().toString();
+                VaccinationPerson vaccinationPerson = (VaccinationPerson) person;
                 PersonResponse personResponse = new PersonResponse(vaccinationPerson);
 
                 createPersonRequest(personRequest, personResponse, distinguishId);
@@ -85,9 +91,8 @@ public class PersonService {
             }
 
             case "NV" -> {
-                NotVaccinationPerson notVaccinationPerson = (NotVaccinationPerson) findPerson;
-                String distinguishId = findPerson.getId().toString();
-                PersonResponse personResponse = new PersonResponse(findPerson);
+                NotVaccinationPerson notVaccinationPerson = (NotVaccinationPerson) person;
+                PersonResponse personResponse = new PersonResponse(notVaccinationPerson);
 
                 createPersonRequest(personRequest, personResponse, distinguishId);
                 notVaccinationPerson.getInfected();
@@ -96,9 +101,8 @@ public class PersonService {
             }
 
             case "C" -> {
-                ContactedPerson contactedPerson = (ContactedPerson) findPerson;
-                String distinguishId = findPerson.getId().toString();
-                PersonResponse personResponse = new PersonResponse(findPerson);
+                ContactedPerson contactedPerson = (ContactedPerson) person;
+                PersonResponse personResponse = new PersonResponse(contactedPerson);
 
                 createPersonRequest(personRequest, personResponse, distinguishId);
                 contactedPerson.getInfected();

@@ -34,6 +34,10 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     @Query("select type(p) from Person p where p.id = :personId")
     String findPersonWhereIncluded(@Param("personId") Long personId);
 
+    //감염 전 상태인지 판단
+    @Query("select case when p.infectionStatus = 'INFECTED' then true else false end from Person p")
+    boolean findPersonWhoInfectedOrNot(Long personId);
+
     //도시로 페이징
     @Query("select p from Person p")
     Page<T> findPageByCity(City city, Pageable pageable);
