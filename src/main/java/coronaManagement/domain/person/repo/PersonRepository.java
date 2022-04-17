@@ -19,7 +19,7 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     List<VaccinationPerson> findVaccinationPerson();
 
     //백신 미접종자 조회
-    @Query("select nv from NotVaccinationPerson nv where nv.infectionStatus='BEFORE_INFECT' or nv.infectionStatus = 'INFECTED'")
+    @Query("select nv from NotVaccinationPerson nv where nv.infectionStatus = 'BEFORE_INFECT' or nv.infectionStatus = 'INFECTED'")
     List<NotVaccinationPerson> findNotVaccinationPerson();
 
     //감염자 조회
@@ -30,9 +30,9 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     @Query("select cp from ContactedPerson cp")
     List<ContactedPerson> findContactedPerson();
 
-    //어디에 속해있는지 조회 (sql)
-    @Query("select column_name from information_schema.columns where table_name='findPerson'")
-    String findPersonWhereIncluded(Person findPerson);
+    //dType 조회
+    @Query("select type(p) from Person p where p.id = :personId")
+    String findPersonWhereIncluded(@Param("personId") Long personId);
 
     //도시로 페이징
     @Query("select p from Person p")
@@ -50,6 +50,10 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     @Query("select p from Person p where p.gender = :gender and p.age = :age")
     List<T> findPeopleWithGenderAndAge(@Param("gender") Gender gender, @Param("age") int age);
 
+    //평균 나이를 넘는 사람들 조회
+    @Query("select p from Person p where p.age > (select avg(p1.age) from Person p1)")
+    List<T> findPeopleOverThanAvgAge();
+
     //백신 재접종 대상자 조회
     @Query("select p from Person p where p.vaccinationCount < :nextVaccinationCount and p.vaccinationCount > 0")
     List<T> findPeopleWhoMustReVaccination(@Param("nextVaccinationCount") int nextVaccinationCount);
@@ -59,10 +63,10 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     Optional<T> findPersonWhoCanReVaccination(@Param("personId") Long personId);
 
     //감염자 중 격리 조치된 사람 조회
-    @Query("select p from Person p where p.physicalStatus='ISOLATED' order by infectedTime desc")
+    @Query("select p from Person p where p.physicalStatus = 'ISOLATED' order by infectedTime desc")
     List<T> findPeopleWhoInfectedAndIsolated();
 
     //감염자 중 병원에 이송된 사람 조회
-    @Query("select p from Person p where p.physicalStatus='HOSPITALIZED' order by infectedTime desc")
+    @Query("select p from Person p where p.physicalStatus = 'HOSPITALIZED' order by infectedTime desc")
     List<T> findPeopleWhoInfectedAndHospitalized();
 }

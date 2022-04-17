@@ -70,7 +70,7 @@ public class PersonService {
         }
 
         Person findPerson = optionalPerson.get();
-        String dType = personRepository.findPersonWhereIncluded(findPerson);
+        String dType = personRepository.findPersonWhereIncluded(findPerson.getId());
 
         switch (dType) {
             case "V" -> {
