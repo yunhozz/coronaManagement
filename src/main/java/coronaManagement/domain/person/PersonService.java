@@ -62,9 +62,6 @@ public class PersonService {
         vaccinationPerson.reVaccination();
     }
 
-    /*
-    기존 테이블을 delete 한 후 InfectedPerson 테이블 생성, save
-     */
     public void getInfected(Long personId, PersonRequest personRequest) {
         Optional<Person> optionalPerson = personRepository.findById(personId);
 
@@ -78,28 +75,34 @@ public class PersonService {
         switch (dType) {
             case "V" -> {
                 VaccinationPerson vaccinationPerson = (VaccinationPerson) findPerson;
+                String distinguishId = findPerson.getId().toString();
                 PersonResponse personResponse = new PersonResponse(vaccinationPerson);
-                personRepository.delete(vaccinationPerson);
 
-                createPersonRequest(personRequest, personResponse);
+                createPersonRequest(personRequest, personResponse, distinguishId);
+                vaccinationPerson.getInfected();
+
                 personRepository.save(personRequest.infectedPersonToEntity());
             }
 
             case "NV" -> {
                 NotVaccinationPerson notVaccinationPerson = (NotVaccinationPerson) findPerson;
+                String distinguishId = findPerson.getId().toString();
                 PersonResponse personResponse = new PersonResponse(findPerson);
-                personRepository.delete(notVaccinationPerson);
 
-                createPersonRequest(personRequest, personResponse);
+                createPersonRequest(personRequest, personResponse, distinguishId);
+                notVaccinationPerson.getInfected();
+
                 personRepository.save(personRequest.infectedPersonToEntity());
             }
 
             case "C" -> {
                 ContactedPerson contactedPerson = (ContactedPerson) findPerson;
+                String distinguishId = findPerson.getId().toString();
                 PersonResponse personResponse = new PersonResponse(findPerson);
-                personRepository.delete(contactedPerson);
 
-                createPersonRequest(personRequest, personResponse);
+                createPersonRequest(personRequest, personResponse, distinguishId);
+                contactedPerson.getInfected();
+
                 personRepository.save(personRequest.infectedPersonToEntity());
             }
 
@@ -123,11 +126,12 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    private void createPersonRequest(PersonRequest personRequest, PersonResponse personResponse) {
+    private void createPersonRequest(PersonRequest personRequest, PersonResponse personResponse, String distinguishId) {
         personRequest.setName(personResponse.getName());
         personRequest.setCity(personResponse.getCity());
         personRequest.setGender(personResponse.getGender());
         personRequest.setAge(personResponse.getAge());
         personRequest.setPhoneNumber(personResponse.getPhoneNumber());
+        personRequest.setDistinguishId(distinguishId);
     }
 }

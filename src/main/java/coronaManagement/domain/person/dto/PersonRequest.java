@@ -28,9 +28,13 @@ public class PersonRequest {
 
     private EachRecord eachRecord;
 
+    //vaccinationPerson
+    private Vaccine vaccine;
+    private int vaccinationCount;
+    private LocalDateTime vaccinationDate;
+
     //infectedPerson
     private Virus virus;
-    private Address infectedAddress;
     private String distinguishId;
 
     //contactedPerson
@@ -40,11 +44,6 @@ public class PersonRequest {
     private int day;
     private int hour;
     private int minute;
-
-    //personWhoVaccination
-    private Vaccine vaccine;
-    private int vaccinationCount;
-    private LocalDateTime vaccinationDate;
 
     public Person vaccinationPersonToEntity() {
         return VaccinationPerson.builder()
