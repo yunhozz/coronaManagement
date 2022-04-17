@@ -62,6 +62,9 @@ public class PersonService {
         vaccinationPerson.reVaccination();
     }
 
+    /*
+    기존 테이블을 delete 한 후 InfectedPerson 테이블 생성, save
+     */
     public void getInfected(Long personId, PersonRequest personRequest) {
         Optional<Person> optionalPerson = personRepository.findById(personId);
 
@@ -70,9 +73,9 @@ public class PersonService {
         }
 
         Person findPerson = optionalPerson.get();
-        String dtype = personRepository.findPersonWhereIncluded(findPerson);
+        String dType = personRepository.findPersonWhereIncluded(findPerson);
 
-        switch (dtype) {
+        switch (dType) {
             case "V" -> {
                 VaccinationPerson vaccinationPerson = (VaccinationPerson) findPerson;
                 PersonResponse personResponse = new PersonResponse(vaccinationPerson);

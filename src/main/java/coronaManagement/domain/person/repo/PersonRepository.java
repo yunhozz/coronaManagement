@@ -31,7 +31,7 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     List<ContactedPerson> findContactedPerson();
 
     //어디에 속해있는지 조회 (sql)
-    @Query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='FIND_PERSON'")
+    @Query("select column_name from information_schema.columns where table_name='findPerson'")
     String findPersonWhereIncluded(Person findPerson);
 
     //도시로 페이징
