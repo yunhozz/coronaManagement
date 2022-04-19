@@ -67,7 +67,16 @@ public class PersonService {
         return person.getId();
     }
 
-    public Long saveContactedPerson(PersonRequest personRequest, RouteInformationRequest routeInformationRequest) {
+    public Long saveContactedPerson(PersonRequest personRequest, RouteInformationRequest routeInformationRequest, Long infectedPersonId) {
+        Optional<Person> optionalPerson = personRepository.findById(infectedPersonId);
+
+        if (optionalPerson.isEmpty()) {
+            throw new IllegalStateException("Infected person is null.");
+        }
+
+        InfectedPerson infectedPerson = (InfectedPerson) optionalPerson.get();
+        routeInformationRequest.setInfectedPerson(infectedPerson);
+
         Person person = personRequest.contactedPersonToEntity();
         RouteInformation routeInformation = routeInformationRequest.toEntity();
 
