@@ -118,13 +118,13 @@ public class PersonService {
         Virus virus = optionalVirus.get();
         EachRecord eachRecord = optionalEachRecord.get();
 
-        virus.addInfectionCount();
-        eachRecord.addInfection();
-
         //감염자 -> true
         if (personRepository.findPersonWhoInfectedOrNot(person.getId())) {
             throw new IllegalStateException("This person is already infected.");
         }
+
+        virus.addInfectionCount();
+        eachRecord.addInfection();
 
         String dType = personRepository.findPersonWhereIncluded(person.getId()); //dType 조회
         String distinguishId = person.getId().toString();
