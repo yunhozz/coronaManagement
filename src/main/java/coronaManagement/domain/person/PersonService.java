@@ -27,7 +27,6 @@ public class PersonService {
     private final PersonRepository personRepository;
     private final VaccineRepository vaccineRepository;
     private final VirusRepository virusRepository;
-    private final RouteInformationRepository routeInformationRepository;
     private final EachRecordRepository eachRecordRepository;
 
     public Long saveVaccinationPerson(PersonRequest personRequest, Long vaccineId, Long eachRecordId) {
@@ -92,10 +91,7 @@ public class PersonService {
         routeInformationRequest.setInfectedPerson(infectedPerson);
 
         Person person = personRequest.contactedPersonToEntity();
-        RouteInformation routeInformation = routeInformationRequest.toEntity();
-
-        personRepository.save(person);
-        routeInformationRepository.save(routeInformation);
+        personRepository.save(person); //routeInformation auto persist
 
         return person.getId();
     }
