@@ -94,15 +94,19 @@ public class PersonService {
         return person.getId();
     }
 
-    public void reVaccination(Long personId) {
-        Optional<VaccinationPerson> findPerson = personRepository.findPersonWhoCanReVaccination(personId);
+    public void reVaccination(Long personId, Long eachRecordId) {
+        Optional<Person> optionalPerson = personRepository.findPersonWhoCanReVaccination(personId);
+        Optional<EachRecord> optionalEachRecord = eachRecordRepository.findById(eachRecordId);
 
-        if (findPerson.isEmpty()) {
-            throw new IllegalStateException("This person can't be re vaccinated.");
+        if (optionalPerson.isEmpty() || optionalEachRecord.isEmpty()) {
+            throw new IllegalStateException("Person or eachRecord is null.");
         }
 
-        VaccinationPerson vaccinationPerson = findPerson.get();
+        VaccinationPerson vaccinationPerson = (VaccinationPerson) optionalPerson.get();
+        EachRecord eachRecord = optionalEachRecord.get();
+
         vaccinationPerson.reVaccination();
+        eachRecord.addVaccination();
     }
 
     public void getInfected(Long personId, Long virusId, Long eachRecordId, PersonRequest personRequest) {
