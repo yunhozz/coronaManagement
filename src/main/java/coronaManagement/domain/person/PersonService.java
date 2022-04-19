@@ -5,8 +5,6 @@ import coronaManagement.domain.person.dto.PersonResponse;
 import coronaManagement.domain.person.repo.PersonRepository;
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.EachRecordRepository;
-import coronaManagement.domain.routeInformation.RouteInformation;
-import coronaManagement.domain.routeInformation.RouteInformationRepository;
 import coronaManagement.domain.routeInformation.dto.RouteInformationRequest;
 import coronaManagement.domain.vaccine.Vaccine;
 import coronaManagement.domain.vaccine.VaccineRepository;
