@@ -1,6 +1,5 @@
 package coronaManagement.domain.person;
 
-import coronaManagement.domain.hospital.repo.HospitalRepository;
 import coronaManagement.domain.person.dto.PersonRequest;
 import coronaManagement.domain.person.dto.PersonResponse;
 import coronaManagement.domain.person.repo.PersonRepository;
@@ -44,6 +43,9 @@ public class PersonService {
         personRequest.setVaccine(vaccine);
         personRequest.setEachRecord(eachRecord);
 
+        vaccine.removeQuantity(1);
+        eachRecord.addVaccination();
+
         Person person = personRequest.vaccinationPersonToEntity();
         personRepository.save(person);
 
@@ -69,6 +71,9 @@ public class PersonService {
         EachRecord eachRecord = optionalEachRecord.get();
         personRequest.setVirus(virus);
         personRequest.setEachRecord(eachRecord);
+
+        virus.addInfectionCount();
+        eachRecord.addInfection();
 
         Person person = personRequest.infectedPersonToEntity();
         personRepository.save(person);
@@ -106,16 +111,21 @@ public class PersonService {
         vaccinationPerson.reVaccination();
     }
 
-    public void getInfected(Long personId, Long virusId, PersonRequest personRequest) {
+    public void getInfected(Long personId, Long virusId, Long eachRecordId, PersonRequest personRequest) {
         Optional<Person> optionalPerson = personRepository.findById(personId);
         Optional<Virus> optionalVirus = virusRepository.findById(virusId);
+        Optional<EachRecord> optionalEachRecord = eachRecordRepository.findById(eachRecordId);
 
-        if (optionalPerson.isEmpty() || optionalVirus.isEmpty()) {
-            throw new IllegalStateException("Can't find person or virus.");
+        if (optionalPerson.isEmpty() || optionalVirus.isEmpty() || optionalEachRecord.isEmpty()) {
+            throw new IllegalStateException("Field is null.");
         }
 
         Person person = optionalPerson.get();
         Virus virus = optionalVirus.get();
+        EachRecord eachRecord = optionalEachRecord.get();
+
+        virus.addInfectionCount();
+        eachRecord.addInfection();
 
         //감염자 -> true
         if (personRepository.findPersonWhoInfectedOrNot(person.getId())) {
