@@ -4,6 +4,8 @@ import coronaManagement.domain.hospital.repo.HospitalRepository;
 import coronaManagement.domain.person.dto.PersonRequest;
 import coronaManagement.domain.person.dto.PersonResponse;
 import coronaManagement.domain.person.repo.PersonRepository;
+import coronaManagement.domain.record.EachRecord;
+import coronaManagement.domain.record.EachRecordRepository;
 import coronaManagement.domain.routeInformation.RouteInformation;
 import coronaManagement.domain.routeInformation.RouteInformationRepository;
 import coronaManagement.domain.routeInformation.dto.RouteInformationRequest;
@@ -27,18 +29,22 @@ public class PersonService {
     private final VaccineRepository vaccineRepository;
     private final VirusRepository virusRepository;
     private final RouteInformationRepository routeInformationRepository;
+    private final EachRecordRepository eachRecordRepository;
 
-    public Long saveVaccinationPerson(PersonRequest personRequest, Long vaccineId) {
+    public Long saveVaccinationPerson(PersonRequest personRequest, Long vaccineId, Long eachRecordId) {
         Optional<Vaccine> optionalVaccine = vaccineRepository.findById(vaccineId);
+        Optional<EachRecord> optionalEachRecord = eachRecordRepository.findById(eachRecordId);
 
-        if (optionalVaccine.isEmpty()) {
-            throw new IllegalStateException("Vaccine is null.");
+        if (optionalVaccine.isEmpty() || optionalEachRecord.isEmpty()) {
+            throw new IllegalStateException("Vaccine or eachRecord is null.");
         }
 
         Vaccine vaccine = optionalVaccine.get();
+        EachRecord eachRecord = optionalEachRecord.get();
         personRequest.setVaccine(vaccine);
-        Person person = personRequest.vaccinationPersonToEntity();
+        personRequest.setEachRecord(eachRecord);
 
+        Person person = personRequest.vaccinationPersonToEntity();
         personRepository.save(person);
 
         return person.getId();
@@ -51,17 +57,20 @@ public class PersonService {
         return person.getId();
     }
 
-    public Long saveInfectedPerson(PersonRequest personRequest, Long virusId) {
+    public Long saveInfectedPerson(PersonRequest personRequest, Long virusId, Long eachRecordId) {
         Optional<Virus> optionalVirus = virusRepository.findById(virusId);
+        Optional<EachRecord> optionalEachRecord = eachRecordRepository.findById(eachRecordId);
 
-        if (optionalVirus.isEmpty()) {
-            throw new IllegalStateException("Virus is null.");
+        if (optionalVirus.isEmpty() || optionalEachRecord.isEmpty()) {
+            throw new IllegalStateException("Virus or eachRecord is null.");
         }
 
         Virus virus = optionalVirus.get();
+        EachRecord eachRecord = optionalEachRecord.get();
         personRequest.setVirus(virus);
-        Person person = personRequest.infectedPersonToEntity();
+        personRequest.setEachRecord(eachRecord);
 
+        Person person = personRequest.infectedPersonToEntity();
         personRepository.save(person);
 
         return person.getId();
