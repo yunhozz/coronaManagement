@@ -3,6 +3,7 @@ package coronaManagement.domain.person;
 import coronaManagement.domain.person.dto.PersonRequest;
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.dto.EachRecordRequest;
+import coronaManagement.domain.record.dto.TotalRecordRequest;
 import coronaManagement.domain.routeInformation.RouteInformation;
 import coronaManagement.domain.routeInformation.dto.RouteInformationRequest;
 import coronaManagement.domain.vaccine.Vaccine;
@@ -10,6 +11,7 @@ import coronaManagement.domain.virus.Virus;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import coronaManagement.global.enums.VirusType;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +19,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+
+import java.time.LocalDateTime;
 
 @SpringBootTest
 @Transactional
@@ -35,9 +39,6 @@ class PersonServiceTest {
         EachRecordRequest eachRecordRequest = createEachRecordRequest(2022, 4, 19);
         EachRecord eachRecord = eachRecordRequest.toEntity();
 
-        InfectedPerson infectedPerson = createInfectedPerson("yunho", virus, eachRecord);
-        RouteInformationRequest routeInformationRequest = createRouteInformationRequest(infectedPerson, City.SEOUL);
-
         em.persist(vaccine);
         em.persist(virus);
         em.persist(eachRecord);
@@ -51,10 +52,24 @@ class PersonServiceTest {
         em.clear();
 
         //when
-        personService.saveVaccinationPerson(personRequest1, vaccine.getId(), eachRecord.getId());
-        personService.saveNotVaccinationPerson(personRequest2);
-        personService.saveInfectedPerson(personRequest3, virus.getId(), eachRecord.getId());
-        personService.saveContactedPerson(personRequest4, routeInformationRequest)
+        Long vaccinationPersonId = personService.saveVaccinationPerson(personRequest1, vaccine.getId(), eachRecord.getId());
+        Long notVaccinationPersonId = personService.saveNotVaccinationPerson(personRequest2);
+        Long infectedPersonId = personService.saveInfectedPerson(personRequest3, virus.getId(), eachRecord.getId());
+
+        InfectedPerson infectedPerson = (InfectedPerson) personService.findPerson(infectedPersonId);
+        RouteInformationRequest routeInformationRequest = createRouteInformationRequest(infectedPerson, City.SEOUL);
+        Long contactedPersonId = personService.saveContactedPerson(personRequest4, routeInformationRequest);
+
+        //then
+    }
+
+    @Test
+    void reVaccination() {
+        //given
+
+
+        //when
+
 
         //then
     }
@@ -87,9 +102,13 @@ class PersonServiceTest {
         return Virus.createVirus(virusType, initialPoint);
     }
 
+    private TotalRecordRequest createTotalRecordRequest() {
+        return new TotalRecordRequest();
+    }
+
     private EachRecordRequest createEachRecordRequest(int year, int month, int day) {
         EachRecordRequest eachRecordRequest = new EachRecordRequest();
-        eachRecordRequest.setTotalRecord(null);
+        eachRecordRequest.setTotalRecord(createTotalRecordRequest().toEntity());
         eachRecordRequest.setYear(year);
         eachRecordRequest.setMonth(month);
         eachRecordRequest.setDay(day);
@@ -105,8 +124,18 @@ class PersonServiceTest {
         routeInformationRequest.setStreet(null);
         routeInformationRequest.setEtc(null);
         routeInformationRequest.setCCTV(true);
-        routeInformationRequest.setStartTime();
-        routeInformationRequest.setEndTime();
+
+        routeInformationRequest.setStartYear(2022);
+        routeInformationRequest.setStartMonth(4);
+        routeInformationRequest.setStartDay(20);
+        routeInformationRequest.setStartHour(1);
+        routeInformationRequest.setStartMin(10);
+
+        routeInformationRequest.setEndYear(2022);
+        routeInformationRequest.setEndMonth(4);
+        routeInformationRequest.setEndDay(20);
+        routeInformationRequest.setEndHour(2);
+        routeInformationRequest.setEndMin(20);
 
         return routeInformationRequest;
     }

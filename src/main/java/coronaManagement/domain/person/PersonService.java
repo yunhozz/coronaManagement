@@ -5,6 +5,8 @@ import coronaManagement.domain.person.dto.PersonResponse;
 import coronaManagement.domain.person.repo.PersonRepository;
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.EachRecordRepository;
+import coronaManagement.domain.routeInformation.RouteInformation;
+import coronaManagement.domain.routeInformation.RouteInformationRepository;
 import coronaManagement.domain.routeInformation.dto.RouteInformationRequest;
 import coronaManagement.domain.vaccine.Vaccine;
 import coronaManagement.domain.vaccine.VaccineRepository;
@@ -26,6 +28,7 @@ public class PersonService {
     private final VaccineRepository vaccineRepository;
     private final VirusRepository virusRepository;
     private final EachRecordRepository eachRecordRepository;
+    private final RouteInformationRepository routeInformationRepository;
 
     public Long saveVaccinationPerson(PersonRequest personRequest, Long vaccineId, Long eachRecordId) {
         Optional<Vaccine> optionalVaccine = vaccineRepository.findById(vaccineId);
@@ -78,18 +81,12 @@ public class PersonService {
         return person.getId();
     }
 
-    public Long saveContactedPerson(PersonRequest personRequest, RouteInformationRequest routeInformationRequest, Long infectedPersonId) {
-        Optional<Person> optionalPerson = personRepository.findById(infectedPersonId);
-
-        if (optionalPerson.isEmpty()) {
-            throw new IllegalStateException("Infected person is null.");
-        }
-
-        InfectedPerson infectedPerson = (InfectedPerson) optionalPerson.get();
-        routeInformationRequest.setInfectedPerson(infectedPerson);
-
+    public Long saveContactedPerson(PersonRequest personRequest, RouteInformationRequest routeInformationRequest) {
         Person person = personRequest.contactedPersonToEntity();
-        personRepository.save(person); //routeInformation auto persist
+        RouteInformation routeInformation = routeInformationRequest.toEntity();
+
+        personRepository.save(person);
+        routeInformationRepository.save(routeInformation);
 
         return person.getId();
     }
@@ -174,9 +171,8 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-    public Person findPerson(Long personId) throws Throwable {
-        return (Person) personRepository.findById(personId)
-                .orElseThrow(() -> new IllegalStateException("Can't find person."));
+    public Person findPerson(Long personId) {
+        return (Person) personRepository.findById(personId).orElseThrow();
     }
 
     @Transactional(readOnly = true)
