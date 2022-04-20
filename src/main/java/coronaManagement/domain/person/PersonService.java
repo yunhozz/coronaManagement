@@ -141,30 +141,42 @@ public class PersonService {
                 VaccinationPerson vaccinationPerson = (VaccinationPerson) person;
                 PersonResponse personResponse = new PersonResponse(vaccinationPerson);
 
-                createPersonRequestByResponse(personRequest, personResponse, virus, distinguishId);
+                createPersonRequestByResponse(personRequest, personResponse, distinguishId);
                 vaccinationPerson.getInfected();
 
-                personRepository.save(personRequest.infectedPersonToEntity());
+                InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
+                infectedPerson.setVirus(virus);
+                infectedPerson.setEachRecord(eachRecord);
+
+                personRepository.save(infectedPerson);
             }
 
             case "NV" -> {
                 NotVaccinationPerson notVaccinationPerson = (NotVaccinationPerson) person;
                 PersonResponse personResponse = new PersonResponse(notVaccinationPerson);
 
-                createPersonRequestByResponse(personRequest, personResponse, virus, distinguishId);
+                createPersonRequestByResponse(personRequest, personResponse, distinguishId);
                 notVaccinationPerson.getInfected();
 
-                personRepository.save(personRequest.infectedPersonToEntity());
+                InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
+                infectedPerson.setVirus(virus);
+                infectedPerson.setEachRecord(eachRecord);
+
+                personRepository.save(infectedPerson);
             }
 
             case "C" -> {
                 ContactedPerson contactedPerson = (ContactedPerson) person;
                 PersonResponse personResponse = new PersonResponse(contactedPerson);
 
-                createPersonRequestByResponse(personRequest, personResponse, virus, distinguishId);
+                createPersonRequestByResponse(personRequest, personResponse, distinguishId);
                 contactedPerson.getInfected();
 
-                personRepository.save(personRequest.infectedPersonToEntity());
+                InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
+                infectedPerson.setVirus(virus);
+                infectedPerson.setEachRecord(eachRecord);
+
+                personRepository.save(infectedPerson);
             }
 
             default -> throw new IllegalStateException("This person is already infected.");
@@ -186,13 +198,12 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    private void createPersonRequestByResponse(PersonRequest personRequest, PersonResponse personResponse, Virus virus, String distinguishId) {
+    private void createPersonRequestByResponse(PersonRequest personRequest, PersonResponse personResponse, String distinguishId) {
         personRequest.setName(personResponse.getName());
         personRequest.setCity(personResponse.getCity());
         personRequest.setGender(personResponse.getGender());
         personRequest.setAge(personResponse.getAge());
         personRequest.setPhoneNumber(personResponse.getPhoneNumber());
-        personRequest.setVirus(virus);
         personRequest.setDistinguishId(distinguishId);
     }
 }

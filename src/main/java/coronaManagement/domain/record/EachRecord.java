@@ -26,12 +26,15 @@ public class EachRecord extends BaseEntity {
     private int todayVaccination;
 
     @Builder
-    private EachRecord(TotalRecord totalRecord, LocalDate recordDate, int todayInfection, int todayDeath, int todayVaccination) {
-        this.totalRecord = totalRecord;
+    private EachRecord(LocalDate recordDate, int todayInfection, int todayDeath, int todayVaccination) {
         this.recordDate = recordDate;
         this.todayInfection = todayInfection;
         this.todayDeath = todayDeath;
         this.todayVaccination = todayVaccination;
+    }
+
+    public void setTotalRecord(TotalRecord totalRecord) {
+        this.totalRecord = totalRecord;
     }
 
     public void addInfection() {

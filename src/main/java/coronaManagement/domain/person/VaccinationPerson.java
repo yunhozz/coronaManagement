@@ -54,8 +54,6 @@ public class VaccinationPerson extends Person {
         this.eachRecord = eachRecord;
     }
 
-    public void
-
     public void reVaccination() {
         vaccine.removeQuantity(1);
         vaccinationCount++;

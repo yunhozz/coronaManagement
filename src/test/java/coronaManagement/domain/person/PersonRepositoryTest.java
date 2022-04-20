@@ -265,7 +265,9 @@ class PersonRepositoryTest {
         eachRecordRequest.setYear(2022);
         eachRecordRequest.setMonth(4);
         eachRecordRequest.setDay(11);
-        eachRecordRequest.setTotalRecord(totalRecord);
+
+        EachRecord eachRecord = eachRecordRequest.toEntity();
+        eachRecord.setTotalRecord(totalRecord);
 
         return eachRecordRepository.save(eachRecordRequest.toEntity());
     }

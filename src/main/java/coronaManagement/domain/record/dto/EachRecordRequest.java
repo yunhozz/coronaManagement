@@ -1,7 +1,6 @@
 package coronaManagement.domain.record.dto;
 
 import coronaManagement.domain.record.EachRecord;
-import coronaManagement.domain.record.TotalRecord;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class EachRecordRequest {
 
-    private TotalRecord totalRecord;
     private int year;
     private int month;
     private int day;
@@ -21,7 +19,6 @@ public class EachRecordRequest {
 
     public EachRecord toEntity() {
         return EachRecord.builder()
-                .totalRecord(totalRecord)
                 .recordDate(LocalDate.of(year, month, day))
                 .todayInfection(0)
                 .todayDeath(0)
