@@ -1,17 +1,14 @@
 package coronaManagement.domain.person;
 
-import coronaManagement.domain.person.dto.PersonRequest;
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.dto.EachRecordRequest;
 import coronaManagement.domain.record.dto.TotalRecordRequest;
-import coronaManagement.domain.routeInformation.RouteInformation;
 import coronaManagement.domain.routeInformation.dto.RouteInformationRequest;
 import coronaManagement.domain.vaccine.Vaccine;
 import coronaManagement.domain.virus.Virus;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import coronaManagement.global.enums.VirusType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +16,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-
-import java.time.LocalDateTime;
 
 @SpringBootTest
 @Transactional

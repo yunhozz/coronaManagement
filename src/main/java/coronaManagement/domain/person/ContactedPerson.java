@@ -35,13 +35,16 @@ public class ContactedPerson extends Person {
     private InfectionStatus infectionStatus; //BEFORE_INFECT, INFECTED
 
     @Builder
-    private ContactedPerson(String name, City city, Gender gender, int age, String phoneNumber, RouteInformation routeInformation,
-                           LocalDateTime contactDate, InfectionStatus infectionStatus) {
+    private ContactedPerson(String name, City city, Gender gender, int age, String phoneNumber, LocalDateTime contactDate,
+                            InfectionStatus infectionStatus) {
 
         super(name, city, gender, age, phoneNumber);
-        this.routeInformation = routeInformation;
         this.contactDate = contactDate;
         this.infectionStatus = infectionStatus;
+    }
+
+    public void setRouteInformation(RouteInformation routeInformation) {
+        this.routeInformation = routeInformation;
     }
 
     public void getInfected() {

@@ -1,7 +1,6 @@
 package coronaManagement.domain.routeInformation.dto;
 
 import coronaManagement.global.enums.City;
-import coronaManagement.domain.person.InfectedPerson;
 import coronaManagement.domain.routeInformation.Address;
 import coronaManagement.domain.routeInformation.RouteInformation;
 import lombok.Data;
@@ -12,8 +11,6 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class RouteInformationRequest {
-
-    private InfectedPerson infectedPerson;
 
     //address
     private City city;
@@ -36,7 +33,6 @@ public class RouteInformationRequest {
 
     public RouteInformation toEntity() {
         return RouteInformation.builder()
-                .infectedPerson(infectedPerson)
                 .address(new Address(city, district, street, etc))
                 .isCCTV(isCCTV)
                 .startTime(LocalDateTime.of(startYear, startMonth, startDay, startHour, startMin))

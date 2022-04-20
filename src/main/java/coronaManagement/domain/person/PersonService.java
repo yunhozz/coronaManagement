@@ -40,23 +40,24 @@ public class PersonService {
 
         Vaccine vaccine = optionalVaccine.get();
         EachRecord eachRecord = optionalEachRecord.get();
-        personRequest.setVaccine(vaccine);
-        personRequest.setEachRecord(eachRecord);
+
+        VaccinationPerson vaccinationPerson = (VaccinationPerson) personRequest.vaccinationPersonToEntity();
+        vaccinationPerson.setVaccine(vaccine);
+        vaccinationPerson.setEachRecord(eachRecord);
 
         vaccine.removeQuantity(1);
         eachRecord.addVaccination();
 
-        Person person = personRequest.vaccinationPersonToEntity();
-        personRepository.save(person);
+        personRepository.save(vaccinationPerson);
 
-        return person.getId();
+        return vaccinationPerson.getId();
     }
 
     public Long saveNotVaccinationPerson(PersonRequest personRequest) {
-        Person person = personRequest.notVaccinationPersonToEntity();
-        personRepository.save(person);
+        NotVaccinationPerson notVaccinationPerson = (NotVaccinationPerson) personRequest.notVaccinationPersonToEntity();
+        personRepository.save(notVaccinationPerson);
 
-        return person.getId();
+        return notVaccinationPerson.getId();
     }
 
     public Long saveInfectedPerson(PersonRequest personRequest, Long virusId, Long eachRecordId) {
@@ -69,26 +70,31 @@ public class PersonService {
 
         Virus virus = optionalVirus.get();
         EachRecord eachRecord = optionalEachRecord.get();
-        personRequest.setVirus(virus);
-        personRequest.setEachRecord(eachRecord);
+
+        InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
+        infectedPerson.setVirus(virus);
+        infectedPerson.setEachRecord(eachRecord);
 
         virus.addInfectionCount();
         eachRecord.addInfection();
 
-        Person person = personRequest.infectedPersonToEntity();
-        personRepository.save(person);
+        personRepository.save(infectedPerson);
 
-        return person.getId();
+        return infectedPerson.getId();
     }
 
-    public Long saveContactedPerson(PersonRequest personRequest, RouteInformationRequest routeInformationRequest) {
-        Person person = personRequest.contactedPersonToEntity();
+    public Long saveContactedPerson(PersonRequest personRequest, RouteInformationRequest routeInformationRequest, Long infectedPersonId) {
+        ContactedPerson contactedPerson = (ContactedPerson) personRequest.contactedPersonToEntity();
         RouteInformation routeInformation = routeInformationRequest.toEntity();
+        InfectedPerson infectedPerson = (InfectedPerson) this.findPerson(infectedPersonId);
 
-        personRepository.save(person);
+        routeInformation.setInfectedPerson(infectedPerson);
+        contactedPerson.setRouteInformation(routeInformation);
+
+        personRepository.save(contactedPerson);
         routeInformationRepository.save(routeInformation);
 
-        return person.getId();
+        return contactedPerson.getId();
     }
 
     public void reVaccination(Long personId, Long eachRecordId) {

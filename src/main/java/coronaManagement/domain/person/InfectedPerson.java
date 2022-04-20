@@ -43,18 +43,21 @@ public class InfectedPerson extends Person {
     private String distinguishId;
 
     @Builder
-    private InfectedPerson(String name, City city, Gender gender, int age, String phoneNumber, Virus virus, EachRecord eachRecord,
-                           LocalDateTime infectedTime, PhysicalStatus physicalStatus, String distinguishId) {
+    private InfectedPerson(String name, City city, Gender gender, int age, String phoneNumber, LocalDateTime infectedTime,
+                           PhysicalStatus physicalStatus, String distinguishId) {
 
         super(name, city, gender, age, phoneNumber);
-        this.virus = virus;
-        this.eachRecord = eachRecord;
         this.infectedTime = infectedTime;
         this.physicalStatus = physicalStatus;
         this.distinguishId = distinguishId;
+    }
 
-        virus.addInfectionCount();
-        eachRecord.addInfection();
+    public void setVirus(Virus virus) {
+        this.virus = virus;
+    }
+
+    public void setEachRecord(EachRecord eachRecord) {
+        this.eachRecord = eachRecord;
     }
 
     //입원 -> Hospital 과의 연관관계 생성

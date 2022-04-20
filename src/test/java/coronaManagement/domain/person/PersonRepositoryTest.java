@@ -220,8 +220,6 @@ class PersonRepositoryTest {
     private Person createPerson(String name, Virus virus, EachRecord eachRecord) {
         PersonRequest personRequest = new PersonRequest();
         personRequest.setName(name);
-        personRequest.setVirus(virus);
-        personRequest.setEachRecord(eachRecord);
         InfectedPerson infectedPerson = (InfectedPerson) personRepository.save(personRequest.infectedPersonToEntity());
 
         return infectedPerson;
@@ -234,8 +232,6 @@ class PersonRepositoryTest {
         personRequest.setGender(gender);
         personRequest.setAge(age);
         personRequest.setPhoneNumber(phoneNumber);
-        personRequest.setVaccine(vaccine);
-        personRequest.setEachRecord(eachRecord);
 
         return (Person) personRepository.save(personRequest.vaccinationPersonToEntity());
     }

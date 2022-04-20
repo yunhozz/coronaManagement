@@ -32,11 +32,14 @@ public class RouteInformation extends BaseEntity {
     private LocalDateTime endTime;
 
     @Builder
-    private RouteInformation(InfectedPerson infectedPerson, Address address, boolean isCCTV, LocalDateTime startTime, LocalDateTime endTime) {
-        this.infectedPerson = infectedPerson;
+    private RouteInformation(Address address, boolean isCCTV, LocalDateTime startTime, LocalDateTime endTime) {
         this.address = address;
         this.isCCTV = isCCTV;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public void setInfectedPerson(InfectedPerson infectedPerson) {
+        this.infectedPerson = infectedPerson;
     }
 }
