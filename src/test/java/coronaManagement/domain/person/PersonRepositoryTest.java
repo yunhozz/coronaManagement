@@ -267,7 +267,7 @@ class PersonRepositoryTest {
         eachRecordRequest.setDay(11);
 
         EachRecord eachRecord = eachRecordRequest.toEntity();
-        eachRecord.setTotalRecord(totalRecord);
+        eachRecord.updateField(totalRecord);
 
         return eachRecordRepository.save(eachRecordRequest.toEntity());
     }

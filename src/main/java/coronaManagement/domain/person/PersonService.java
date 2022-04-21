@@ -42,8 +42,7 @@ public class PersonService {
         EachRecord eachRecord = optionalEachRecord.get();
 
         VaccinationPerson vaccinationPerson = (VaccinationPerson) personRequest.vaccinationPersonToEntity();
-        vaccinationPerson.setVaccine(vaccine);
-        vaccinationPerson.setEachRecord(eachRecord);
+        vaccinationPerson.updateField(vaccine, eachRecord);
 
         vaccine.removeQuantity(1);
         eachRecord.addVaccination();
@@ -72,8 +71,7 @@ public class PersonService {
         EachRecord eachRecord = optionalEachRecord.get();
 
         InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
-        infectedPerson.setVirus(virus);
-        infectedPerson.setEachRecord(eachRecord);
+        infectedPerson.updateField(virus, eachRecord);
 
         virus.addInfectionCount();
         eachRecord.addInfection();
@@ -86,13 +84,17 @@ public class PersonService {
     public Long saveContactedPerson(PersonRequest personRequest, RouteInformationRequest routeInformationRequest, Long infectedPersonId) {
         ContactedPerson contactedPerson = (ContactedPerson) personRequest.contactedPersonToEntity();
         RouteInformation routeInformation = routeInformationRequest.toEntity();
-        InfectedPerson infectedPerson = (InfectedPerson) this.findPerson(infectedPersonId);
+        Optional<Person> optionalPerson = this.findPerson(infectedPersonId);
 
-        routeInformation.setInfectedPerson(infectedPerson);
-        contactedPerson.setRouteInformation(routeInformation);
+        if (optionalPerson.isEmpty()) {
+            throw new IllegalStateException("InfectedPerson is null.");
+        }
 
-        personRepository.save(contactedPerson);
-        routeInformationRepository.save(routeInformation);
+        InfectedPerson infectedPerson = (InfectedPerson) optionalPerson.get();
+        routeInformation.updateField(infectedPerson);
+        contactedPerson.updateField(routeInformation);
+
+        personRepository.save(contactedPerson); //routeInformation auto persist
 
         return contactedPerson.getId();
     }
@@ -145,8 +147,7 @@ public class PersonService {
                 vaccinationPerson.getInfected();
 
                 InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
-                infectedPerson.setVirus(virus);
-                infectedPerson.setEachRecord(eachRecord);
+                infectedPerson.updateField(virus, eachRecord);
 
                 personRepository.save(infectedPerson);
             }
@@ -159,8 +160,7 @@ public class PersonService {
                 notVaccinationPerson.getInfected();
 
                 InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
-                infectedPerson.setVirus(virus);
-                infectedPerson.setEachRecord(eachRecord);
+                infectedPerson.updateField(virus, eachRecord);
 
                 personRepository.save(infectedPerson);
             }
@@ -173,8 +173,7 @@ public class PersonService {
                 contactedPerson.getInfected();
 
                 InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
-                infectedPerson.setVirus(virus);
-                infectedPerson.setEachRecord(eachRecord);
+                infectedPerson.updateField(virus, eachRecord);
 
                 personRepository.save(infectedPerson);
             }
@@ -189,8 +188,8 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-    public Person findPerson(Long personId) {
-        return (Person) personRepository.findById(personId).orElseThrow();
+    public Optional<Person> findPerson(Long personId) {
+        return (Optional<Person>) personRepository.findById(personId);
     }
 
     @Transactional(readOnly = true)

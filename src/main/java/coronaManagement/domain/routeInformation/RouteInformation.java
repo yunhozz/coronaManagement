@@ -39,7 +39,7 @@ public class RouteInformation extends BaseEntity {
         this.endTime = endTime;
     }
 
-    public void setInfectedPerson(InfectedPerson infectedPerson) {
+    public void updateField(InfectedPerson infectedPerson) {
         this.infectedPerson = infectedPerson;
     }
 }

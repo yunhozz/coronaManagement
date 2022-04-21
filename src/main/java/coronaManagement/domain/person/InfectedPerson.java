@@ -52,11 +52,8 @@ public class InfectedPerson extends Person {
         this.distinguishId = distinguishId;
     }
 
-    public void setVirus(Virus virus) {
+    public void updateField(Virus virus, EachRecord eachRecord) {
         this.virus = virus;
-    }
-
-    public void setEachRecord(EachRecord eachRecord) {
         this.eachRecord = eachRecord;
     }
 

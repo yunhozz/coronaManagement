@@ -46,11 +46,8 @@ public class VaccinationPerson extends Person {
         this.infectionStatus = infectionStatus;
     }
 
-    public void setVaccine(Vaccine vaccine) {
+    public void updateField(Vaccine vaccine, EachRecord eachRecord) {
         this.vaccine = vaccine;
-    }
-
-    public void setEachRecord(EachRecord eachRecord) {
         this.eachRecord = eachRecord;
     }
 

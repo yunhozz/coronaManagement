@@ -1,5 +1,6 @@
 package coronaManagement.domain.person;
 
+import coronaManagement.domain.person.dto.PersonRequest;
 import coronaManagement.domain.record.EachRecord;
 import coronaManagement.domain.record.dto.EachRecordRequest;
 import coronaManagement.domain.record.dto.TotalRecordRequest;
@@ -16,6 +17,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 @SpringBootTest
 @Transactional
@@ -33,6 +35,7 @@ class PersonServiceTest {
 
         EachRecordRequest eachRecordRequest = createEachRecordRequest(2022, 4, 19);
         EachRecord eachRecord = eachRecordRequest.toEntity();
+        eachRecord.updateField(new TotalRecordRequest().toEntity());
 
         em.persist(vaccine);
         em.persist(virus);
@@ -43,17 +46,23 @@ class PersonServiceTest {
         PersonRequest personRequest3 = createPersonRequest("yunho3", City.INCHEON, Gender.FEMALE, 29, "333");
         PersonRequest personRequest4 = createPersonRequest("yunho4", City.DAEGU, Gender.FEMALE, 30, "444");
 
-        em.flush();
-        em.clear();
-
-        //when
         Long vaccinationPersonId = personService.saveVaccinationPerson(personRequest1, vaccine.getId(), eachRecord.getId());
         Long notVaccinationPersonId = personService.saveNotVaccinationPerson(personRequest2);
         Long infectedPersonId = personService.saveInfectedPerson(personRequest3, virus.getId(), eachRecord.getId());
 
-        InfectedPerson infectedPerson = (InfectedPerson) personService.findPerson(infectedPersonId);
+        em.flush();
+        em.clear();
+
+        //when
+        Optional<Person> optionalPerson = personService.findPerson(infectedPersonId);
+
+        if (optionalPerson.isEmpty()) {
+            throw new IllegalStateException("InfectedPerson is null.");
+        }
+
+        InfectedPerson infectedPerson = (InfectedPerson) optionalPerson.get();
         RouteInformationRequest routeInformationRequest = createRouteInformationRequest(infectedPerson, City.SEOUL);
-        Long contactedPersonId = personService.saveContactedPerson(personRequest4, routeInformationRequest);
+        personService.saveContactedPerson(personRequest4, routeInformationRequest, infectedPersonId);
 
         //then
     }
@@ -83,8 +92,6 @@ class PersonServiceTest {
     private InfectedPerson createInfectedPerson(String name, Virus virus, EachRecord eachRecord) {
         PersonRequest personRequest = new PersonRequest();
         personRequest.setName(name);
-        personRequest.setVirus(virus);
-        personRequest.setEachRecord(eachRecord);
 
         return (InfectedPerson) personRequest.infectedPersonToEntity();
     }
@@ -103,7 +110,6 @@ class PersonServiceTest {
 
     private EachRecordRequest createEachRecordRequest(int year, int month, int day) {
         EachRecordRequest eachRecordRequest = new EachRecordRequest();
-        eachRecordRequest.setTotalRecord(createTotalRecordRequest().toEntity());
         eachRecordRequest.setYear(year);
         eachRecordRequest.setMonth(month);
         eachRecordRequest.setDay(day);
@@ -113,7 +119,6 @@ class PersonServiceTest {
 
     private RouteInformationRequest createRouteInformationRequest(InfectedPerson infectedPerson, City city) {
         RouteInformationRequest routeInformationRequest = new RouteInformationRequest();
-        routeInformationRequest.setInfectedPerson(infectedPerson);
         routeInformationRequest.setCity(city);
         routeInformationRequest.setDistrict(null);
         routeInformationRequest.setStreet(null);

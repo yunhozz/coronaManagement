@@ -33,7 +33,7 @@ public class EachRecord extends BaseEntity {
         this.todayVaccination = todayVaccination;
     }
 
-    public void setTotalRecord(TotalRecord totalRecord) {
+    public void updateField(TotalRecord totalRecord) {
         this.totalRecord = totalRecord;
     }
 
