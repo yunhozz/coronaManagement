@@ -29,13 +29,6 @@ public class PersonRequest {
     //infectedPerson
     private String distinguishId;
 
-    //contactedPerson
-    private int year;
-    private int month;
-    private int day;
-    private int hour;
-    private int minute;
-
     public Person vaccinationPersonToEntity() {
         return VaccinationPerson.builder()
                 .name(name)
@@ -80,7 +73,6 @@ public class PersonRequest {
                 .gender(gender)
                 .age(age)
                 .phoneNumber(phoneNumber)
-                .contactDate(LocalDateTime.of(year, month, day, hour, minute))
                 .infectionStatus(InfectionStatus.BEFORE_INFECT)
                 .build();
     }

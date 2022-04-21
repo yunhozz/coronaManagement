@@ -29,17 +29,13 @@ public class ContactedPerson extends Person {
     @JoinColumn(name = "route_information_id")
     private RouteInformation routeInformation;
 
-    private LocalDateTime contactDate;
-
     @Enumerated(EnumType.STRING)
     private InfectionStatus infectionStatus; //BEFORE_INFECT, INFECTED
 
     @Builder
-    private ContactedPerson(String name, City city, Gender gender, int age, String phoneNumber, LocalDateTime contactDate,
-                            InfectionStatus infectionStatus) {
+    private ContactedPerson(String name, City city, Gender gender, int age, String phoneNumber, InfectionStatus infectionStatus) {
 
         super(name, city, gender, age, phoneNumber);
-        this.contactDate = contactDate;
         this.infectionStatus = infectionStatus;
     }
 

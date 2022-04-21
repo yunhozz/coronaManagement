@@ -13,11 +13,13 @@ import coronaManagement.global.enums.VirusType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -27,8 +29,8 @@ class PersonServiceTest {
     @Autowired EntityManager em;
 
     @Test
-    @Rollback(value = false)
-    void savePerson() {
+    @Commit
+    void savePerson() throws Exception {
         //given
         Vaccine vaccine = createVaccine("vaccine", "developer", 100);
         Virus virus = createVirus(VirusType.ALPHA, "China");
@@ -41,6 +43,9 @@ class PersonServiceTest {
         em.persist(virus);
         em.persist(eachRecord);
 
+        em.flush();
+        em.clear();
+
         PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
         PersonRequest personRequest2 = createPersonRequest("yunho2", City.BUSAN, Gender.MALE, 28, "222");
         PersonRequest personRequest3 = createPersonRequest("yunho3", City.INCHEON, Gender.FEMALE, 29, "333");
@@ -50,25 +55,24 @@ class PersonServiceTest {
         Long notVaccinationPersonId = personService.saveNotVaccinationPerson(personRequest2);
         Long infectedPersonId = personService.saveInfectedPerson(personRequest3, virus.getId(), eachRecord.getId());
 
-        em.flush();
-        em.clear();
+        VaccinationPerson vaccinationPerson = (VaccinationPerson) personService.findPerson(vaccinationPersonId).get();
+        NotVaccinationPerson notVaccinationPerson = (NotVaccinationPerson) personService.findPerson(notVaccinationPersonId).get();
+        InfectedPerson infectedPerson = (InfectedPerson) personService.findPerson(infectedPersonId).get();
 
         //when
-        Optional<Person> optionalPerson = personService.findPerson(infectedPersonId);
-
-        if (optionalPerson.isEmpty()) {
-            throw new IllegalStateException("InfectedPerson is null.");
-        }
-
-        InfectedPerson infectedPerson = (InfectedPerson) optionalPerson.get();
-        RouteInformationRequest routeInformationRequest = createRouteInformationRequest(infectedPerson, City.SEOUL);
-        personService.saveContactedPerson(personRequest4, routeInformationRequest, infectedPersonId);
+        RouteInformationRequest routeInformationRequest = createRouteInformationRequest(City.SEOUL);
+        Long contactedPersonId = personService.saveContactedPerson(personRequest4, routeInformationRequest, infectedPerson.getId());
+        ContactedPerson contactedPerson = (ContactedPerson) personService.findPerson(contactedPersonId).get();
 
         //then
+        assertThat(vaccinationPerson.getName()).isEqualTo("yunho1");
+        assertThat(notVaccinationPerson.getName()).isEqualTo("yunho2");
+        assertThat(infectedPerson.getName()).isEqualTo("yunho3");
+        assertThat(contactedPerson.getName()).isEqualTo("yunho4");
     }
 
     @Test
-    void reVaccination() {
+    void reVaccination() throws Exception {
         //given
 
 
@@ -117,7 +121,7 @@ class PersonServiceTest {
         return eachRecordRequest;
     }
 
-    private RouteInformationRequest createRouteInformationRequest(InfectedPerson infectedPerson, City city) {
+    private RouteInformationRequest createRouteInformationRequest(City city) {
         RouteInformationRequest routeInformationRequest = new RouteInformationRequest();
         routeInformationRequest.setCity(city);
         routeInformationRequest.setDistrict(null);
