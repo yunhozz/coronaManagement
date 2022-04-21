@@ -52,7 +52,7 @@ public class VaccinationPerson extends Person {
     }
 
     public void reVaccination() {
-        vaccine.removeQuantity(1);
+        vaccine.removeQuantity();
         vaccinationCount++;
         vaccinationDate = LocalDateTime.now();
     }

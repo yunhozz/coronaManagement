@@ -40,8 +40,16 @@ public class Virus extends BaseEntity {
         this.infectionCount++;
     }
 
+    public void addInfectionCount(int infectionCount) {
+        this.infectionCount += infectionCount;
+    }
+
     public void addFatalCount() {
         this.fatalCount++;
+    }
+
+    public void addFatalCount(int fatalCount) {
+        this.fatalCount += fatalCount;
     }
 
     public double getInfectionRate(int number) {

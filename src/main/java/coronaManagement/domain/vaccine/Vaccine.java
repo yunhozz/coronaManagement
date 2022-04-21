@@ -35,8 +35,20 @@ public class Vaccine extends BaseEntity {
         return new Vaccine(name, developer, stockQuantity);
     }
 
+    public void addQuantity() {
+        stockQuantity++;
+    }
+
     public void addQuantity(int stockQuantity) {
         this.stockQuantity += stockQuantity;
+    }
+
+    public void removeQuantity() {
+        if (stockQuantity == 0) {
+            throw new NotEnoughStockException("not enough stock quantity.");
+        }
+
+        stockQuantity--;
     }
 
     public void removeQuantity(int stockQuantity) {

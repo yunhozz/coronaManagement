@@ -36,12 +36,24 @@ public class TotalRecord extends BaseEntity {
         totalInfection += 1;
     }
 
+    public void addInfection(int totalInfection) {
+        this.totalInfection += totalInfection;
+    }
+
     public void addDeath() {
         totalDeath += 1;
     }
 
+    public void addDeath(int totalDeath) {
+        this.totalDeath += totalDeath;
+    }
+
     public void addVaccination() {
         totalVaccination += 1;
+    }
+
+    public void addVaccination(int totalVaccination) {
+        this.totalVaccination += totalVaccination;
     }
 
     public double getFatalityRate() {

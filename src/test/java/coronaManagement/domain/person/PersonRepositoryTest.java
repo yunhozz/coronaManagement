@@ -44,12 +44,13 @@ class PersonRepositoryTest {
         //given
         Vaccine vaccine = createVaccine();
         EachRecord eachRecord = createRecord();
-        Person person1 = createPerson("yunho1", City.SEOUL, Gender.MALE, 27, "01033317551", vaccine, eachRecord);
-        Person person2 = createPerson("yunho2", City.BUSAN, Gender.FEMALE, 28, "01012345678", vaccine, eachRecord);
+        Person person1 = createPerson("yunho1", City.SEOUL, Gender.MALE, 27, "01033317551");
+        Person person2 = createPerson("yunho2", City.BUSAN, Gender.FEMALE, 28, "01012345678");
 
         //when
         VaccinationPerson person2ToVp = (VaccinationPerson) person2;
-        person2ToVp.reVaccination(); //person1 1차, person2 2차 접종 (update)
+        person2ToVp.updateField(vaccine, eachRecord);
+        person2ToVp.reVaccination(); //person1 : 1차 접종, person2 : 2차 접종
 
         List<VaccinationPerson> findPeople = personRepository.findPeopleWhoMustReVaccination(2); //2차 접종 대상자
 
@@ -60,10 +61,7 @@ class PersonRepositoryTest {
         assertThat(findPeople.get(0).getVaccinationCount()).isEqualTo(1);
 
         assertThat(vaccine.getName()).isEqualTo("vac");
-        assertThat(vaccine.getStockQuantity()).isEqualTo(7);
-
-        assertThat(eachRecord.getTodayVaccination()).isEqualTo(2);
-        assertThat(eachRecord.getTotalRecord().getTotalVaccination()).isEqualTo(2);
+        assertThat(vaccine.getStockQuantity()).isEqualTo(9);
     }
 
     @Test
@@ -71,26 +69,20 @@ class PersonRepositoryTest {
         //given
         Vaccine vaccine = createVaccine();
         EachRecord eachRecord = createRecord();
-        Person savedPerson = createPerson("yunho", City.SEOUL, Gender.MALE, 27, "01033317551", vaccine, eachRecord);
+        Person savedPerson = createPerson("yunho", City.SEOUL, Gender.MALE, 27, "01033317551");
 
         //when
         VaccinationPerson vaccinationPerson = (VaccinationPerson) personRepository.findPersonWhoCanReVaccination(savedPerson.getId()).get();
+        vaccinationPerson.updateField(vaccine, eachRecord);
 
         //then
         assertThat(vaccinationPerson.getId()).isEqualTo(savedPerson.getId());
         assertThat(vaccinationPerson.getName()).isEqualTo("yunho");
         assertThat(vaccinationPerson.getVaccinationCount()).isEqualTo(1);
         assertThat(vaccinationPerson.getInfectionStatus()).isEqualTo(InfectionStatus.BEFORE_INFECT);
-
-        assertThat(vaccinationPerson.getVaccine().getName()).isEqualTo("vac");
-        assertThat(vaccinationPerson.getVaccine().getStockQuantity()).isEqualTo(9);
-
-        assertThat(vaccinationPerson.getEachRecord().getTodayVaccination()).isEqualTo(1);
-        assertThat(vaccinationPerson.getEachRecord().getTotalRecord().getTotalVaccination()).isEqualTo(1);
     }
 
     @Test
-    @Rollback(value = false)
     void findPageBy() throws Exception {
         //given
         createPerson("yunho1", City.SEOUL , Gender.MALE, 27);
@@ -146,16 +138,23 @@ class PersonRepositoryTest {
     }
 
     @Test
-    @Rollback(value = false)
     void findPeopleWhoInfectedAndHospitalized() throws Exception {
         //given
         Virus virus = createVirus();
         EachRecord eachRecord = createRecord();
         Hospital hospital = createHospital();
 
-        InfectedPerson person1 = (InfectedPerson) createPerson("yunho1", virus, eachRecord);
-        InfectedPerson person2 = (InfectedPerson) createPerson("yunho2", virus, eachRecord);
-        InfectedPerson person3 = (InfectedPerson) createPerson("yunho3", virus, eachRecord);
+        InfectedPerson person1 = (InfectedPerson) createPerson("yunho1");
+        InfectedPerson person2 = (InfectedPerson) createPerson("yunho2");
+        InfectedPerson person3 = (InfectedPerson) createPerson("yunho3");
+
+        person1.updateField(virus, eachRecord);
+        person2.updateField(virus, eachRecord);
+        person3.updateField(virus, eachRecord);
+        eachRecord.updateField(new TotalRecordRequest().toEntity());
+
+        virus.addInfectionCount(3);
+        eachRecord.addInfection(3);
 
         //when
         hospital.hospitalize(person1, person2); //person3을 제외한 입원 처리, Person - Hospital 연관관계 생성
@@ -176,37 +175,6 @@ class PersonRepositoryTest {
         }
     }
 
-    @Test
-    void findVpWithVaccine() throws Exception {
-        //given
-        Vaccine vaccine = createVaccine();
-        EachRecord eachRecord = createRecord();
-        Person person1 = createPerson("yunho1", City.SEOUL, Gender.MALE, 27, "01033317551", vaccine, eachRecord);
-        Person person2 = createPerson("yunho2", City.BUSAN, Gender.FEMALE, 28, "01012345678", vaccine, eachRecord);
-
-        //when
-        List<VaccinationPerson> result = personRepository.findVpWithVaccine();
-
-        //then
-        assertThat(result.size()).isEqualTo(2);
-        assertThat(result.get(0).getVaccine().getName()).isEqualTo("vac");
-    }
-
-    @Test
-    void findAllWithContactedPerson() throws Exception {
-        //given
-        Vaccine vaccine = createVaccine();
-        EachRecord eachRecord = createRecord();
-        Person person1 = createPerson("yunho1", City.SEOUL, Gender.MALE, 27, "01033317551", vaccine, eachRecord);
-        Person person2 = createPerson("yunho2", City.BUSAN, Gender.FEMALE, 28, "01012345678", vaccine, eachRecord);
-
-        //when
-        List<ContactedPerson> result = personRepository.findAllWithContactedPerson(0, 2);
-
-        //then
-        assertThat(result.size()).isEqualTo(0); //Data is empty so result's size is zero.
-    }
-
     private Person createPerson(String name, City city, Gender gender, int age) {
         PersonRequest personRequest = new PersonRequest();
         personRequest.setName(name);
@@ -217,7 +185,7 @@ class PersonRepositoryTest {
         return (Person) personRepository.save(personRequest.notVaccinationPersonToEntity());
     }
 
-    private Person createPerson(String name, Virus virus, EachRecord eachRecord) {
+    private Person createPerson(String name) {
         PersonRequest personRequest = new PersonRequest();
         personRequest.setName(name);
         InfectedPerson infectedPerson = (InfectedPerson) personRepository.save(personRequest.infectedPersonToEntity());
@@ -225,7 +193,7 @@ class PersonRepositoryTest {
         return infectedPerson;
     }
 
-    private Person createPerson(String name, City city, Gender gender, int age, String phoneNumber, Vaccine vaccine, EachRecord eachRecord) {
+    private Person createPerson(String name, City city, Gender gender, int age, String phoneNumber) {
         PersonRequest personRequest = new PersonRequest();
         personRequest.setName(name);
         personRequest.setCity(city);

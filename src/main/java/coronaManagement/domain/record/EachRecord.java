@@ -42,14 +42,29 @@ public class EachRecord extends BaseEntity {
         totalRecord.addInfection();
     }
 
+    public void addInfection(int todayInfection) {
+        this.todayInfection += todayInfection;
+        totalRecord.addInfection(todayInfection);
+    }
+
     public void addDeath() {
         todayDeath += 1;
         totalRecord.addDeath();
     }
 
+    public void addDeath(int todayDeath) {
+        this.todayDeath += todayDeath;
+        totalRecord.addDeath(todayDeath);
+    }
+
     public void addVaccination() {
         todayVaccination += 1;
         totalRecord.addVaccination();
+    }
+
+    public void addVaccination(int todayVaccination) {
+        this.todayVaccination += todayVaccination;
+        totalRecord.addVaccination(todayVaccination);
     }
 
     public double getFatalityRateOfToday() {
