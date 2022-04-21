@@ -17,7 +17,6 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -43,9 +42,6 @@ class PersonServiceTest {
         em.persist(virus);
         em.persist(eachRecord);
 
-        em.flush();
-        em.clear();
-
         PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
         PersonRequest personRequest2 = createPersonRequest("yunho2", City.BUSAN, Gender.MALE, 28, "222");
         PersonRequest personRequest3 = createPersonRequest("yunho3", City.INCHEON, Gender.FEMALE, 29, "333");
@@ -64,11 +60,17 @@ class PersonServiceTest {
         Long contactedPersonId = personService.saveContactedPerson(personRequest4, routeInformationRequest, infectedPerson.getId());
         ContactedPerson contactedPerson = (ContactedPerson) personService.findPerson(contactedPersonId).get();
 
+        em.flush();
+        em.clear();
+
         //then
         assertThat(vaccinationPerson.getName()).isEqualTo("yunho1");
         assertThat(notVaccinationPerson.getName()).isEqualTo("yunho2");
         assertThat(infectedPerson.getName()).isEqualTo("yunho3");
         assertThat(contactedPerson.getName()).isEqualTo("yunho4");
+
+        assertThat(vaccine.getStockQuantity()).isEqualTo(99);
+        assertThat(virus.getInfectionCount()).isEqualTo(1);
     }
 
     @Test
