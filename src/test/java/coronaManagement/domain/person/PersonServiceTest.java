@@ -2,6 +2,7 @@ package coronaManagement.domain.person;
 
 import coronaManagement.domain.person.dto.PersonRequest;
 import coronaManagement.domain.record.EachRecord;
+import coronaManagement.domain.record.TotalRecord;
 import coronaManagement.domain.record.dto.EachRecordRequest;
 import coronaManagement.domain.record.dto.TotalRecordRequest;
 import coronaManagement.domain.routeInformation.dto.RouteInformationRequest;
@@ -31,7 +32,6 @@ class PersonServiceTest {
     Virus virus;
     EachRecord eachRecord;
 
-
     @BeforeEach
     void beforeEach() {
         Vaccine vaccine = createVaccine("vaccine", "developer", 100);
@@ -39,14 +39,11 @@ class PersonServiceTest {
 
         EachRecordRequest eachRecordRequest = createEachRecordRequest(2022, 4, 19);
         EachRecord eachRecord = eachRecordRequest.toEntity();
-        eachRecord.updateField(new TotalRecordRequest().toEntity());
+        eachRecord.updateField(createTotalRecord());
 
         em.persist(vaccine);
         em.persist(virus);
         em.persist(eachRecord);
-
-        em.flush();
-        em.clear();
     }
 
     @Test
@@ -119,8 +116,8 @@ class PersonServiceTest {
         return Virus.createVirus(virusType, initialPoint);
     }
 
-    private TotalRecordRequest createTotalRecordRequest() {
-        return new TotalRecordRequest();
+    private TotalRecord createTotalRecord() {
+        return new TotalRecordRequest().toEntity();
     }
 
     private EachRecordRequest createEachRecordRequest(int year, int month, int day) {
