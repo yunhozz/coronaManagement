@@ -27,16 +27,13 @@ class PersonServiceTest {
 
     @Autowired PersonService personService;
     @Autowired EntityManager em;
+    Vaccine vaccine;
+    Virus virus;
+    EachRecord eachRecord;
+
 
     @BeforeEach
     void beforeEach() {
-
-    }
-
-    @Test
-    @Commit
-    void savePerson() throws Exception {
-        //given
         Vaccine vaccine = createVaccine("vaccine", "developer", 100);
         Virus virus = createVirus(VirusType.ALPHA, "China");
 
@@ -48,6 +45,14 @@ class PersonServiceTest {
         em.persist(virus);
         em.persist(eachRecord);
 
+        em.flush();
+        em.clear();
+    }
+
+    @Test
+    @Commit
+    void savePerson() throws Exception {
+        //given
         PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
         PersonRequest personRequest2 = createPersonRequest("yunho2", City.BUSAN, Gender.MALE, 28, "222");
         PersonRequest personRequest3 = createPersonRequest("yunho3", City.INCHEON, Gender.FEMALE, 29, "333");
@@ -65,9 +70,6 @@ class PersonServiceTest {
         RouteInformationRequest routeInformationRequest = createRouteInformationRequest(City.SEOUL);
         Long contactedPersonId = personService.saveContactedPerson(personRequest4, routeInformationRequest, infectedPerson.getId());
         ContactedPerson contactedPerson = (ContactedPerson) personService.findPerson(contactedPersonId).get();
-
-        em.flush();
-        em.clear();
 
         //then
         assertThat(vaccinationPerson.getName()).isEqualTo("yunho1");
