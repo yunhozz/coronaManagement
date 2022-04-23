@@ -101,13 +101,6 @@ class PersonServiceTest {
         return personRequest;
     }
 
-    private InfectedPerson createInfectedPerson(String name, Virus virus, EachRecord eachRecord) {
-        PersonRequest personRequest = new PersonRequest();
-        personRequest.setName(name);
-
-        return (InfectedPerson) personRequest.infectedPersonToEntity();
-    }
-
     private Vaccine createVaccine(String name, String developer, int stockQuantity) {
         return Vaccine.createVaccine(name, developer, stockQuantity);
     }
