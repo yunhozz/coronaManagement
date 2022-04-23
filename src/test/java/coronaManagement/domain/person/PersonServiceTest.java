@@ -10,6 +10,7 @@ import coronaManagement.domain.virus.Virus;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
 import coronaManagement.global.enums.VirusType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,11 @@ class PersonServiceTest {
 
     @Autowired PersonService personService;
     @Autowired EntityManager em;
+
+    @BeforeEach
+    void beforeEach() {
+
+    }
 
     @Test
     @Commit
@@ -74,6 +80,7 @@ class PersonServiceTest {
     }
 
     @Test
+    @Commit
     void reVaccination() throws Exception {
         //given
 
