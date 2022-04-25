@@ -15,8 +15,8 @@ public class InitDb {
 
     @PostConstruct
     public void init() {
-        initService.dbInit1();
-        initService.dbInit2();
+        initService.init1();
+        initService.init2();
     }
 
     @Component
@@ -26,11 +26,11 @@ public class InitDb {
 
         private final EntityManager em;
 
-        public void dbInit1() {
+        public void init1() {
 
         }
 
-        public void dbInit2() {
+        public void init2() {
 
         }
     }
