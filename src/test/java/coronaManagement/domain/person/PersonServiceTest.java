@@ -113,6 +113,30 @@ class PersonServiceTest {
         //then
     }
 
+    @Test
+    @Commit
+    void getInfected() throws Exception {
+        //given
+        PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
+        PersonRequest personRequest2 = createPersonRequest("yunho2", City.BUSAN, Gender.MALE, 28, "222");
+        PersonRequest personRequest3 = createPersonRequest("yunho3", City.INCHEON, Gender.FEMALE, 29, "333");
+        PersonRequest personRequest4 = createPersonRequest("yunho4", City.DAEGU, Gender.FEMALE, 30, "444");
+
+        Long infectedPersonId = personService.saveInfectedPerson(personRequest4, virus.getId(), eachRecord.getId());
+        RouteInformationRequest routeInformationRequest = createRouteInformationRequest(City.SEOUL);
+
+        Long vaccinationPersonId = personService.saveVaccinationPerson(personRequest1, vaccine.getId(), eachRecord.getId());
+        Long notVaccinationPersonId = personService.saveNotVaccinationPerson(personRequest2);
+        Long contactedPersonId = personService.saveContactedPerson(personRequest3, routeInformationRequest, infectedPersonId);
+
+        //when
+        personService.getInfected(vaccinationPersonId, virus.getId(), eachRecord.getId(), personRequest1);
+        personService.getInfected(notVaccinationPersonId, virus.getId(), eachRecord.getId(), personRequest2);
+        personService.getInfected(contactedPersonId, virus.getId(), eachRecord.getId(), personRequest3);
+
+        //then
+    }
+
     private PersonRequest createPersonRequest(String name, City city, Gender gender, int age, String phoneNumber) {
         PersonRequest personRequest = new PersonRequest();
         personRequest.setName(name);
