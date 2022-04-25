@@ -82,10 +82,33 @@ class PersonServiceTest {
     @Commit
     void reVaccination() throws Exception {
         //given
-
+        PersonRequest personRequest = createPersonRequest("yunho", City.SEOUL, Gender.MALE, 27, "111");
+        Long vaccinationPersonId = personService.saveVaccinationPerson(personRequest, vaccine.getId(), eachRecord.getId());
 
         //when
+        personService.reVaccination(vaccinationPersonId, eachRecord.getId());
+        VaccinationPerson vaccinationPerson = (VaccinationPerson) personService.findPerson(vaccinationPersonId).get();
 
+        //then
+        assertThat(vaccinationPerson.getName()).isEqualTo("yunho");
+        assertThat(vaccinationPerson.getVaccinationCount()).isEqualTo(2);
+        assertThat(vaccinationPerson.getVaccine().getStockQuantity()).isEqualTo(98);
+        assertThat(vaccinationPerson.getEachRecord().getTodayVaccination()).isEqualTo(2);
+    }
+
+    @Test
+    void reVaccinationFalse() throws Exception {
+        //given
+        PersonRequest personRequest = createPersonRequest("yunho", City.SEOUL, Gender.MALE, 27, "111");
+        Long notVaccinationPersonId = personService.saveNotVaccinationPerson(personRequest);
+
+        //when
+        try {
+            personService.reVaccination(notVaccinationPersonId, eachRecord.getId());
+
+        } catch (Exception e) {
+            assertThat(e.getMessage()).isEqualTo("Person or eachRecord is null.");
+        }
 
         //then
     }
