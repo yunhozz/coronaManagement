@@ -34,11 +34,11 @@ class PersonServiceTest {
 
     @BeforeEach
     void beforeEach() {
-        Vaccine vaccine = createVaccine("vaccine", "developer", 100);
-        Virus virus = createVirus(VirusType.ALPHA, "China");
+        vaccine = createVaccine("vaccine", "developer", 100);
+        virus = createVirus(VirusType.ALPHA, "China");
 
         EachRecordRequest eachRecordRequest = createEachRecordRequest(2022, 4, 19);
-        EachRecord eachRecord = eachRecordRequest.toEntity();
+        eachRecord = eachRecordRequest.toEntity();
         eachRecord.updateField(createTotalRecord());
 
         em.persist(vaccine);
