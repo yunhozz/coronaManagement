@@ -21,7 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -157,7 +156,7 @@ class PersonRepositoryTest {
         eachRecord.addInfection(3);
 
         //when
-        hospital.hospitalize(person1, person2); //person3을 제외한 입원 처리, Person - Hospital 연관관계 생성
+        hospital.hospitalize(List.of(person1, person2)); //person3을 제외한 입원 처리, Person - Hospital 연관관계 생성
         List<InfectedPerson> result = personRepository.findPeopleWhoInfectedAndHospitalized();
 
         //then

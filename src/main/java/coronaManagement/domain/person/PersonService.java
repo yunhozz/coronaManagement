@@ -122,7 +122,7 @@ public class PersonService {
                 .orElseThrow(() -> new IllegalStateException("EachRecord is empty."));
 
         //감염자 -> true
-        if (personRepository.findPersonWhoInfectedOrNot(person.getId())) {
+        if (personRepository.findPersonWhoInfectedOrNot()) {
             throw new IllegalStateException("This person is already infected.");
         }
 

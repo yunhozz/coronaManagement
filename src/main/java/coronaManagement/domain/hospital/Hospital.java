@@ -35,32 +35,32 @@ public class Hospital extends BaseEntity {
     }
 
     //입원 처리
-    public void hospitalize(InfectedPerson... infectedPeople) {
-        for (InfectedPerson infectedPerson : infectedPeople) {
+    public void hospitalize(List<InfectedPerson> infectedPersonList) {
+        for (InfectedPerson infectedPerson : infectedPersonList) {
             if (infectedPerson.getHospital() == null && infectedPerson.getPhysicalStatus() == INFECTED) {
                 infectedPerson.beHospitalized(this);
             }
         }
 
-        removeNumberOfBed(infectedPeople.length);
+        removeNumberOfBed(infectedPersonList.size());
     }
 
     //치료 완료
-    public void completeTreatment(InfectedPerson... infectedPeople) {
-        for (InfectedPerson infectedPerson : infectedPeople) {
+    public void completeTreatment(List<InfectedPerson> infectedPersonList) {
+        for (InfectedPerson infectedPerson : infectedPersonList) {
             infectedPerson.recovered();
         }
 
-        addNumberOfBed(infectedPeople.length);
+        addNumberOfBed(infectedPersonList.size());
     }
 
     //치료 실패
-    public void failTreatment(InfectedPerson... infectedPeople) {
-        for (InfectedPerson infectedPerson : infectedPeople) {
+    public void failTreatment(List<InfectedPerson> infectedPersonList) {
+        for (InfectedPerson infectedPerson : infectedPersonList) {
             infectedPerson.passedAway();
         }
 
-        addNumberOfBed(infectedPeople.length);
+        addNumberOfBed(infectedPersonList.size());
     }
 
     public void addNumberOfBed(int numberOfBed) {

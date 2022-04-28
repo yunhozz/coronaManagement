@@ -32,7 +32,7 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
 
     //감염 전 상태인지 판단
     @Query("select case when p.infectionStatus = 'INFECTED' then true else false end from Person p")
-    boolean findPersonWhoInfectedOrNot(Long personId);
+    boolean findPersonWhoInfectedOrNot();
 
     //도시로 페이징
     @Query("select p from Person p")
@@ -62,11 +62,20 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     @Query("select p from Person p where p.id = :personId and p.vaccinationCount > 0")
     Optional<T> findPersonWhoCanReVaccination(@Param("personId") Long personId);
 
+    @Query("select case when p.physicalStatus = 'INFECTED' then true else false end from Person p")
+    boolean findInfectedPersonWhoInfectedOrNot();
+
+    @Query("select case when p.physicalStatus = 'HOSPITALIZED' then true else false end from Person p")
+    boolean findInfectedPersonWhoHospitalized();
+
+    @Query("select case when p.physicalStatus = 'DEAD' then true else false end from Person p")
+    boolean findInfectedPersonWhoDead();
+
     //감염자 중 격리 조치된 사람 조회
-    @Query("select p from Person p where p.physicalStatus = 'ISOLATED' order by infectedTime desc")
+    @Query("select p from Person p where p.physicalStatus = 'ISOLATED'")
     List<T> findPeopleWhoInfectedAndIsolated();
 
     //감염자 중 병원에 이송된 사람 조회
-    @Query("select p from Person p where p.physicalStatus = 'HOSPITALIZED' order by infectedTime desc")
+    @Query("select p from Person p where p.physicalStatus = 'HOSPITALIZED'")
     List<T> findPeopleWhoInfectedAndHospitalized();
 }
