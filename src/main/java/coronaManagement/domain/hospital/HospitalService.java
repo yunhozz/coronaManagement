@@ -22,6 +22,15 @@ public class HospitalService {
 
     public Long makeHospital(HospitalForm form) {
         Hospital hospital = new Hospital(form.getName(), form.getNumberOfBed());
+        List<Hospital> hospitals = this.findHospitals();
+
+        //병원 이름 중복 불가
+        if (hospitals.size() != 0) {
+            if (hospitals.stream().anyMatch(h -> h.getName().equals(hospital.getName()))) {
+                throw new IllegalStateException("This hospital is already exist.");
+            }
+        }
+
         hospitalRepository.save(hospital);
 
         return hospital.getId();
@@ -38,18 +47,19 @@ public class HospitalService {
         for (Long personId : personIds) {
             Optional<Person> optionalPerson = personRepository.findById(personId);
 
-            if (optionalPerson.isEmpty()) {
-                throw new IllegalStateException("Person is empty.");
-            }
-
-            if (!personRepository.findInfectedPersonWhoInfectedOrNot()) {
-                throw new IllegalStateException("This person is already hospitalized or isolated.");
+            if (optionalPerson.isEmpty() || !personRepository.findInfectedPersonWhoInfectedOrNot()) {
+                continue;
             }
 
             infectedPersonList.add((InfectedPerson) optionalPerson.get());
         }
 
-        hospital.hospitalize(infectedPersonList);
+        if (!infectedPersonList.isEmpty()) {
+            hospital.hospitalize(infectedPersonList);
+
+        } else {
+            throw new IllegalStateException("There are not person to hospitalize.");
+        }
     }
 
     /*
@@ -99,7 +109,7 @@ public class HospitalService {
             infectedPersonList.add((InfectedPerson) optionalPerson.get());
         }
 
-        hospital.completeTreatment(infectedPersonList);
+        hospital.failTreatment(infectedPersonList);
     }
 
     @Transactional(readOnly = true)
