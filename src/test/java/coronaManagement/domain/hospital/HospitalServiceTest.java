@@ -95,13 +95,13 @@ class HospitalServiceTest {
         PersonRequest personRequest2 = createPersonRequest("yunho2", City.BUSAN, Gender.MALE, 28, "222");
         HospitalForm hospitalForm = createHospitalForm("hos", 100);
 
+        //when
         Long infectedPersonId1 = personService.saveInfectedPerson(personRequest1, virus.getId(), eachRecord.getId());
         Long infectedPersonId2 = personService.saveInfectedPerson(personRequest2, virus.getId(), eachRecord.getId());
-        Long hospitalId = hospitalService.makeHospital(hospitalForm);
 
+        Long hospitalId = hospitalService.makeHospital(hospitalForm);
         Hospital hospital = hospitalService.findHospital(hospitalId);
 
-        //when
         hospitalService.hospitalize(hospital.getId(), infectedPersonId1, infectedPersonId2);
 
         //then
