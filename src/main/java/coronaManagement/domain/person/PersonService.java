@@ -28,7 +28,6 @@ public class PersonService {
     private final VaccineRepository vaccineRepository;
     private final VirusRepository virusRepository;
     private final EachRecordRepository eachRecordRepository;
-    private final RouteInformationRepository routeInformationRepository;
 
     public Long saveVaccinationPerson(PersonRequest personRequest, Long vaccineId, Long eachRecordId) {
         Optional<Vaccine> optionalVaccine = vaccineRepository.findById(vaccineId);
