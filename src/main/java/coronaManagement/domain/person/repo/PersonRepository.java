@@ -30,10 +30,6 @@ public interface PersonRepository<T extends Person> extends JpaRepository<T, Lon
     @Query("select cp from ContactedPerson cp")
     List<ContactedPerson> findContactedPerson();
 
-    //dType 조회
-    @Query("select type(p) from Person p where p.id = :personId")
-    String findPersonWhereIncluded(@Param("personId") Long personId);
-
     //감염 전 상태인지 판단
     @Query("select case when p.infectionStatus = 'INFECTED' then true else false end from Person p")
     boolean findPersonWhoInfectedOrNot(Long personId);

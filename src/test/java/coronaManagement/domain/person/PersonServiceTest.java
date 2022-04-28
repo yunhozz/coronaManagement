@@ -137,6 +137,23 @@ class PersonServiceTest {
         //then
     }
 
+    @Test
+    void getInfectedFalse() throws Exception {
+        //given
+        PersonRequest personRequest = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
+        Long infectedPersonId = personService.saveInfectedPerson(personRequest, virus.getId(), eachRecord.getId());
+
+        //when
+        try {
+            personService.getInfected(infectedPersonId, virus.getId(), eachRecord.getId(), personRequest);
+
+        } catch (Exception e) {
+            assertThat(e.getMessage()).isEqualTo("This person is already infected.");
+        }
+
+        //then
+    }
+
     private PersonRequest createPersonRequest(String name, City city, Gender gender, int age, String phoneNumber) {
         PersonRequest personRequest = new PersonRequest();
         personRequest.setName(name);

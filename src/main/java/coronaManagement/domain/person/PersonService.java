@@ -134,51 +134,16 @@ public class PersonService {
         virus.addInfectionCount();
         eachRecord.addInfection();
 
-        String dType = personRepository.findPersonWhereIncluded(person.getId()); //dType 조회
         String distinguishId = person.getId().toString();
+        PersonResponse personResponse = new PersonResponse(person);
 
-        switch (dType) {
-            case "V" -> {
-                VaccinationPerson vaccinationPerson = (VaccinationPerson) person;
-                PersonResponse personResponse = new PersonResponse(vaccinationPerson);
+        personRepository.delete(person);
 
-                createPersonRequestByResponse(personRequest, personResponse, distinguishId);
-                vaccinationPerson.getInfected();
+        createPersonRequestByResponse(personRequest, personResponse, distinguishId);
+        InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
+        infectedPerson.updateField(virus, eachRecord);
 
-                InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
-                infectedPerson.updateField(virus, eachRecord);
-
-                personRepository.save(infectedPerson);
-            }
-
-            case "NV" -> {
-                NotVaccinationPerson notVaccinationPerson = (NotVaccinationPerson) person;
-                PersonResponse personResponse = new PersonResponse(notVaccinationPerson);
-
-                createPersonRequestByResponse(personRequest, personResponse, distinguishId);
-                notVaccinationPerson.getInfected();
-
-                InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
-                infectedPerson.updateField(virus, eachRecord);
-
-                personRepository.save(infectedPerson);
-            }
-
-            case "C" -> {
-                ContactedPerson contactedPerson = (ContactedPerson) person;
-                PersonResponse personResponse = new PersonResponse(contactedPerson);
-
-                createPersonRequestByResponse(personRequest, personResponse, distinguishId);
-                contactedPerson.getInfected();
-
-                InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
-                infectedPerson.updateField(virus, eachRecord);
-
-                personRepository.save(infectedPerson);
-            }
-
-            default -> throw new IllegalStateException("This person is already infected.");
-        }
+        personRepository.save(infectedPerson);
     }
 
     @Transactional(readOnly = true)

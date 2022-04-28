@@ -25,7 +25,7 @@ public class ContactedPerson extends Person {
     @Column(name = "contacted_person_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "route_information_id")
     private RouteInformation routeInformation;
 
