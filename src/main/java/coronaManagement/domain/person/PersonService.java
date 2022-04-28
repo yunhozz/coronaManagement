@@ -113,7 +113,7 @@ public class PersonService {
         eachRecord.addVaccination();
     }
 
-    public void getInfected(Long personId, Long virusId, Long eachRecordId, PersonRequest personRequest) {
+    public Long getInfected(Long personId, Long virusId, Long eachRecordId, PersonRequest personRequest) {
         Optional<Person> optionalPerson = personRepository.findById(personId);
         Optional<Virus> optionalVirus = virusRepository.findById(virusId);
         Optional<EachRecord> optionalEachRecord = eachRecordRepository.findById(eachRecordId);
@@ -144,6 +144,8 @@ public class PersonService {
         infectedPerson.updateField(virus, eachRecord);
 
         personRepository.save(infectedPerson);
+
+        return infectedPerson.getId();
     }
 
     @Transactional(readOnly = true)

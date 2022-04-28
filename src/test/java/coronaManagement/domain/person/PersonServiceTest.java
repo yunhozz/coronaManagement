@@ -130,11 +130,21 @@ class PersonServiceTest {
         Long contactedPersonId = personService.saveContactedPerson(personRequest3, routeInformationRequest, infectedPersonId);
 
         //when
-        personService.getInfected(vaccinationPersonId, virus.getId(), eachRecord.getId(), personRequest1);
-        personService.getInfected(notVaccinationPersonId, virus.getId(), eachRecord.getId(), personRequest2);
-        personService.getInfected(contactedPersonId, virus.getId(), eachRecord.getId(), personRequest3);
+        Long id1 = personService.getInfected(vaccinationPersonId, virus.getId(), eachRecord.getId(), personRequest1);
+        Long id2 = personService.getInfected(notVaccinationPersonId, virus.getId(), eachRecord.getId(), personRequest2);
+        Long id3 = personService.getInfected(contactedPersonId, virus.getId(), eachRecord.getId(), personRequest3);
+
+        Person person1 = personService.findPerson(id1).get();
+        Person person2 = personService.findPerson(id2).get();
+        Person person3 = personService.findPerson(id3).get();
 
         //then
+        assertThat(person1.getName()).isEqualTo("yunho1");
+        assertThat(person2.getName()).isEqualTo("yunho2");
+        assertThat(person3.getName()).isEqualTo("yunho3");
+
+        assertThat(eachRecord.getTodayInfection()).isEqualTo(4);
+        assertThat(eachRecord.getTotalRecord().getTotalInfection()).isEqualTo(4);
     }
 
     @Test
