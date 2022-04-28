@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,6 +26,9 @@ public class HospitalService {
 
     //입원 처리
     public void hospitalize(Long hospitalId, Long... personIds) {
+        Hospital hospital = hospitalRepository.findById(hospitalId)
+                .orElseThrow(() -> new IllegalStateException("Hospital is empty."));
+
 
     }
 

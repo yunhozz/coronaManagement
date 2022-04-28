@@ -59,15 +59,11 @@ public class PersonService {
     }
 
     public Long saveInfectedPerson(PersonRequest personRequest, Long virusId, Long eachRecordId) {
-        Optional<Virus> optionalVirus = virusRepository.findById(virusId);
-        Optional<EachRecord> optionalEachRecord = eachRecordRepository.findById(eachRecordId);
+        Virus virus = virusRepository.findById(virusId)
+                .orElseThrow(() -> new IllegalStateException("Virus is empty."));
 
-        if (optionalVirus.isEmpty() || optionalEachRecord.isEmpty()) {
-            throw new IllegalStateException("Virus or eachRecord is null.");
-        }
-
-        Virus virus = optionalVirus.get();
-        EachRecord eachRecord = optionalEachRecord.get();
+        EachRecord eachRecord = eachRecordRepository.findById(eachRecordId)
+                .orElseThrow(() -> new IllegalStateException("EachRecord is empty."));
 
         InfectedPerson infectedPerson = (InfectedPerson) personRequest.infectedPersonToEntity();
         infectedPerson.updateField(virus, eachRecord);
@@ -83,13 +79,10 @@ public class PersonService {
     public Long saveContactedPerson(PersonRequest personRequest, RouteInformationRequest routeInformationRequest, Long infectedPersonId) {
         ContactedPerson contactedPerson = (ContactedPerson) personRequest.contactedPersonToEntity();
         RouteInformation routeInformation = routeInformationRequest.toEntity();
-        Optional<Person> optionalPerson = this.findPerson(infectedPersonId);
 
-        if (optionalPerson.isEmpty()) {
-            throw new IllegalStateException("InfectedPerson is null.");
-        }
+        InfectedPerson infectedPerson = (InfectedPerson) this.findPerson(infectedPersonId)
+                .orElseThrow(() -> new IllegalStateException("InfectedPerson is empty."));
 
-        InfectedPerson infectedPerson = (InfectedPerson) optionalPerson.get();
         routeInformation.updateField(infectedPerson);
         contactedPerson.updateField(routeInformation);
 
@@ -100,14 +93,14 @@ public class PersonService {
 
     public void reVaccination(Long personId, Long eachRecordId) {
         Optional<Person> optionalPerson = personRepository.findPersonWhoCanReVaccination(personId);
-        Optional<EachRecord> optionalEachRecord = eachRecordRepository.findById(eachRecordId);
+        EachRecord eachRecord = eachRecordRepository.findById(eachRecordId)
+                .orElseThrow(() -> new IllegalStateException("EachRecord is empty."));
 
-        if (optionalPerson.isEmpty() || optionalEachRecord.isEmpty()) {
-            throw new IllegalStateException("Person or eachRecord is null.");
+        if (optionalPerson.isEmpty()) {
+            throw new IllegalStateException("Person is empty.");
         }
 
         VaccinationPerson vaccinationPerson = (VaccinationPerson) optionalPerson.get();
-        EachRecord eachRecord = optionalEachRecord.get();
 
         vaccinationPerson.reVaccination();
         eachRecord.addVaccination();
@@ -115,16 +108,18 @@ public class PersonService {
 
     public Long getInfected(Long personId, Long virusId, Long eachRecordId, PersonRequest personRequest) {
         Optional<Person> optionalPerson = personRepository.findById(personId);
-        Optional<Virus> optionalVirus = virusRepository.findById(virusId);
-        Optional<EachRecord> optionalEachRecord = eachRecordRepository.findById(eachRecordId);
 
-        if (optionalPerson.isEmpty() || optionalVirus.isEmpty() || optionalEachRecord.isEmpty()) {
-            throw new IllegalStateException("Field is null.");
+        if (optionalPerson.isEmpty()) {
+            throw new IllegalStateException("Person is empty.");
         }
 
         Person person = optionalPerson.get();
-        Virus virus = optionalVirus.get();
-        EachRecord eachRecord = optionalEachRecord.get();
+
+        Virus virus = virusRepository.findById(virusId)
+                .orElseThrow(() -> new IllegalStateException("Virus is empty."));
+
+        EachRecord eachRecord = eachRecordRepository.findById(eachRecordId)
+                .orElseThrow(() -> new IllegalStateException("EachRecord is empty."));
 
         //감염자 -> true
         if (personRepository.findPersonWhoInfectedOrNot(person.getId())) {
