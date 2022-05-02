@@ -39,10 +39,9 @@ public class Hospital extends BaseEntity {
         for (InfectedPerson infectedPerson : infectedPersonList) {
             if (infectedPerson.getHospital() == null && infectedPerson.getPhysicalStatus() == INFECTED) {
                 infectedPerson.beHospitalized(this);
+                removeNumberOfBed(1);
             }
         }
-
-        removeNumberOfBed(infectedPersonList.size());
     }
 
     //치료 완료

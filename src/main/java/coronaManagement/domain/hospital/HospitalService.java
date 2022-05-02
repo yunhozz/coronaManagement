@@ -47,8 +47,8 @@ public class HospitalService {
         for (Long personId : personIds) {
             Optional<Person> optionalPerson = personRepository.findById(personId);
 
-            if (optionalPerson.isEmpty() || !personRepository.findInfectedPersonWhoInfectedOrNot()) {
-                continue;
+            if (optionalPerson.isEmpty()) {
+                throw new IllegalStateException("Person is empty.");
             }
 
             infectedPersonList.add((InfectedPerson) optionalPerson.get());
