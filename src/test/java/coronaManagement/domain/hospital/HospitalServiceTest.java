@@ -12,6 +12,7 @@ import coronaManagement.domain.vaccine.Vaccine;
 import coronaManagement.domain.virus.Virus;
 import coronaManagement.global.enums.City;
 import coronaManagement.global.enums.Gender;
+import coronaManagement.global.enums.PhysicalStatus;
 import coronaManagement.global.enums.VirusType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,6 @@ class HospitalServiceTest {
     }
 
     @Test
-    @Commit
     void makeHospital() throws Exception {
         //given
         HospitalForm hospitalForm1 = createHospitalForm("hosA", 100);
@@ -88,17 +88,16 @@ class HospitalServiceTest {
     }
 
     @Test
-    @Commit
     void hospitalize() throws Exception {
         //given
         PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
         PersonRequest personRequest2 = createPersonRequest("yunho2", City.BUSAN, Gender.MALE, 28, "222");
         HospitalForm hospitalForm = createHospitalForm("hos", 100);
 
-        //when
         Long infectedPersonId1 = personService.saveInfectedPerson(personRequest1, virus.getId(), eachRecord.getId());
         Long infectedPersonId2 = personService.saveInfectedPerson(personRequest2, virus.getId(), eachRecord.getId());
 
+        //when
         Long hospitalId = hospitalService.makeHospital(hospitalForm);
         Hospital hospital = hospitalService.findHospital(hospitalId);
 
@@ -112,7 +111,6 @@ class HospitalServiceTest {
     }
 
     @Test
-    @Commit
     void hospitalizeFail() throws Exception {
         //given
         PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
@@ -123,19 +121,18 @@ class HospitalServiceTest {
         Long infectedPersonId1 = personService.saveInfectedPerson(personRequest1, virus.getId(), eachRecord.getId());
         Long infectedPersonId2 = personService.saveInfectedPerson(personRequest2, virus.getId(), eachRecord.getId());
         Long infectedPersonId3 = personService.saveInfectedPerson(personRequest3, virus.getId(), eachRecord.getId());
-
         Long hospitalId = hospitalService.makeHospital(hospitalForm);
 
-        //when
-        //person1 : 격리, person2 : 죽음, person3 : 감염(default)
         InfectedPerson infectedPerson1 = (InfectedPerson) personService.findPerson(infectedPersonId1).get();
         InfectedPerson infectedPerson2 = (InfectedPerson) personService.findPerson(infectedPersonId2).get();
         InfectedPerson infectedPerson3 = (InfectedPerson) personService.findPerson(infectedPersonId3).get();
+
+        //when
+        //person1 : 격리, person2 : 죽음, person3 : 감염(default)
         infectedPerson1.beIsolated();
         infectedPerson2.passedAway();
 
         Hospital hospital = hospitalService.findHospital(hospitalId);
-
         hospitalService.hospitalize(hospital.getId(), infectedPersonId1, infectedPersonId2, infectedPersonId3);
 
         //then
@@ -143,6 +140,74 @@ class HospitalServiceTest {
         assertThat(hospital.getNumberOfBed()).isEqualTo(99);
         assertThat(hospital.getInfectedPersonList()).extracting("name")
                 .containsExactly("yunho3");
+    }
+
+    @Test
+    void completeTreatment() throws Exception {
+        //given
+        PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
+        PersonRequest personRequest2 = createPersonRequest("yunho2", City.BUSAN, Gender.MALE, 28, "222");
+        PersonRequest personRequest3 = createPersonRequest("yunho3", City.INCHEON, Gender.MALE, 29, "333");
+        HospitalForm hospitalForm = createHospitalForm("hos", 100);
+
+        Long infectedPersonId1 = personService.saveInfectedPerson(personRequest1, virus.getId(), eachRecord.getId());
+        Long infectedPersonId2 = personService.saveInfectedPerson(personRequest2, virus.getId(), eachRecord.getId());
+        Long infectedPersonId3 = personService.saveInfectedPerson(personRequest3, virus.getId(), eachRecord.getId());
+        Long hospitalId = hospitalService.makeHospital(hospitalForm);
+
+        InfectedPerson infectedPerson1 = (InfectedPerson) personService.findPerson(infectedPersonId1).get();
+        InfectedPerson infectedPerson2 = (InfectedPerson) personService.findPerson(infectedPersonId2).get();
+        InfectedPerson infectedPerson3 = (InfectedPerson) personService.findPerson(infectedPersonId3).get();
+
+        //when
+        Hospital hospital = hospitalService.findHospital(hospitalId);
+        hospitalService.hospitalize(hospital.getId(), infectedPersonId1, infectedPersonId2, infectedPersonId3);
+
+        hospitalService.completeTreatment(hospital.getId(), infectedPersonId1, infectedPersonId2);
+
+        //then
+        assertThat(hospital.getName()).isEqualTo("hos");
+        assertThat(hospital.getNumberOfBed()).isEqualTo(99);
+        assertThat(hospital.getInfectedPersonList()).extracting("name")
+                .containsExactly("yunho3");
+
+        assertThat(infectedPerson1.getPhysicalStatus()).isEqualTo(PhysicalStatus.RECOVERED);
+        assertThat(infectedPerson2.getPhysicalStatus()).isEqualTo(PhysicalStatus.RECOVERED);
+        assertThat(infectedPerson3.getPhysicalStatus()).isEqualTo(PhysicalStatus.HOSPITALIZED);
+    }
+
+    @Test
+    void failToTreatment() throws Exception {
+        //given
+        PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
+        PersonRequest personRequest2 = createPersonRequest("yunho2", City.BUSAN, Gender.MALE, 28, "222");
+        PersonRequest personRequest3 = createPersonRequest("yunho3", City.INCHEON, Gender.MALE, 29, "333");
+        HospitalForm hospitalForm = createHospitalForm("hos", 100);
+
+        Long infectedPersonId1 = personService.saveInfectedPerson(personRequest1, virus.getId(), eachRecord.getId());
+        Long infectedPersonId2 = personService.saveInfectedPerson(personRequest2, virus.getId(), eachRecord.getId());
+        Long infectedPersonId3 = personService.saveInfectedPerson(personRequest3, virus.getId(), eachRecord.getId());
+        Long hospitalId = hospitalService.makeHospital(hospitalForm);
+
+        InfectedPerson infectedPerson1 = (InfectedPerson) personService.findPerson(infectedPersonId1).get();
+        InfectedPerson infectedPerson2 = (InfectedPerson) personService.findPerson(infectedPersonId2).get();
+        InfectedPerson infectedPerson3 = (InfectedPerson) personService.findPerson(infectedPersonId3).get();
+
+        //when
+        Hospital hospital = hospitalService.findHospital(hospitalId);
+        hospitalService.hospitalize(hospital.getId(), infectedPersonId1, infectedPersonId2, infectedPersonId3);
+
+        hospitalService.failToTreatment(hospital.getId(), infectedPersonId3);
+
+        //then
+        assertThat(hospital.getName()).isEqualTo("hos");
+        assertThat(hospital.getNumberOfBed()).isEqualTo(98);
+        assertThat(hospital.getInfectedPersonList()).extracting("name")
+                .containsExactly("yunho1", "yunho2");
+
+        assertThat(infectedPerson1.getPhysicalStatus()).isEqualTo(PhysicalStatus.HOSPITALIZED);
+        assertThat(infectedPerson2.getPhysicalStatus()).isEqualTo(PhysicalStatus.HOSPITALIZED);
+        assertThat(infectedPerson3.getPhysicalStatus()).isEqualTo(PhysicalStatus.DEAD);
     }
 
     private PersonRequest createPersonRequest(String name, City city, Gender gender, int age, String phoneNumber) {

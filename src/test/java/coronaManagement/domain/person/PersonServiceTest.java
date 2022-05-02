@@ -47,7 +47,6 @@ class PersonServiceTest {
     }
 
     @Test
-    @Commit
     void savePerson() throws Exception {
         //given
         PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");
@@ -79,7 +78,6 @@ class PersonServiceTest {
     }
 
     @Test
-    @Commit
     void reVaccination() throws Exception {
         //given
         PersonRequest personRequest = createPersonRequest("yunho", City.SEOUL, Gender.MALE, 27, "111");
@@ -107,14 +105,13 @@ class PersonServiceTest {
             personService.reVaccination(notVaccinationPersonId, eachRecord.getId());
 
         } catch (Exception e) {
-            assertThat(e.getMessage()).isEqualTo("Person or eachRecord is null.");
+            assertThat(e.getMessage()).isEqualTo("Person is empty.");
         }
 
         //then
     }
 
     @Test
-    @Commit
     void getInfected() throws Exception {
         //given
         PersonRequest personRequest1 = createPersonRequest("yunho1", City.SEOUL, Gender.MALE, 27, "111");

@@ -48,6 +48,7 @@ public class Hospital extends BaseEntity {
     public void completeTreatment(List<InfectedPerson> infectedPersonList) {
         for (InfectedPerson infectedPerson : infectedPersonList) {
             infectedPerson.recovered();
+            this.infectedPersonList.remove(infectedPerson);
         }
 
         addNumberOfBed(infectedPersonList.size());
@@ -57,6 +58,7 @@ public class Hospital extends BaseEntity {
     public void failTreatment(List<InfectedPerson> infectedPersonList) {
         for (InfectedPerson infectedPerson : infectedPersonList) {
             infectedPerson.passedAway();
+            this.infectedPersonList.remove(infectedPerson);
         }
 
         addNumberOfBed(infectedPersonList.size());
